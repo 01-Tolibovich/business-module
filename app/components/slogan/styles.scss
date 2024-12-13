@@ -1,0 +1,19 @@
+.slogan {
+  text-align: center;
+  margin-bottom: 3rem;
+  .title {
+    color: $primary-color;
+    margin-bottom: 1.625rem;
+    font-size: 2rem;
+
+    span {
+      color: $secondary-color;
+    }
+  }
+  .description {
+    font-weight: 600;
+    span {
+      color: $primary-color;
+    }
+  }
+}

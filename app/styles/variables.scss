@@ -1,0 +1,15 @@
+$primary-color: #257EFF;
+$secondary-color: #FFA710;
+$text-color: #5b5b5b;
+
+$neo-color: #E3EEFF;
+$neo-blackout: #bec9db;
+$neo-glow: #ffffff;
+
+
+// default colors for svg
+:root {
+  --primary-color: #{$primary-color};
+  --fly-logo-color: #{$primary-color};
+  --secondary-color: #{$secondary-color};
+}

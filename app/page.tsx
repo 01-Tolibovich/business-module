@@ -1,10 +1,15 @@
-// import Image from "next/image";
-import styles from "./page.module.css";
+import { Auth, OurAdvantages, Slogan } from "./components";
 
 export default function Home() {
   return (
-    <div className={styles.page}>
-     
+    <div className='container'>
+      <section>
+        <Slogan />
+        <Auth />
+      </section>
+      <section>
+        <OurAdvantages />
+      </section>
     </div>
   );
 }
