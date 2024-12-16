@@ -1,0 +1,25 @@
+.footer-wrapper {
+  border-top: 1px solid $neo-glow;
+
+  .footer-links {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    border-bottom: 1px solid $neo-glow;
+    padding: 1.75rem 0;
+  }
+
+  .contact-section {
+    padding: 1.75rem 0;
+
+    .contact-block {
+      display: flex;
+      margin-top: 1.5rem;
+
+      .contact-links {
+        display: flex;
+        gap: 1rem;
+      }
+    }
+  }
+}

@@ -12,3 +12,5 @@ export * from "./SettingsIcon";
 export * from "./AgreementIcon";
 export * from "./PlaneTicketIcon";
 export * from "./PaymentIcon";
+export * from "./AtIcon";
+export * from "./PhoneIcon";
