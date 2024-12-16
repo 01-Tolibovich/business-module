@@ -1,4 +1,4 @@
-import { Auth, OurAdvantages, ServicesAndTechnologies, Slogan } from "./components";
+import { Auth, OurAdvantages, OurPartners, ServicesAndTechnologies, Slogan } from "./components";
 
 export default function Home() {
   return (
@@ -12,6 +12,9 @@ export default function Home() {
       </section>
       <section>
         <ServicesAndTechnologies />
+      </section>
+      <section>
+        <OurPartners />
       </section>
     </div>
   );

@@ -1,0 +1,26 @@
+.our-partners {
+  .partner-items {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin-top: 2.25rem;
+    gap: 1rem;
+
+    .partner-item {
+      @include neumorphism(
+        $inset: inset,
+        $shadow-step: 0.625rem,
+        $glow-step: -0.625rem,
+        $blur: 1.25rem,
+        $radius: 6rem
+      );
+      padding: 2rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .img {
+      height: auto;
+    }
+  }
+}
