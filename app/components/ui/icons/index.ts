@@ -9,3 +9,6 @@ export * from "./SpyIcon";
 export * from "./SafetyIcon";
 export * from "./PortfolioIcon";
 export * from "./SettingsIcon";
+export * from "./AgreementIcon";
+export * from "./PlaneTicketIcon";
+export * from "./PaymentIcon";

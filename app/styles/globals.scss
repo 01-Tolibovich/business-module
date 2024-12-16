@@ -14,6 +14,16 @@ body {
   section {
     margin: 5rem auto;
   }
+
+  h2 {
+    text-align: center;
+    color: $primary-color;
+    font-size: 2rem;
+  }
+
+  h4 {
+    font-size: 1rem;
+  }
 }
 
 * {

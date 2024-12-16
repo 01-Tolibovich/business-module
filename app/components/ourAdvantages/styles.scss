@@ -1,32 +1,45 @@
 .our-advantages {
-  margin: 2.5rem;
+  margin: 2.5rem 0;
 
-  h2 {
-    text-align: center;
-    color: $primary-color;
-  }
   .our-advantages-items {
     margin-top: 2.25rem;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
+    gap: 1.5rem;
 
     .advantages-item {
-      @include neumorphism($radius: 1rem);
+      @include neumorphism(
+        $shadow-step: 0.438rem,
+        $glow-step: -0.438rem,
+        $blur: 0.875rem,
+        $radius: 1rem
+      );
       padding: 0.5rem;
       aspect-ratio: 1/1;
 
       .inset-block {
-        @include neumorphism($inset: inset, $radius: 0.563rem);
+        @include neumorphism(
+          $inset: inset,
+          $shadow-step: 0.438rem,
+          $glow-step: -0.438rem,
+          $blur: 0.875rem,
+          $radius: 0.563rem
+        );
         height: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
         padding: 1rem;
         text-align: center;
+        justify-content: space-evenly;
 
         .icon {
-          @include neumorphism($radius: 50%);
+          @include neumorphism(
+            $shadow-step: 0.438rem,
+            $glow-step: -0.438rem,
+            $blur: 0.875rem,
+            $radius: 50%
+          );
           display: block;
           aspect-ratio: 1/1;
           display: flex;
