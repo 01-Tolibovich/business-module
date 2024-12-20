@@ -21,7 +21,12 @@ export const LoginForm = () => {
 
   const sendUserData = () => {
     const { login, password } = user;
-    loginRequest(login, password).then((response) => console.log(response));
+    loginRequest(login, password)
+    .then((response) => {
+      console.log(response.token);
+      // response
+      
+    });
   };
   return (
     <div className="login-form">

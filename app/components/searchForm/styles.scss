@@ -1,0 +1,12 @@
+.search-form {
+  @include container();
+  @include neumorphism();
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.5rem;
+
+  .title {
+    grid-column: 1/-1;
+  }
+}

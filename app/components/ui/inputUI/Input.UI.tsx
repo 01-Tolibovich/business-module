@@ -3,7 +3,7 @@ import "./styles.scss";
 interface InputUIProps {
   htmlFor?: string;
   label?: string;
-  type: string;
+  type?: string;
   value?: string;
   placeholder?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -18,8 +18,8 @@ export const InputUI: React.FC<InputUIProps> = ({
   onChange,
 }) => {
   return (
-    <>
-      <label className="label-ui" htmlFor={htmlFor}>{label}</label>
+    <div>
+      {label ? <label className="label-ui" htmlFor={htmlFor}>{label}</label> : null }
       <input
         className="input-ui"
         type={type}
@@ -27,6 +27,6 @@ export const InputUI: React.FC<InputUIProps> = ({
         value={value}
         placeholder={placeholder}
       />
-    </>
+    </div>
   );
 };

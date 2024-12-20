@@ -5,3 +5,4 @@ export * from "./ourAdvantages";
 export * from "./servicesAndTechnologies";
 export * from "./ourPartners";
 export * from "./footer";
+export * from "./searchForm";
