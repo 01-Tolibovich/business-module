@@ -1,0 +1,20 @@
+.link-ui {
+  color: $primary-color;
+  
+  span {
+    display: block;
+    width: 0;
+    height: 1px;
+    transition: .500s;
+    margin: 0 auto;
+    background-color: $active-color;
+  }
+
+  &:hover {
+    color: $active-color;
+
+    span { 
+      width: 100%;
+    }
+  }
+}

@@ -1,4 +1,6 @@
 .services-and-technologies {
+  @include container();
+
   .items {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -14,7 +16,6 @@
         padding: 1rem;
         margin-bottom: 1rem;
         height: 8.563rem;
-        // text-align: center;
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;

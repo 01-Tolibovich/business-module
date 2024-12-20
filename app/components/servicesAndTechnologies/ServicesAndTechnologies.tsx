@@ -1,3 +1,4 @@
+import { HeadingUI } from "../ui";
 import { AgreementIcon, PaymentIcon, PlaneTicketIcon } from "../ui/icons";
 import "./styles.scss";
 
@@ -24,7 +25,7 @@ export const ServicesAndTechnologies = () => {
   ];
   return (
     <div className="services-and-technologies">
-      <h2>Сервисы и технологии</h2>
+      <HeadingUI as="h2" textAlign="center">Сервисы и технологии</HeadingUI>
       <div className="items">
       {servicesInfo.map((item, index) => (
         <div key={index} className="item">

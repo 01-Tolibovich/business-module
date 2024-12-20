@@ -15,15 +15,17 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  children,
+  children, auth
 }: Readonly<{
   children: React.ReactNode;
+  auth: React.ReactNode;
 }>) {
   return (
     <html lang="en">
       <body className={montserrat.className}>
         <Header />
         {children}
+        {auth}
         <Footer />
       </body>
     </html>

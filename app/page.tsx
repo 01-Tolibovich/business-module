@@ -2,7 +2,7 @@ import { Auth, OurAdvantages, OurPartners, ServicesAndTechnologies, Slogan } fro
 
 export default function Home() {
   return (
-    <div className='container'>
+    <div>
       <section>
         <Slogan />
         <Auth />

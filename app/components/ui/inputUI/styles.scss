@@ -1,0 +1,16 @@
+.input-ui {
+  background-color: $neo-color;
+  width: 100%;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  padding: 0.5rem 1rem;
+  @include neumorphism($inset: inset);
+  outline: 1px solid $neo-blackout;
+  color: $text-color;
+}
+
+.label-ui {
+  display: block;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}

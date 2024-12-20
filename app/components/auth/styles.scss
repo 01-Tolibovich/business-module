@@ -1,10 +1,11 @@
 .auth {
   display: grid;
   gap: 2rem;
-  grid-template-columns: repeat(2, 180px);
+  grid-template-columns: repeat(2, 230px);
   justify-content: center;
+  @include container();
 
   button {
-    // width: fit-content;
+    width: 100%;
   }
 }

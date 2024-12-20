@@ -1,5 +1,10 @@
 .footer-wrapper {
   border-top: 1px solid $neo-glow;
+  margin-top: 5rem;
+
+  .container {
+    @include container($padding: 0 $indent 0 $indent)
+  }
 
   .footer-links {
     display: flex;
@@ -15,10 +20,27 @@
     .contact-block {
       display: flex;
       margin-top: 1.5rem;
+      justify-content: space-between;
+      align-items: center;
 
       .contact-links {
         display: flex;
-        gap: 1rem;
+        gap: 1.5rem;
+      }
+
+      .social {
+        display: flex;
+        gap: 1.5rem;
+
+        .social-btn {
+          height: 2.75rem;
+          width: 2.75rem;
+          @include neumorphism($radius: 50%);
+
+          :nth-child(1) {
+            transform: translateY(1px);
+          }
+        }
       }
     }
   }

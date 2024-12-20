@@ -1,5 +1,6 @@
 .our-advantages {
   margin: 2.5rem 0;
+  @include container();
 
   .our-advantages-items {
     margin-top: 2.25rem;
@@ -47,6 +48,14 @@
           margin-bottom: 1rem;
           justify-content: center;
           align-items: center;
+        }
+
+        .item-title {
+          color: $text-color;
+        }
+
+        p {
+          font-size: 0.875rem;
         }
       }
     }

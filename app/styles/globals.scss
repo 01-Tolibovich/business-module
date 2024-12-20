@@ -14,16 +14,6 @@ body {
   section {
     margin: 5rem auto;
   }
-
-  h2 {
-    text-align: center;
-    color: $primary-color;
-    font-size: 2rem;
-  }
-
-  h4 {
-    font-size: 1rem;
-  }
 }
 
 * {
@@ -35,10 +25,5 @@ body {
 a {
   color: inherit;
   text-decoration: none;
-}
-
-.container {
-  max-width: 73.75rem;
-  margin: 0 auto;
-  width: 100%;
+  display: block;
 }

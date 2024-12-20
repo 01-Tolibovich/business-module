@@ -2,6 +2,7 @@ import Link from "next/link";
 import "./styles.scss";
 import { ButtonUI } from "../ui";
 import { AtIcon, PhoneIcon } from "../ui/icons";
+import Image from "next/image";
 
 export const Footer = () => {
   const links = [
@@ -30,6 +31,31 @@ export const Footer = () => {
       link: "#",
     },
   ];
+
+  const renderSocialIcon = (icon: string) => (<Image src={`/socialIcons/${icon}`} width={26} height={26} alt="instagram" />)
+
+  const socialMedias = [
+    {
+      link: "#",
+      className: "social-btn",
+      socialIcon: renderSocialIcon("instagram.svg"),
+    },
+    {
+      link: "#",
+      className: "social-btn",
+      socialIcon: renderSocialIcon("facebook.svg"),
+    },
+    {
+      link: "#",
+      className: "social-btn",
+      socialIcon: renderSocialIcon("telegram.svg"),
+    },
+    {
+      link: "#",
+      className: "social-btn",
+      socialIcon: renderSocialIcon("whatsapp.svg"),
+    },
+  ]
   return (
     <footer className="footer-wrapper">
       <div className="container">
@@ -54,7 +80,13 @@ export const Footer = () => {
                 <ButtonUI icon={<PhoneIcon />}>1133</ButtonUI>
               </Link>
             </div>
-            <div></div>
+            <div className="social">
+              {socialMedias.map((socialBtn, index) => (
+                <Link href={socialBtn.link} key={index}>
+                  <ButtonUI icon={socialBtn.socialIcon} className={socialBtn.className}/>
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </div>

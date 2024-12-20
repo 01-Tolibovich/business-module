@@ -1,3 +1,4 @@
+import { HeadingUI } from "../ui";
 import {
   ArmchairsIcon,
   PortfolioIcon,
@@ -56,13 +57,13 @@ export const OurAdvantages = () => {
 
   return (
     <div className="our-advantages">
-      <h2>Наши преимущества</h2>
+      <HeadingUI as="h2" textAlign="center">Наши преимущества</HeadingUI>
       <div className="our-advantages-items">
         {ourAdvantagesdata.map((item, index) => (
           <div key={index} className="advantages-item">
             <div className="inset-block">
               <span className="icon">{item.icon}</span>
-              <h4>{item.title}</h4>
+              <HeadingUI as="h6" className="item-title">{item.title}</HeadingUI>
               <p>{item.description}</p>
             </div>
           </div>

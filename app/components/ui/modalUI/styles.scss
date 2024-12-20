@@ -1,0 +1,57 @@
+.modal-ui-background {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.212);
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // animation: modal-ui-background-anim 1s forwards reverse;
+  // animation: fade 3s reverse forwards;
+  // z-index: -100;
+  // backdrop-filter: blur(0);
+  // animation-name: fade;
+  //   animation-duration: 1s;
+  //   animation-fill-mode: forwards;
+  //   animation-direction: reverse;
+  // transition: 1s 1s;
+
+  .modal-window {
+    background-color: $neo-color;
+    max-width: 800px;
+    width: fit-content;
+    @include container($max-width: 50rem, $width: auto);
+    border-radius: 1rem;
+
+    .section {
+      margin: 0;
+    }
+  }
+
+  &.active {
+    // backdrop-filter: blur(5px);
+    // // transition: 1s;
+    // z-index: 100;
+    // animation-name: fade;
+    // animation-duration: 1s;
+    // animation-fill-mode: forwards;
+    // animation-direction: normal;
+  }
+}
+
+@keyframes fade {
+  0% {
+    display: none;
+  }
+  1% {
+    display: block;
+  }
+  2% {
+    backdrop-filter: blur(0);
+  }
+  100% {
+    backdrop-filter: blur(5px);
+  }
+}

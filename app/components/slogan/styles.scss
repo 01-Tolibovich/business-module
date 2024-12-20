@@ -1,6 +1,8 @@
 .slogan {
   text-align: center;
   margin-bottom: 3rem;
+  @include container();
+  
   .title {
     color: $primary-color;
     margin-bottom: 1.625rem;

@@ -1,0 +1,11 @@
+.login-page-wrapper {
+  @include neumorphism();
+  @include container();
+  width: fit-content;
+  padding: 8px;
+
+  .insert {
+    @include neumorphism($inset: inset);
+    padding: 2rem;
+  }
+}
