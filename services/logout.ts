@@ -1,34 +1,34 @@
-"use server"
+"use server";
 
 import { config } from "@/config";
 import { cookies } from "next/headers";
 
 const { apiUrl } = config;
 
-export const loginRequest = async (login: string, password: string) => {
+export const logoutRequest = async () => {
+  const cookieStore = cookies();
+  const token = (await cookieStore).get("token")?.value
+
   try {
-    const response = await fetch(`${apiUrl}login`, {
+    const response = await fetch(`${apiUrl}logout`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ login, password, }),
     });
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
+
     const data = await response.json();
 
-    (await cookies()).set({
-      name: "token",
-      value: data.token,
+    (await cookies()).set("token", "", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
+      expires: new Date(0),
       path: "/",
-      sameSite: "strict",
-      maxAge: 43200, // время жизни cookie 12 часов.
     });
 
     return data;

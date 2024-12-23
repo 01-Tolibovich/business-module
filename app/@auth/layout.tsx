@@ -1,16 +1,23 @@
 "use client"
 
-import { useState } from "react";
-// import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { ModalUI } from "../components/ui";
 
 export default function AuthLayout({children}: Readonly<{children: React.ReactNode}>) {
   const [modalShow, setModalShow] = useState(true);
-  // const router = useRouter();
+  const router = useRouter();
+  const pathName = usePathname()
+
+  useEffect(() => {
+    if (pathName === "/" || pathName !== "/login") {
+      setModalShow(false);
+    }
+  }, [pathName])
 
   const handleCloseModal = () => {
     setModalShow(false);
-    window.history.back()
+    router.back();
   }
 
   return (

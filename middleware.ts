@@ -1,10 +1,16 @@
 import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
-  return NextResponse.redirect(new URL("/info", request.url))
+  const token = request.cookies.get("token")?.value;
+
+  if (!token) {
+    return NextResponse.redirect(new URL("/info", request.url));
+  }
+
+  return NextResponse.next();
 }
 
 export const config = {
   matcher: "/",
-}
+};

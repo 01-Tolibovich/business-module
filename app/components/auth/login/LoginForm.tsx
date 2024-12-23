@@ -3,6 +3,8 @@
 import { ButtonUI, HeadingUI, InputUI, LinkUI } from "../../ui";
 import { loginRequest } from "@/services";
 import { ChangeEvent, useState } from "react";
+// import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import "./styles.scss";
 
 export const LoginForm = () => {
@@ -10,6 +12,7 @@ export const LoginForm = () => {
     login: "",
     password: "",
   });
+  const router = useRouter()
 
   const loginHandle = (e: ChangeEvent<HTMLInputElement>) => {
     setUser((prevState) => ({ ...prevState, login: e.target.value }));
@@ -22,11 +25,7 @@ export const LoginForm = () => {
   const sendUserData = () => {
     const { login, password } = user;
     loginRequest(login, password)
-    .then((response) => {
-      console.log(response.token);
-      // response
-      
-    });
+    .then(() => {router.push("/")});
   };
   return (
     <div className="login-form">
