@@ -3,7 +3,8 @@
 import "./styles.scss";
 
 interface ModalUIProps {
-  modalShow: boolean;
+  active: boolean;
+  anim: boolean;
   handleCloseModal: () => void;
   header?: React.ReactNode;
   children?: React.ReactNode;
@@ -12,17 +13,18 @@ interface ModalUIProps {
 
 export const ModalUI: React.FC<ModalUIProps> = ({
   children,
-  modalShow,
+  active,
+  anim,
   handleCloseModal,
   header,
   footer,
 }) => {
 
   return (
-    modalShow && (
+    active && (
       <div
         onClick={handleCloseModal}
-        className={`modal-ui-background`}
+        className={`modal-ui-background ${anim ? "anim" : ""}`}
       >
         <div className="modal-window" onClick={e => e.stopPropagation()}>
           <header>{header}</header>
