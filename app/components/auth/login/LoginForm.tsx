@@ -3,59 +3,95 @@
 import { ButtonUI, HeadingUI, InputUI, LinkUI } from "../../ui";
 import { loginRequest } from "@/services";
 import { ChangeEvent, useState } from "react";
-// import { redirect } from "next/navigation";
 import { useRouter } from "next/navigation";
+import { validateEmail, validatePassword } from "@/formValidate";
 import "./styles.scss";
 
 export const LoginForm = () => {
   const [user, setUser] = useState({
-    login: "",
+    email: "",
     password: "",
   });
-  const router = useRouter()
+  const [errors, setErrors] = useState<{
+    email: string | null;
+    password: string | undefined;
+  }>({
+    email: "",
+    password: "",
+  });
+  const router = useRouter();
 
-  const loginHandle = (e: ChangeEvent<HTMLInputElement>) => {
-    setUser((prevState) => ({ ...prevState, login: e.target.value }));
+  const validate = () => {
+    
+    return {
+      email: validateEmail(user.email),
+      password: validatePassword(user.password),
+    };
   };
 
-  const passwordHandle = (e: ChangeEvent<HTMLInputElement>) => {
-    setUser((prevState) => ({ ...prevState, password: e.target.value }));
+  const sendUserData = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const { email, password } = user;
+    const newError = validate();
+
+    if (Object.values(newError).every((error) => !error)) {
+      loginRequest(email, password).then(() => {
+        router.push("/");
+      });
+    } else {
+      setErrors(newError);
+    }
   };
 
-  const sendUserData = () => {
-    const { login, password } = user;
-    loginRequest(login, password)
-    .then(() => {router.push("/")});
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setUser((prevState) => ({ ...prevState, [name]: value }));
+    if (Object.values(validate()).every((error) => error)) {
+      setErrors(validate())
+    } else {
+      setErrors({
+        email: "",
+        password: "",
+      })
+    }
   };
+
   return (
-    <div className="login-form">
+    <form onSubmit={sendUserData} className="login-form">       
       <HeadingUI as="h3" className="title">
         Войти
       </HeadingUI>
       <InputUI
         label="Email"
+        name="email"
         type="text"
-        onChange={loginHandle}
-        value={user.login}
+        onChange={handleChange}
+        value={user.email}
         placeholder="Введите свой email"
+        onBlur={() => setErrors(validate())}
       />
+      {errors.email && <small>{errors.email}</small>}
       <InputUI
         label="Пароль"
+        name="password"
         type="password"
-        onChange={passwordHandle}
+        onChange={handleChange}
         value={user.password}
         placeholder="Введите ваш пароль"
+        onBlur={() => setErrors(validate())}
       />
+      {errors.password && <small>{errors.password}</small>}
       <div className="botton-block">
         <LinkUI href="#" className="forget-password">
           <small>Забыли пароль?</small>
         </LinkUI>
-        <ButtonUI onClick={sendUserData}>Войти</ButtonUI>
+        <ButtonUI type="submit">Войти</ButtonUI>
         <small>Ещё нет аккаунта? </small>
         <LinkUI href="#" className="signup">
           <small>Зарегистрироватся</small>
         </LinkUI>
       </div>
-    </div>
+    </form>
   );
 };

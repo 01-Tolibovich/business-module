@@ -12,6 +12,8 @@ export default function AuthLayout({children}: Readonly<{children: React.ReactNo
   useEffect(() => {
     if (pathName === "/" || pathName !== "/login") {
       setModalShow(false);
+    } else {
+      setModalShow(true);
     }
   }, [pathName])
 
