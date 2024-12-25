@@ -5,10 +5,14 @@
     display: block;
     width: 0;
     height: 1px;
-    transition: .500s;
     margin: 0 auto;
     background-color: $active-color;
-  }
+    transition: .500s;
+    -webkit-transition: .500s;
+    -moz-transition: .500s;
+    -ms-transition: .500s;
+    -o-transition: .500s;
+}
 
   &:hover {
     color: $active-color;

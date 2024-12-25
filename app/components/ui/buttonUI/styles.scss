@@ -4,6 +4,10 @@ $indents: 0.625rem;
 
 .button-ui {
   transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
   position: relative;
 
   @include neumorphism(
@@ -41,9 +45,13 @@ $indents: 0.625rem;
 
   &.only-text {
     padding: $indents $indents * 4;
-    border-radius: 30px;
     height: 2.5rem;
-  }
+    border-radius: 30px;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    -ms-border-radius: 30px;
+    -o-border-radius: 30px;
+}
 
   &.icon-with-text {
     display: flex;
@@ -66,7 +74,11 @@ $indents: 0.625rem;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-  }
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+}
 
   &:hover {
     color: $primary-color;

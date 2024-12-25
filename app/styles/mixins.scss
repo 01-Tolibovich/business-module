@@ -9,9 +9,13 @@
 ) {
   box-shadow: #{$inset} $shadow-step $shadow-step $blur $neo-blackout,
     #{$inset} $glow-step $glow-step $blur $neo-glow;
-  border-radius: $radius;
   background: #e3eeff;
   border: 1px solid rgba(139, 139, 139, 0.0784313725);
+  border-radius: $radius;
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  -o-border-radius: $radius;
 }
 
 $indent: clamp(0.875rem, 2vw, 1.5rem);

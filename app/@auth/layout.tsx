@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { ModalUI } from "../components/ui";
 
@@ -14,6 +14,8 @@ export default function AuthLayout({
   const router = useRouter();
   const pathName = usePathname();
 
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+
   useEffect(() => {
     if (pathName === "/") {
       setModalShow((prevState) => ({ ...prevState, active: false }));
@@ -21,13 +23,26 @@ export default function AuthLayout({
     }
     if (pathName === "/login") {
       setModalShow((prevState) => ({ ...prevState, active: true }));
-      setModalShow((prevState) => ({ ...prevState, anim: true }));
+      timerRef.current = setTimeout(() => {
+        setModalShow((prevState) => ({ ...prevState, anim: true }));
+      }, 10);
+    }
+
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current)
+      }
     }
   }, [pathName]);
 
   const handleCloseModal = () => {
     setModalShow((prevState) => ({ ...prevState, anim: false }));
-    setTimeout(() => {
+
+    if (timerRef.current) {
+      clearTimeout(timerRef.current)
+    }
+    
+    timerRef.current = setTimeout(() => {
       setModalShow((prevState) => ({ ...prevState, active: false }));
       router.back();
     }, 400);
