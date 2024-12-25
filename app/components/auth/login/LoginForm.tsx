@@ -19,10 +19,10 @@ export const LoginForm = () => {
     email: "",
     password: "",
   });
+  const [isLoad, setIsLoad] = useState(false);
   const router = useRouter();
 
   const validate = () => {
-    
     return {
       email: validateEmail(user.email),
       password: validatePassword(user.password),
@@ -31,13 +31,18 @@ export const LoginForm = () => {
 
   const sendUserData = (e: React.FormEvent) => {
     e.preventDefault();
-
+    setIsLoad(true);
     const { email, password } = user;
     const newError = validate();
 
     if (Object.values(newError).every((error) => !error)) {
-      loginRequest(email, password).then(() => {
+      loginRequest(email, password).then((res) => {
+        setIsLoad(false);
         router.push("/");
+
+        if (!res) {
+          setIsLoad(false);
+        }
       });
     } else {
       setErrors(newError);
@@ -48,17 +53,17 @@ export const LoginForm = () => {
     const { name, value } = e.target;
     setUser((prevState) => ({ ...prevState, [name]: value }));
     if (Object.values(validate()).every((error) => error)) {
-      setErrors(validate())
+      setErrors(validate());
     } else {
       setErrors({
         email: "",
         password: "",
-      })
+      });
     }
   };
 
   return (
-    <form onSubmit={sendUserData} className="login-form">       
+    <form onSubmit={sendUserData} className="login-form">
       <HeadingUI as="h3" className="title">
         Войти
       </HeadingUI>
@@ -70,8 +75,8 @@ export const LoginForm = () => {
         value={user.email}
         placeholder="Введите свой email"
         onBlur={() => setErrors(validate())}
+        errors={errors.email}
       />
-      {errors.email && <small>{errors.email}</small>}
       <InputUI
         label="Пароль"
         name="password"
@@ -80,13 +85,15 @@ export const LoginForm = () => {
         value={user.password}
         placeholder="Введите ваш пароль"
         onBlur={() => setErrors(validate())}
+        errors={errors.password}
       />
-      {errors.password && <small>{errors.password}</small>}
       <div className="botton-block">
         <LinkUI href="#" className="forget-password">
           <small>Забыли пароль?</small>
         </LinkUI>
-        <ButtonUI type="submit">Войти</ButtonUI>
+        <ButtonUI isLoad={isLoad} type="submit">
+          Войти
+        </ButtonUI>
         <small>Ещё нет аккаунта? </small>
         <LinkUI href="#" className="signup">
           <small>Зарегистрироватся</small>

@@ -4,6 +4,8 @@ $indents: 0.625rem;
 
 .button-ui {
   transition: all 0.3s ease;
+  position: relative;
+
   @include neumorphism(
     $shadow-step: 0.5rem,
     $glow-step: -0.5rem,
@@ -40,6 +42,7 @@ $indents: 0.625rem;
   &.only-text {
     padding: $indents $indents * 4;
     border-radius: 30px;
+    height: 2.5rem;
   }
 
   &.icon-with-text {
@@ -48,11 +51,21 @@ $indents: 0.625rem;
     align-items: center;
     gap: $indents;
     padding: $indents $indents * 4;
+    height: 2.5rem;
 
     .icon {
       border-right: 0.063rem solid $neo-blackout;
       padding-right: $indents;
     }
+  }
+
+  .loading-spiner {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 
   &:hover {

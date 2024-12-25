@@ -1,12 +1,22 @@
-.input-ui {
-  background-color: $neo-color;
-  width: 100%;
-  font-size: 1rem;
+.input-block {
   margin-bottom: 2rem;
-  padding: 0.5rem 1rem;
-  @include neumorphism($inset: inset);
-  outline: 1px solid $neo-blackout;
-  color: $text-color;
+
+  .input-ui {
+    background-color: $neo-color;
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    @include neumorphism($inset: inset);
+    color: $text-color;
+    margin-bottom: 0.3rem;
+  }
+
+  .errors-message {
+    color: $error-color;
+    left: 0;
+    bottom: 0;
+    font-size: 0.75rem;
+  }
 }
 
 .label-ui {

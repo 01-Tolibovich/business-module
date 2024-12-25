@@ -1,11 +1,13 @@
 "use client"
 
+import { LoadingSpinningDots } from "../icons";
 import "./styles.scss";
 
 interface ButtonUIProps {
   children?: React.ReactNode;
   icon?: React.ReactNode;
   className?: string;
+  isLoad?: boolean
   [key: string]: unknown;
 }
 
@@ -13,11 +15,13 @@ export const ButtonUI: React.FC<ButtonUIProps> = ({
   children,
   icon,
   className,
+  isLoad,
   ...rest
 }) => {
   const renderButton = (conventionalStyles: string) => (
-    <button {...rest} className={`button-ui ${conventionalStyles} ${className}`}>
-      <span className="icon">{icon}</span> {children}
+    <button disabled={isLoad} {...rest} className={`button-ui ${conventionalStyles} ${className}`}>
+      { isLoad ? (<div className="loading-spiner"><LoadingSpinningDots /></div>)
+        : <><span className="icon">{icon}</span>{children}</>}
     </button>
   );
 
