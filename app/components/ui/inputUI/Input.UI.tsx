@@ -10,6 +10,7 @@ interface InputUIProps {
   placeholder?: string;
   onBlur?: FocusEventHandler<HTMLInputElement>;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  checked?: boolean,
   errors?: string | null;
 }
 
@@ -22,10 +23,11 @@ export const InputUI: React.FC<InputUIProps> = ({
   placeholder,
   onBlur,
   onChange,
+  checked,
   errors,
 }) => {
   return (
-    <div>
+    <div className={`input-ui-block ${type === "radio" ? "type-radio" : ""}`}>
       {label ? (
         <label className="label-ui" htmlFor={htmlFor}>
           {label}
@@ -36,10 +38,12 @@ export const InputUI: React.FC<InputUIProps> = ({
           className="input-ui"
           name={name}
           type={type}
+          id={htmlFor}
           onChange={onChange}
           value={value}
           placeholder={placeholder}
           onBlur={onBlur}
+          checked={checked}
         />
         {errors ? <small className="errors-message">{errors}</small> : null}
       </div>
