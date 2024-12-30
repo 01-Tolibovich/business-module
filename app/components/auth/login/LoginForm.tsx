@@ -1,10 +1,11 @@
 "use client";
 
 import { ButtonUI, HeadingUI, InputUI, LinkUI } from "../../ui";
-import { loginRequest } from "@/services";
+import { getUserInfo, loginRequest } from "@/services";
 import { ChangeEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { validateEmail, validatePassword } from "@/formValidate";
+import userAuth from "@/store/userAuth";
 import "./styles.scss";
 
 export const LoginForm = () => {
@@ -20,6 +21,9 @@ export const LoginForm = () => {
     password: "",
   });
   const [isLoad, setIsLoad] = useState(false);
+  
+  const setUserData = userAuth((state) => state.setUserData);
+  const setIsAuth = userAuth((state) => state.setIsAuth);
   const router = useRouter();
 
   const validate = () => {
@@ -34,12 +38,17 @@ export const LoginForm = () => {
     setIsLoad(true);
     const { email, password } = user;
     const newError = validate();
-
+    
     if (Object.values(newError).every((error) => !error)) {
       loginRequest(email, password).then((res) => {
         setIsLoad(false);
         router.push("/");
-
+        getUserInfo().then((userData) => {
+          if (userData) {
+            setUserData(userData);
+            setIsAuth(true);
+          }
+        })
         if (!res) {
           setIsLoad(false);
         }
