@@ -43,7 +43,7 @@ export const TranslateButton = () => {
   };
 
   return (
-    <DropDownUI {...isShowDropDown} setIsShowDropDown={setIsShowDropDown}>
+    <DropDownUI right="0" {...isShowDropDown} setIsShowDropDown={setIsShowDropDown}>
       <ButtonUI icon={<TranslateIcon />} onClick={handleToggleDropDown} />
       <div>
         <InputUI

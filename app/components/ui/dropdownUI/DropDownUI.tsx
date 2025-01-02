@@ -7,6 +7,8 @@ interface DropDownUIProps {
   children?: React.ReactNode | null;
   active: boolean;
   anim: boolean;
+  left?: string;
+  right?: string;
   setIsShowDropDown: Dispatch<
     SetStateAction<{ active: boolean; anim: boolean }>
   >;
@@ -16,6 +18,8 @@ export const DropDownUI: React.FC<DropDownUIProps> = ({
   children,
   active,
   anim,
+  left = "auto",
+  right = "auto",
   setIsShowDropDown,
 }) => {
   const dropDownChildren = React.Children.toArray(children);
@@ -50,37 +54,10 @@ export const DropDownUI: React.FC<DropDownUIProps> = ({
     <div ref={dropDownRef} className="drop-down-ui">
       <div className="item">{dropDownChildren[0]}</div>
       {active && (
-        <div className={`drop-down-item ${anim ? "anim" : ""}`}>
+        <div style={{ left, right}} className={`drop-down-item ${anim ? "anim" : ""}`}>
           {dropDownChildren[1]}
         </div>
       )}
     </div>
   );
 };
-
-
-// Используйте это функцию в родительском компоненте для управление выпадающим окном
-// const handleToggleDropDown = () => {
-//   if (timeoutRef.current) {
-//     clearTimeout(timeoutRef.current);
-//     timeoutRef.current = null;
-//   }
-
-//   const toggleDropDown = (elem1: keyof typeof isShowDropDown, elem2: keyof typeof isShowDropDown, bool: boolean) => {
-//     setIsShowDropDown((prevState) => ({
-//       ...prevState,
-//       [elem1]: bool,
-//     }));
-
-//     timeoutRef.current = setTimeout(() => {
-//       setIsShowDropDown((prevState) => ({ ...prevState, [elem2]: bool }));
-//     }, 400);
-//   };
-
-//   if (!isShowDropDown.active && !isShowDropDown.anim) {
-//     toggleDropDown("active", "anim", true);
-//   }
-//   if (isShowDropDown.anim && isShowDropDown.active) {
-//     toggleDropDown("anim", "active", false);
-//   }
-// };

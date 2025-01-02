@@ -13,7 +13,7 @@ export const LoadingSpinningDots = () => (
       cx="100"
       cy="100"
       r="70"
-      transform-origin="center"
+      style={{ transformOrigin: 'center' }}
     >
       <animateTransform
         type="rotate"

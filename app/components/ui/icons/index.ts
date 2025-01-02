@@ -15,3 +15,8 @@ export * from "./PaymentIcon";
 export * from "./AtIcon";
 export * from "./PhoneIcon";
 export * from "./LoadingSpinningDots";
+export * from "./CartIcon";
+export * from "./UsersIcon";
+export * from "./DownloadIcon";
+export * from "./ReturnPaymentIcon";
+export * from "./LoguotIcon";

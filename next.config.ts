@@ -8,6 +8,14 @@ const nextConfig: NextConfig = {
       @import "./app/styles/variables.scss";
       @import "./app/styles/mixins.scss";
     `,
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "corp.55fly.ru"
+      }
+    ]
   }
 };
 

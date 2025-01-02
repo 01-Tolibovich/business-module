@@ -23,8 +23,12 @@ export const LoginForm = () => {
   const [isLoad, setIsLoad] = useState(false);
   
   const setUserData = userAuth((state) => state.setUserData);
+  const userData = userAuth(state => state.userData)
   const setIsAuth = userAuth((state) => state.setIsAuth);
   const router = useRouter();
+
+  console.log(userData);
+  
 
   const validate = () => {
     return {

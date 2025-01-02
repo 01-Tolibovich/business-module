@@ -8,6 +8,7 @@ const { apiUrl } = config;
 export const getUserInfo = async () => {
   const cookieStore = cookies();
   const token = (await cookieStore).get("token")?.value
+  
   try {
     const response = await fetch(`${apiUrl}auth/corporates`, {
       method: "GET",
@@ -20,7 +21,9 @@ export const getUserInfo = async () => {
       throw new Error(`HTTP error! status: ${response.status}`)
     }
 
-    return await response.json();
+    const { data } = await response.json()
+
+    return await data;
   } catch (error) {
     console.error(error);
   }
