@@ -1,9 +1,9 @@
 .drop-down-ui {
   position: relative;
-  z-index: 100;
 
   .drop-down-item {
     position: absolute;
+    z-index: 100;
     background-color: $neo-color;
     box-shadow: 3px 3px 10px 0px #bec9db;
     border-radius: 0.5rem;
