@@ -1,5 +1,6 @@
 .drop-down-ui {
   position: relative;
+  z-index: 100;
 
   .drop-down-item {
     position: absolute;
@@ -13,7 +14,7 @@
     padding: 0 1rem;
     margin-top: 0.5rem;
     max-height: 0;
-    overflow: hidden;
+    overflow: auto;
     transition: 0.3s;
     -webkit-transition: 0.3s;
     -moz-transition: 0.3s;

@@ -11,6 +11,7 @@ interface InputUIProps {
   onBlur?: FocusEventHandler<HTMLInputElement>;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   checked?: boolean,
+  classNameInput?: string
   errors?: string | null;
 }
 
@@ -24,6 +25,7 @@ export const InputUI: React.FC<InputUIProps> = ({
   onBlur,
   onChange,
   checked,
+  classNameInput,
   errors,
 }) => {
   return (
@@ -35,7 +37,7 @@ export const InputUI: React.FC<InputUIProps> = ({
       ) : null}
       <div className="input-block">
         <input
-          className="input-ui"
+          className={`input-ui ${classNameInput}`}
           name={name}
           type={type}
           id={htmlFor}

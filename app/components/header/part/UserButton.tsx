@@ -55,8 +55,6 @@ export const UserButton = () => {
     }
   };
 
-  console.log(4444, userData);
-
   const renderNavLinks = () => {
     const navLinks = [
       {

@@ -9,6 +9,10 @@
     @include neumorphism($inset: inset);
     color: $text-color;
     margin-bottom: 0.3rem;
+
+    &:focus {
+      outline: none;
+    }
   }
 
   .errors-message {

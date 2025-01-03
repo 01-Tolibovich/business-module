@@ -1,0 +1,39 @@
+.calendar {
+
+  .title {
+
+  }
+
+  .weeks {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.875rem;
+    margin: 1rem 0 2rem 0;
+
+    .week-day {
+      align-self: center;
+      justify-self: center;
+    }
+
+    button {
+      background: none;
+      border: none;
+    }
+
+    .day {
+      @include neumorphism($shadow-step: 0.25rem, $glow-step: -0.25rem, $blur: 0.313rem);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0.5rem;
+
+      &:hover {
+        color: $primary-color;
+      }
+
+      &:active {
+        @include neumorphism($inset: inset, $shadow-step: 0.25rem, $glow-step: -0.25rem, $blur: 0.313rem);
+      }
+    }
+  }
+}
