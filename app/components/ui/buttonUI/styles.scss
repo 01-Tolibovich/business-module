@@ -20,6 +20,12 @@ $indents: 0.625rem;
   font-size: 1rem;
   color: $text-color;
 
+  .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   &.only-icon {
     @include neumorphism(
       $shadow-step: 0.25rem,
@@ -51,7 +57,7 @@ $indents: 0.625rem;
     -moz-border-radius: 30px;
     -ms-border-radius: 30px;
     -o-border-radius: 30px;
-}
+  }
 
   &.icon-with-text {
     display: flex;
@@ -78,7 +84,7 @@ $indents: 0.625rem;
     -moz-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
     -o-transform: translate(-50%, -50%);
-}
+  }
 
   &:hover {
     color: $primary-color;

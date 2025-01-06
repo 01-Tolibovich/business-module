@@ -20,3 +20,6 @@ export * from "./UsersIcon";
 export * from "./DownloadIcon";
 export * from "./ReturnPaymentIcon";
 export * from "./LoguotIcon";
+export * from "./SearchIcon";
+export * from "./CancelIcon";
+export * from "./DificultRouteIcon";

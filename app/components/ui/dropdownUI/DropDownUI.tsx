@@ -12,6 +12,7 @@ interface DropDownUIProps {
   setIsShowDropDown: Dispatch<
     SetStateAction<{ active: boolean; anim: boolean }>
   >;
+  className?: string
 }
 
 export const DropDownUI: React.FC<DropDownUIProps> = ({
@@ -21,6 +22,7 @@ export const DropDownUI: React.FC<DropDownUIProps> = ({
   left = "auto",
   right = "auto",
   setIsShowDropDown,
+  className,
 }) => {
   const dropDownChildren = React.Children.toArray(children);
   const dropDownRef = useRef<HTMLDivElement>(null);
@@ -54,10 +56,46 @@ export const DropDownUI: React.FC<DropDownUIProps> = ({
     <div ref={dropDownRef} className="drop-down-ui">
       <div className="item">{dropDownChildren[0]}</div>
       {active && (
-        <div style={{ left, right}} className={`drop-down-item ${anim ? "anim" : ""}`}>
+        <div style={{ left, right}} className={`drop-down-item ${anim ? "anim" : ""} ${className}`}>
           {dropDownChildren[1]}
         </div>
       )}
     </div>
   );
 };
+
+// const [isShowDropDown, setIsShowDropDown] = useState({
+//     active: false,
+//     anim: false,
+//   });
+
+//   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+//   const handleToggleDropDown = () => {
+//     if (timeoutRef.current) {
+//       clearTimeout(timeoutRef.current);
+//       timeoutRef.current = null;
+//     }
+
+//     const toggleDropDown = (
+//       elem1: keyof typeof isShowDropDown,
+//       elem2: keyof typeof isShowDropDown,
+//       bool: boolean
+//     ) => {
+//       setIsShowDropDown((prevState) => ({
+//         ...prevState,
+//         [elem1]: bool,
+//       }));
+
+//       timeoutRef.current = setTimeout(() => {
+//         setIsShowDropDown((prevState) => ({ ...prevState, [elem2]: bool }));
+//       }, 200);
+//     };
+
+//     if (!isShowDropDown.active && !isShowDropDown.anim) {
+//       toggleDropDown("active", "anim", true);
+//     }
+//     if (isShowDropDown.anim && isShowDropDown.active) {
+//       toggleDropDown("anim", "active", false);
+//     }
+//   };

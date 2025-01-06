@@ -1,6 +1,6 @@
 "use server"
 
-import { config } from "@/config";
+import { config } from "@/config/configs";
 import { cookies } from "next/headers";
 
 const { apiUrl } = config;

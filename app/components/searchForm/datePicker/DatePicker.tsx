@@ -1,14 +1,18 @@
-import { useRef, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
+
 import { DropDownUI, InputUI } from "../../ui";
 import { Calendar } from "../../calendar";
 
 import "./styles.scss";
 
 interface DatePickerProps {
-  date?: string;
+  label?: string;
+  handleSetDate: (year: number, month: number, day: number | null) => void;
+  date: string;
+  handleDateChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const DatePicker: React.FC<DatePickerProps> = ({ date }) => {
+export const DatePicker: React.FC<DatePickerProps> = ({ label, handleSetDate, date, handleDateChange }) => {
   const [isShowDropDown, setIsShowDropDown] = useState({
     active: false,
     anim: false,
@@ -48,9 +52,9 @@ export const DatePicker: React.FC<DatePickerProps> = ({ date }) => {
   return (
     <DropDownUI {...isShowDropDown} setIsShowDropDown={setIsShowDropDown}>
       <div className="date-picker-block" onClick={handleToggleDropDown}>
-        <InputUI classInputBlock="date-picker-input" type="text" label={date} />
+        <InputUI classInputBlock="date-picker-input" type="text" label={label} value={date} onChange={handleDateChange} />
       </div>
-      <Calendar />
+      <Calendar handleSetDate={handleSetDate}/>
     </DropDownUI>
   );
 };

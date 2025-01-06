@@ -8,13 +8,17 @@ import "./styles.scss";
 
 moment.locale("ru");
 
+interface CalendarProps {
+  handleSetDate: (year: number, month: number, day: number | null) => void
+}
+
 interface MonthData {
   year: number;
   month: number;
   days: (number | null)[];
 }
 
-export const Calendar: React.FC = () => {
+export const Calendar: React.FC<CalendarProps> = ({handleSetDate}) => {
   const today = moment();
   const startMonth = today.month();
   const startYear = today.year();
@@ -57,12 +61,6 @@ export const Calendar: React.FC = () => {
 
   const yearCalendar = generateYearCalendar(startMonth, startYear);
 
-  const test = (year: number, month: number, day: number | null) => {
-    const formatedDate = moment([year, month, day || 0]).format("YYYY-MM-DD");
-
-    console.log(formatedDate);
-  };
-
   return (
     <div className="calendar">
         {yearCalendar.map(({ year, month, days }) => (
@@ -80,7 +78,7 @@ export const Calendar: React.FC = () => {
                 <button
                   className={`${day ? "day" : ""}`}
                   key={index}
-                  onClick={() => day && test(year, month, day)}
+                  onClick={() => day && handleSetDate(year, month, day)}
                 >
                   {day || ""}
                 </button>

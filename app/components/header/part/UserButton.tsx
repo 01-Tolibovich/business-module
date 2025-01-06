@@ -5,7 +5,7 @@ import { ButtonUI, DropDownUI } from "../../ui";
 import { CartIcon, DownloadIcon, LoguotIcon, ReturnPaymentIcon, UserIcon, UsersIcon } from "../../ui/icons";
 import userAuth from "@/store/userAuth";
 import { useRouter } from "next/navigation";
-import { config } from "@/config";
+import { config } from "@/config/configs";
 import Image from "next/image";
 
 import "./styles.scss";

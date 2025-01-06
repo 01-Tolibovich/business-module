@@ -1,7 +1,7 @@
 "use server"
 
 import { cookies } from "next/headers";
-import { config } from "@/config";
+import { config } from "@/config/configs";
 
 const { apiUrl } = config;
 
