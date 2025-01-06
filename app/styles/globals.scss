@@ -14,6 +14,14 @@ body {
   section {
     margin: 5rem auto;
   }
+
+  ::-webkit-scrollbar {
+    width: 0.2rem;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: $primary-color;
+  }
 }
 
 * {

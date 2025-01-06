@@ -1,7 +1,8 @@
 import { useRef, useState } from "react";
 import { DropDownUI, InputUI } from "../../ui";
-import "./styles.scss";
 import { Calendar } from "../../calendar";
+
+import "./styles.scss";
 
 interface DatePickerProps {
   date?: string;
@@ -33,7 +34,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({ date }) => {
 
       timeoutRef.current = setTimeout(() => {
         setIsShowDropDown((prevState) => ({ ...prevState, [elem2]: bool }));
-      }, 400);
+      }, 200);
     };
 
     if (!isShowDropDown.active && !isShowDropDown.anim) {
@@ -46,8 +47,8 @@ export const DatePicker: React.FC<DatePickerProps> = ({ date }) => {
 
   return (
     <DropDownUI {...isShowDropDown} setIsShowDropDown={setIsShowDropDown}>
-      <div onClick={handleToggleDropDown}>
-        <InputUI type="text" label={date} />
+      <div className="date-picker-block" onClick={handleToggleDropDown}>
+        <InputUI classInputBlock="date-picker-input" type="text" label={date} />
       </div>
       <Calendar />
     </DropDownUI>

@@ -1,8 +1,10 @@
 import moment from "moment";
 import "moment/locale/ru";
-
-import "./styles.scss";
 import { HeadingUI } from "../ui";
+
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import "./styles.scss";
 
 moment.locale("ru");
 
@@ -50,7 +52,7 @@ export const Calendar: React.FC = () => {
         days,
       });
     }
-    return months
+    return months;
   };
 
   const yearCalendar = generateYearCalendar(startMonth, startYear);
@@ -59,23 +61,33 @@ export const Calendar: React.FC = () => {
     const formatedDate = moment([year, month, day || 0]).format("YYYY-MM-DD");
 
     console.log(formatedDate);
-  }
+  };
 
   return (
     <div className="calendar">
-      {yearCalendar.map(({year, month, days}) => (
-        <div key={`${year}-${month}`}>
-          <HeadingUI className="title" as="h4">{moment().year(year).month(month).format("MMMM YYYY")}</HeadingUI>
-          <div className="weeks">
-            {['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'].map((day) => (
-              <div className="week-day" key={day}>{day}</div>
-            ))}
-            {days.map((day, index) => (
-              <button className={`${day ? "day" : ""}`} key={index} onClick={() => day && test(year, month, day)}>{day || ''}</button>
-            ))}
+        {yearCalendar.map(({ year, month, days }) => (
+          <div key={`${year}-${month}`}>
+            <HeadingUI className="title" as="h4">
+              {moment().year(year).month(month).format("MMMM YYYY")}
+            </HeadingUI>
+            <div className="weeks">
+              {["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"].map((day) => (
+                <div className="week-day" key={day}>
+                  {day}
+                </div>
+              ))}
+              {days.map((day, index) => (
+                <button
+                  className={`${day ? "day" : ""}`}
+                  key={index}
+                  onClick={() => day && test(year, month, day)}
+                >
+                  {day || ""}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
     </div>
-  )
+  );
 };

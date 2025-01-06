@@ -12,7 +12,7 @@ export const SearchForm = () => {
         <HeadingUI as="h3" className="title">
           Поиск авиабилетов
         </HeadingUI>
-        <InputUI type="text" label="Откуда" classNameInput="input-item" />
+        <InputUI type="text" label="Откуда" />
         <InputUI type="text" label="Куда" />
         <DatePicker date="Туда"/>
         <DatePicker date="Обратно"/>
