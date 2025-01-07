@@ -4,7 +4,7 @@
     padding: 2rem;
     width: 100px;
     .outside {
-      @include neumorphism($radius: clamp(40px, 5vw, 70px));
+      @include neumorphism($shadow-step: 0.625rem, $glow-step: -0.625rem, $blur: 1rem, $radius: clamp(40px, 5vw, 70px));
       padding: 1rem;
       .inside {
         @include neumorphism($inset: inset, $radius: clamp(30px, 4vw, 60px));
