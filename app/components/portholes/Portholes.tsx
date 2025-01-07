@@ -18,7 +18,7 @@ export const Portholes = () => {
   const settings = {
     dots: false,
     infinite: true,
-    autoplay: false,
+    autoplay: true,
     speed: 500,
     slidesToShow: 7,
     slidesToScroll: 1,
