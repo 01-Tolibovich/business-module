@@ -1,9 +1,7 @@
 "use server"
 
 import { cookies } from "next/headers";
-import { config } from "@/config/configs";
-
-const { apiUrl } = config;
+import { apiUrl } from "@/config/configs";
 
 export const getUserInfo = async () => {
   const cookieStore = cookies();

@@ -1,9 +1,7 @@
 "use server";
 
-import { config } from "@/config/configs";
+import { apiUrl } from "@/config/configs";
 import { cookies } from "next/headers";
-
-const { apiUrl } = config;
 
 export const logoutRequest = async () => {
   const cookieStore = cookies();

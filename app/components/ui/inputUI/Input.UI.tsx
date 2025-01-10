@@ -14,6 +14,7 @@ interface InputUIProps {
   classInput?: string
   classInputBlock?: string
   errors?: string | null;
+  readOnly?: boolean;
 }
 
 export const InputUI: React.FC<InputUIProps> = ({
@@ -29,6 +30,7 @@ export const InputUI: React.FC<InputUIProps> = ({
   classInputBlock,
   classInput,
   errors,
+  readOnly = false
 }) => {
   return (
     <div className={`input-ui-block ${type === "radio" ? "type-radio" : ""}`}>
@@ -48,6 +50,7 @@ export const InputUI: React.FC<InputUIProps> = ({
           placeholder={placeholder}
           onBlur={onBlur}
           checked={checked}
+          readOnly={readOnly}
         />
         {errors ? <small className="errors-message">{errors}</small> : null}
       </div>

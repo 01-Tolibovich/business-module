@@ -5,7 +5,7 @@ import { ButtonUI, DropDownUI } from "../../ui";
 import { CartIcon, DownloadIcon, LoguotIcon, ReturnPaymentIcon, UserIcon, UsersIcon } from "../../ui/icons";
 import userAuth from "@/store/userAuth";
 import { useRouter } from "next/navigation";
-import { config } from "@/config/configs";
+import { uploadsUrl } from "@/config/configs";
 import Image from "next/image";
 
 import "./styles.scss";
@@ -19,7 +19,6 @@ export const UserButton = () => {
   });
   const router = useRouter();
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const { uploadsUrl } = config;
 
   const isAuth = userAuth((state) => state.isAuth);
   const userData = userAuth((state) => state.userData);

@@ -60,12 +60,17 @@ $indents: 0.625rem;
   }
 
   &.icon-with-text {
-    display: flex;
-    justify-content: center;
+    // display: flex;
+    // justify-content: center;
     align-items: center;
     gap: $indents;
-    padding: $indents $indents * 4;
-    height: 2.5rem;
+    // padding: $indents $indents * 4;
+    padding: $indents $indents * 2 $indents $indents;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    height: auto;
+    // height: 2.5rem;
+
 
     .icon {
       border-right: 0.063rem solid $neo-blackout;

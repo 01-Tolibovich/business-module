@@ -1,5 +1,5 @@
 import { ChangeEvent, useRef, useState } from "react";
-import { DropDownUI, InputUI } from "../../ui";
+import { DropDownUI, InputUI } from "../../../ui";
 import "./styles.scss";
 
 interface DirectionItem {
@@ -21,9 +21,9 @@ interface DirectionItem {
 type DirectionProps = {
   label: string;
   airports?: DirectionItem[];
-  handleSetAirport: (airport: {name: {ru: string}}) => void;
+  handleSetAirport: (airport: {code: string, name: {ru: string}}) => void;
   airportName: string;
-  handleChangeAirportName: (event: ChangeEvent<HTMLInputElement>) => void;
+  handleChangeAirportName?: (event: ChangeEvent<HTMLInputElement>) => void;
 };
 
 export const Direction: React.FC<DirectionProps> = ({ label, airports, handleSetAirport, airportName, handleChangeAirportName }) => {
@@ -65,7 +65,7 @@ export const Direction: React.FC<DirectionProps> = ({ label, airports, handleSet
   return (
     <DropDownUI {...isShowDropDown} setIsShowDropDown={setIsShowDropDown} className="dropdown-item">
       <div className="direction" onClick={handleToggleDropDown}>
-        <InputUI classInputBlock="input-block" label={label} value={airportName} onChange={handleChangeAirportName}/>
+        <InputUI classInputBlock="input-block" label={label} value={airportName} onChange={handleChangeAirportName} readOnly/>
       </div>
       <div className="airports-list">
         {airports &&
