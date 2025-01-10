@@ -15,23 +15,16 @@ import { Portholes } from "../portholes";
 import "./styles.scss";
 // import { searchFlights } from "@/services";
 import searchParams from "@/store/searchParams";
+import { useRouter } from "next/navigation";
 
 export const SearchForm = () => {
+  const searchParamsData = searchParams((state) => state.searchParamsData);
   const setSearchParamsData = searchParams(
     (state) => state.setSearchParamsData
   );
-  const searchParamsData = searchParams((state) => state.searchParamsData);
   const setClearSearchFields = searchParams(
     (state) => state.setClearSearchFields
   );
-
-  console.log(5555, searchParamsData);
-
-  // const [date, setDate] = useState({
-  //   from: "",
-  //   to: "",
-  // });
-  // const [date, setDate] = useState<string[]>([]);
 
   const handleSetDate = (
     index: number,
@@ -45,9 +38,9 @@ export const SearchForm = () => {
     if (index >= updatedRoutes.length) {
       updatedRoutes.push({
         id: Math.random(),
-        fromAirportCode: "",
+        fromAirportCode: searchParamsData.routes[0].toAirportCode,
         fromAirportName: "",
-        toAirportCode: "",
+        toAirportCode: searchParamsData.routes[0].fromAirportCode,
         toAirportName: "",
         date: "",
       });
@@ -73,7 +66,6 @@ export const SearchForm = () => {
   //   event: ChangeEvent<HTMLInputElement>,
   //   index: number
   // ) => {
-  //   console.log(3333, event);
 
   //   setDate(
   //     (prevState) =>
@@ -109,71 +101,16 @@ export const SearchForm = () => {
         ...searchParamsData.routes.slice(1),
       ],
     });
-    // console.log(airport);
-    // setDirection((prevState) => ({
-    //   ...prevState,
-    //   [direction]: airport.name.ru,
-    //   [airportCode]: airport.code,
-    // }));
   };
 
-  // const handleChangeAirportName = (
-  //   airportRouteName: string,
-  //   event: ChangeEvent<HTMLInputElement>
-  // ) => {
-  //   setDirection((prevState) => ({
-  //     ...prevState,
-  //     [airportRouteName]: event.target.value,
-  //   }));
-  // };
+  const router = useRouter();
 
-  // const handleClearFields = () => {
-  //   setDate((prevState) => ({ ...prevState, from: "", to: "" }));
-  //   setDirection((prevState) => ({
-  //     ...prevState,
-  //     fromAirportName: "",
-  //     toAirportName: "",
-  //   }));
-  // };
+  searchParamsData.routes.every(
+    (route) => route.fromAirportCode && route.toAirportCode && route.date
+  );
 
   const searchFlightsRequest = () => {
-    // const data = {
-    //   cabin: "all",
-    //   flightType: "OW",
-    //   "passengers[adt]": "1",
-    //   "passengers[chd]": "0",
-    //   "passengers[ins]": "0",
-    //   "passengers[inf]": "0",
-    //   "routes[0][from]": direction.fromAirportCode,
-    //   "routes[0][to]": direction.toAirportCode,
-    //   "routes[0][date]": date,
-    // };
-    // setSearchParamsData({
-    // })
-    // const data = {
-    //     passengers: {
-    //         adt: 1,
-    //         ins: 0,
-    //         chd: 0,
-    //         inf: 0
-    //     },
-    //     cabin: "all",
-    //     flightType: "RT",
-    //     routes: [
-    //         {
-    //             date: "2025-01-18",
-    //             from: "DYU",
-    //             to: "ALA"
-    //         },
-    //         {
-    //             date: "2025-01-26",
-    //             from: "ALA",
-    //             to: "TAS"
-    //         }
-    //     ]
-    // }
-    // console.log(2222, data);
-    // searchFlights(data).then((result) => console.log(1111, result));
+    router.push(`/result/${"ticket"}`);
   };
 
   return (
@@ -216,13 +153,23 @@ export const SearchForm = () => {
           label="Обратно"
         />
         <PassengerAndCabin label="1 пассажир" />
-            <ButtonUI icon={<DificultRouteIcon />} className="action-btn">Сложный маршрут</ButtonUI>
-            <ButtonUI
-              icon={<CancelIcon />}
-              onClick={() => setClearSearchFields()}
-              className="action-btn"
-            >Очистить</ButtonUI>
-          <ButtonUI icon={<SearchIcon />} onClick={searchFlightsRequest} className="action-btn search-btn">Поиск</ButtonUI>
+        <ButtonUI icon={<DificultRouteIcon />} className="action-btn">
+          Сложный маршрут
+        </ButtonUI>
+        <ButtonUI
+          icon={<CancelIcon />}
+          onClick={() => setClearSearchFields()}
+          className="action-btn"
+        >
+          Очистить
+        </ButtonUI>
+        <ButtonUI
+          icon={<SearchIcon />}
+          onClick={searchFlightsRequest}
+          className="action-btn search-btn"
+        >
+          Поиск
+        </ButtonUI>
       </div>
       <Portholes />
     </div>
