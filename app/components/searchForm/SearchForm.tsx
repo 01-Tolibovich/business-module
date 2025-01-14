@@ -16,6 +16,7 @@ import "./styles.scss";
 // import { searchFlights } from "@/services";
 import searchParams from "@/store/searchParams";
 import { useRouter } from "next/navigation";
+import { postSearchParamsData } from "@/services";
 
 export const SearchForm = () => {
   const searchParamsData = searchParams((state) => state.searchParamsData);
@@ -111,6 +112,7 @@ export const SearchForm = () => {
 
   const searchFlightsRequest = () => {
     router.push(`/result/${"ticket"}`);
+    postSearchParamsData(searchParamsData)
   };
 
   return (

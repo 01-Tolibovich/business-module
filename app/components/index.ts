@@ -6,3 +6,4 @@ export * from "./servicesAndTechnologies";
 export * from "./ourPartners";
 export * from "./footer";
 export * from "./searchForm";
+export * from "./searchResult";
