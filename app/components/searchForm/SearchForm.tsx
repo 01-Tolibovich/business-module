@@ -14,9 +14,11 @@ import { useRouter } from "next/navigation";
 import { postSearchParamsData } from "@/services";
 
 import "./styles.scss";
+import userAuth from "@/store/userAuth";
 
 export const SearchForm = () => {
   const searchParamsData = searchParams((state) => state.searchParamsData);
+  const isAuth = userAuth((state) => state.isAuth);
   const setSearchParamsData = searchParams(
     (state) => state.setSearchParamsData
   );
@@ -93,7 +95,7 @@ export const SearchForm = () => {
     postSearchParamsData(searchParamsData);
   };
 
-  return (
+  return isAuth ? (
     <div>
       <div className="search-form">
         <Direction
@@ -152,5 +154,5 @@ export const SearchForm = () => {
         </ButtonUI>
       </div>
     </div>
-  );
+  ) : null;
 };
