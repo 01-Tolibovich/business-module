@@ -1,3 +1,5 @@
+"use client"
+
 import img1 from "../../../public/cities/14.jpg";
 import img2 from "../../../public/cities/Berlin_6.jpg";
 import img3 from "../../../public/cities/Everything.jpg";

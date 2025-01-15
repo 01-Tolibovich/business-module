@@ -23,3 +23,6 @@ export * from "./LoguotIcon";
 export * from "./SearchIcon";
 export * from "./CancelIcon";
 export * from "./DificultRouteIcon";
+export * from "./BaggageIcon";
+export * from "./HandLuggageIcon";
+export * from "./ReloadIcon";

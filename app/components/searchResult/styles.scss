@@ -1,0 +1,126 @@
+$p: 0.2rem;
+
+.search-result-page {
+  @include container();
+  display: grid;
+  grid-template-columns: 18.75rem 1fr;
+  margin-top: 3rem;
+
+  .ticket-wrap {
+    @include neumorphism($radius: 1rem);
+    margin-bottom: 2.25rem;
+    padding: $p;
+
+    .head-text-info {
+      font-weight: 600;
+      font-size: 0.875rem;
+      display: flex;
+      gap: $p;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.625rem;
+    }
+
+    .ticket-blocks {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: $p;
+    }
+
+    .first-block,
+    .second-block {
+      @include neumorphism($inset: inset, $radius: 1rem);
+      padding: $p * 4;
+    }
+
+    .first-block {
+      .cabin-and-free-seats {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        small {
+          font-size: 0.688rem;
+        }
+      }
+
+      .routes {
+        display: grid;
+        height: 100%;
+        align-content: space-between;
+
+        .route {
+          display: grid;
+          grid-template-columns: auto 1fr auto;
+          gap: 1rem;
+          align-items: center;
+
+          .time {
+            color: $primary-color;
+            font-weight: 600;
+            font-size: 1.25rem;
+          }
+
+          .airport {
+            font-size: 0.875rem;
+          }
+
+          .departure {
+            text-align: end;
+          }
+
+          .line {
+            background-color: $primary-color;
+            height: 0.3rem;
+            display: block;
+            margin: 0.2rem 0;
+            border-radius: 1rem;
+            -webkit-border-radius: 1rem;
+            -moz-border-radius: 1rem;
+            -ms-border-radius: 1rem;
+            -o-border-radius: 1rem;
+          }
+
+          .text-center {
+            text-align: center;
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+          }
+        }
+
+        .baggage {
+          font-size: 0.688rem;
+          justify-self: end;
+        }
+      }
+    }
+
+    .second-block {
+      aspect-ratio: 1/1;
+      display: grid;
+      gap: $p;
+      justify-items: center;
+      align-items: center;
+      padding: 1.2rem;
+
+      .price {
+        font-size: 1.5rem;
+        font-weight: 500;
+        color: $primary-color;
+        display: block;
+      }
+
+      .icons {
+        display: flex;
+        gap: $p * 2;
+        align-items: center;
+
+        svg {
+          height: 1rem;
+          width: auto;
+        }
+      }
+    }
+  }
+}

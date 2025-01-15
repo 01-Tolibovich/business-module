@@ -1,10 +1,10 @@
-import { SearchForm } from "./components";
+import { Portholes } from "./components/portholes";
 
 export default function Home() {
   return (
     <div>
       <section>
-        <SearchForm />
+        <Portholes />
       </section>
     </div>
   );

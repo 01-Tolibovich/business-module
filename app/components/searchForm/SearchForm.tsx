@@ -6,17 +6,14 @@ import {
   fromInputDefaultAirports,
   toInputDefaultAirports,
 } from "@/config/defaultAirports";
-
 import { ButtonUI } from "../ui";
 import { DatePicker, Direction, PassengerAndCabin } from "./parts";
 import { CancelIcon, DificultRouteIcon, SearchIcon } from "../ui/icons";
-import { Portholes } from "../portholes";
-
-import "./styles.scss";
-// import { searchFlights } from "@/services";
 import searchParams from "@/store/searchParams";
 import { useRouter } from "next/navigation";
 import { postSearchParamsData } from "@/services";
+
+import "./styles.scss";
 
 export const SearchForm = () => {
   const searchParamsData = searchParams((state) => state.searchParamsData);
@@ -57,30 +54,11 @@ export const SearchForm = () => {
       flightType: updatedRoutes.length === 2 ? "RT" : "OW",
       routes: updatedRoutes,
     });
-
-    // setDate((prevState) =>
-    //   prevState.map((d, i) => (i === index ? formatedDate : d))
-    // );
   };
-
-  // const handleDateChange = (
-  //   event: ChangeEvent<HTMLInputElement>,
-  //   index: number
-  // ) => {
-
-  //   setDate(
-  //     (prevState) =>
-  //       prevState.map((date, i) => (i === index ? event.target.value : date)) // Обновляем только нужный индекс
-  //   );
-  // };
 
   const [direction] = useState({
     from: fromInputDefaultAirports,
     to: toInputDefaultAirports,
-    // fromAirportName: "",
-    // toAirportName: "",
-    // fromAirportCode: "",
-    // toAirportCode: "",
   });
 
   const handleSetAirport = (
@@ -112,7 +90,7 @@ export const SearchForm = () => {
 
   const searchFlightsRequest = () => {
     router.push(`/result/${"ticket"}`);
-    postSearchParamsData(searchParamsData)
+    postSearchParamsData(searchParamsData);
   };
 
   return (
@@ -173,7 +151,6 @@ export const SearchForm = () => {
           Поиск
         </ButtonUI>
       </div>
-      <Portholes />
     </div>
   );
 };
