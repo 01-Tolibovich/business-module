@@ -120,7 +120,7 @@ export const SearchResult: React.FC<SearchResultProps> = ({
 
     return (
       <>
-        {flight.routes.map((route) => (
+        {flight.routes && flight.routes.map((route) => (
           <div key={Math.random()} className="routes">
             <div className="cabin-and-free-seats">
               <small>
