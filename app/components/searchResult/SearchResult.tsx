@@ -164,7 +164,7 @@ export const SearchResult: React.FC<SearchResultProps> = ({
       <div className="filter-block">Filters</div>
       <div>
         {searchResultData.flights &&
-          searchResultData.flights.map((flight) => (
+          searchResultData.flights?.map((flight) => (
             <div className="ticket-wrap" key={flight.rec_id}>
               <header className="head-text-info">
                 <p>{included(flight.validating_supplier)}</p>
