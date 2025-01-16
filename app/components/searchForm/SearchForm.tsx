@@ -96,7 +96,7 @@ export const SearchForm = () => {
   };
 
   return isAuth ? (
-    <div>
+    <div className="search-form-section">
       <div className="search-form">
         <Direction
           label="Откуда"

@@ -66,7 +66,7 @@ interface SearchParamsData {
 }
 
 interface SearchResultProps {
-  searchResultData: SearchParamsData | null;
+  searchResultData: SearchParamsData;
 }
 
 export const SearchResult: React.FC<SearchResultProps> = ({
@@ -163,8 +163,8 @@ export const SearchResult: React.FC<SearchResultProps> = ({
     <div className="search-result-page">
       <div className="filter-block">Filters</div>
       <div>
-        {searchResultData &&
-          searchResultData?.flights.map((flight) => (
+        {searchResultData.flights &&
+          searchResultData.flights.map((flight) => (
             <div className="ticket-wrap" key={flight.rec_id}>
               <header className="head-text-info">
                 <p>{included(flight.validating_supplier)}</p>

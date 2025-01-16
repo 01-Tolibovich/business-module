@@ -1,41 +1,45 @@
 $gap: 1rem;
 
-.search-form {
+.search-form-section {
   @include container();
-  @include neumorphism();
-  padding: 1rem;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 1.1rem;
 
-  .input-ui-block {
-    margin-bottom: 0;
-  }
+  .search-form {
+    @include neumorphism();
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.1rem;
 
-  input {
-    height: 46px;
-    margin-bottom: 0 !important;
-  }
+    .input-ui-block {
+      margin-bottom: 0;
+    }
 
-  .action-btn {
-    @include neumorphism(
-      $shadow-step: 0.188rem,
-      $glow-step: -0.188rem,
-      $blur: 0.375rem,
-      $radius: 0.375rem
-    );
+    input {
+      height: 46px;
+      margin-bottom: 0 !important;
+    }
 
-    &:active {
+    .action-btn {
+      text-wrap: nowrap;
       @include neumorphism(
-        $shadow-step: 0rem,
-        $glow-step: -0rem,
-        $blur: 0rem,
+        $shadow-step: 0.188rem,
+        $glow-step: -0.188rem,
+        $blur: 0.375rem,
         $radius: 0.375rem
       );
-    }
-  }
 
-  .search-btn {
-    grid-column: 5/6;
+      &:active {
+        @include neumorphism(
+          $shadow-step: 0rem,
+          $glow-step: -0rem,
+          $blur: 0rem,
+          $radius: 0.375rem
+        );
+      }
+    }
+
+    .search-btn {
+      grid-column: 5/6;
+    }
   }
 }
