@@ -120,41 +120,43 @@ export const SearchResult: React.FC<SearchResultProps> = ({
 
     return (
       <>
-        {flight.routes && flight.routes.map((route) => (
-          <div key={Math.random()} className="routes">
-            <div className="cabin-and-free-seats">
-              <small>
-                Класс: {route.segments[0].service_class.name} (
-                {route.segments[0].service_class.code})
-              </small>
-              <small>{route.segments[0].free_seats}+ мест</small>
-            </div>
-            <div className="route">
-              <div className="departure">
-                {renderRouteInfo(route.segments[0], "departure")}
-              </div>
-              <div>
-                <small className="text-center">
-                  {renderDuration(route.duration)}
+        {flight.routes.length >= 0
+          ? flight.routes.map((route) => (
+              <div key={Math.random()} className="routes">
+                <div className="cabin-and-free-seats">
+                  <small>
+                    Класс: {route.segments[0].service_class.name} (
+                    {route.segments[0].service_class.code})
+                  </small>
+                  <small>{route.segments[0].free_seats}+ мест</small>
+                </div>
+                <div className="route">
+                  <div className="departure">
+                    {renderRouteInfo(route.segments[0], "departure")}
+                  </div>
+                  <div>
+                    <small className="text-center">
+                      {renderDuration(route.duration)}
+                    </small>
+                    <span className="line" />
+                    <small className="text-center">
+                      {route.segments.length === 1
+                        ? "Без пересадок"
+                        : `${route.segments.length} пересадок`}
+                    </small>
+                  </div>
+                  {renderRouteInfo(
+                    route.segments[route.segments.length - 1],
+                    "arrival"
+                  )}
+                </div>
+                <small className="baggage">
+                  Багаж: {route.segments[0].baggage} | Ручная кладь:{" "}
+                  {route.segments[0].hand_luggage}
                 </small>
-                <span className="line" />
-                <small className="text-center">
-                  {route.segments.length === 1
-                    ? "Без пересадок"
-                    : `${route.segments.length} пересадок`}
-                </small>
               </div>
-              {renderRouteInfo(
-                route.segments[route.segments.length - 1],
-                "arrival"
-              )}
-            </div>
-            <small className="baggage">
-              Багаж: {route.segments[0].baggage} | Ручная кладь:{" "}
-              {route.segments[0].hand_luggage}
-            </small>
-          </div>
-        ))}
+            ))
+          : null}
       </>
     );
   };
@@ -163,33 +165,34 @@ export const SearchResult: React.FC<SearchResultProps> = ({
     <div className="search-result-page">
       <div className="filter-block">Filters</div>
       <div>
-        {searchResultData.flights &&
-          searchResultData.flights?.map((flight) => (
-            <div className="ticket-wrap" key={flight.rec_id}>
-              <header className="head-text-info">
-                <p>{included(flight.validating_supplier)}</p>
-                <p>Поставщик: {flight.config_name}</p>
-                <p>
-                  {included(flight.validating_supplier)} — валидирует перелёты
-                </p>
-              </header>
-              <div className="ticket-blocks">
-                <div className="first-block">{renderRoutes(flight)}</div>
-                <div className="second-block">
-                  <span className="price">
-                    {Math.ceil(+flight.price.TJS)} TJS
-                  </span>
-                  <div className="icons">
-                    <BaggageIcon />
-                    <HandLuggageIcon />
-                    <ReturnPaymentIcon />
-                    <ReloadIcon />
+        {searchResultData.flights.length >= 0
+          ? searchResultData.flights?.map((flight) => (
+              <div className="ticket-wrap" key={flight.rec_id}>
+                <header className="head-text-info">
+                  <p>{included(flight.validating_supplier)}</p>
+                  <p>Поставщик: {flight.config_name}</p>
+                  <p>
+                    {included(flight.validating_supplier)} — валидирует перелёты
+                  </p>
+                </header>
+                <div className="ticket-blocks">
+                  <div className="first-block">{renderRoutes(flight)}</div>
+                  <div className="second-block">
+                    <span className="price">
+                      {Math.ceil(+flight.price.TJS)} TJS
+                    </span>
+                    <div className="icons">
+                      <BaggageIcon />
+                      <HandLuggageIcon />
+                      <ReturnPaymentIcon />
+                      <ReloadIcon />
+                    </div>
+                    <ButtonUI>Выбрать</ButtonUI>
                   </div>
-                  <ButtonUI>Выбрать</ButtonUI>
                 </div>
               </div>
-            </div>
-          ))}
+            ))
+          : null}
       </div>
     </div>
   );
