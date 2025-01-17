@@ -177,7 +177,7 @@ export const SearchResult: React.FC<SearchResultProps> = ({
         {searchResultData
           ? searchResultData.flights?.length >= 0 &&
             searchResultData.flights.map((flight) => (
-              <div className="ticket-wrap" key={flight.rec_id}>
+              <div className="ticket-wrap" key={`${flight.rec_id}${Math.random()}`}>
                 <header className="head-text-info">
                   <p>{included(flight.validating_supplier)}</p>
                   <p>Поставщик: {flight.config_name}</p>
