@@ -1,56 +1,63 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, ReactNode } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { ModalUI } from "../components/ui";
 
 export default function AuthLayout({
   children,
-}: Readonly<{ children: React.ReactNode }>) {
+}: Readonly<{ children: ReactNode }>) {
   const [modalShow, setModalShow] = useState({
-    active: true,
+    active: false,
     anim: false,
   });
+
   const router = useRouter();
   const pathName = usePathname();
 
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  useEffect(() => {
-    if (pathName === "/") {
-      setModalShow((prevState) => ({ ...prevState, active: false }));
-      setModalShow((prevState) => ({ ...prevState, anim: false }));
+  const clearExistingTimer = () => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
     }
-    if (pathName === "/login") {
-      setModalShow((prevState) => ({ ...prevState, active: true }));
-      timerRef.current = setTimeout(() => {
-        setModalShow((prevState) => ({ ...prevState, anim: true }));
-      }, 10);
-    }
+  };
 
-    return () => {
-      if (timerRef.current) {
-        clearTimeout(timerRef.current)
-      }
-    }
-  }, [pathName]);
+  const openModal = () => {
+    setModalShow({ active: true, anim: false });
 
-  const handleCloseModal = () => {
+    timerRef.current = setTimeout(() => {
+      setModalShow({ active: true, anim: true });
+    }, 100);
+  };
+
+  const closeModal = () => {
     setModalShow((prevState) => ({ ...prevState, anim: false }));
 
-    if (timerRef.current) {
-      clearTimeout(timerRef.current)
-    }
-    
+    clearExistingTimer();
+
     timerRef.current = setTimeout(() => {
-      setModalShow((prevState) => ({ ...prevState, active: false }));
+      setModalShow({ active: false, anim: false });
       router.back();
     }, 400);
   };
 
+  useEffect(() => {
+    clearExistingTimer();
+
+    if (pathName === "/") {
+      setModalShow({ active: false, anim: false });
+    } else if (pathName === "/login") {
+      openModal();
+    }
+
+    return () => clearExistingTimer();
+  }, [pathName]);
+
   return (
-    <ModalUI {...modalShow} handleCloseModal={handleCloseModal}>
+    <ModalUI {...modalShow} handleCloseModal={closeModal}>
       {children}
     </ModalUI>
-  );
+  )
 }

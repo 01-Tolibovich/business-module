@@ -19,11 +19,6 @@ interface searchParamsData {
     inf: string;
   };
   routes: Route[];
-  // notFilledFields: {
-  //   from: boolean;
-  //   to: boolean;
-  //   date: boolean;
-  // };
 }
 
 interface searchParamTypes {
@@ -51,11 +46,6 @@ const defaultsearchParamsData: searchParamsData = {
       date: "",
     },
   ],
-  // notFilledFields: {
-  //   from: false,
-  //   to: false,
-  //   date: false,
-  // },
 }
 
 const searchParams = create<searchParamTypes>((set) => ({

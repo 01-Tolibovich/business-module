@@ -6,7 +6,5 @@ export default async function searchId() {
 
   const searchResultData = paramsData ? await searchFlights(paramsData) : "Not found";
 
-  console.log(searchResultData);
-
   return <SearchResult searchResultData={searchResultData} />;
 }

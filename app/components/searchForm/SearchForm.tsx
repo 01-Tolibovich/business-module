@@ -131,6 +131,7 @@ export const SearchForm = () => {
           }
           date={searchParamsData.routes[0]?.date}
           label="Туда"
+          index={0}
         />
         <DatePicker
           handleSetDate={(year, month, day) =>
@@ -138,6 +139,7 @@ export const SearchForm = () => {
           }
           date={searchParamsData.routes[1]?.date || ""}
           label="Обратно"
+          index={1}
         />
         <PassengerAndCabin label="1 пассажир" />
         <ButtonUI icon={<DificultRouteIcon />} className="action-btn">
