@@ -21,11 +21,10 @@ export const LoginForm = () => {
     password: "",
   });
   const [isLoad, setIsLoad] = useState(false);
-  
+
   const setUserData = userAuth((state) => state.setUserData);
   const setIsAuth = userAuth((state) => state.setIsAuth);
   const router = useRouter();
-
 
   const validate = () => {
     return {
@@ -39,7 +38,7 @@ export const LoginForm = () => {
     setIsLoad(true);
     const { email, password } = user;
     const newError = validate();
-    
+
     if (Object.values(newError).every((error) => !error)) {
       loginRequest(email, password).then((res) => {
         setIsLoad(false);
@@ -49,7 +48,7 @@ export const LoginForm = () => {
             setUserData(userData);
             setIsAuth(true);
           }
-        })
+        });
         if (!res) {
           setIsLoad(false);
         }
@@ -101,7 +100,7 @@ export const LoginForm = () => {
         <LinkUI href="#" className="forget-password">
           <small>Забыли пароль?</small>
         </LinkUI>
-        <ButtonUI isLoad={isLoad} type="submit">
+        <ButtonUI isLoad={isLoad} loadText="Войти" type="submit">
           Войти
         </ButtonUI>
         <small>Ещё нет аккаунта? </small>

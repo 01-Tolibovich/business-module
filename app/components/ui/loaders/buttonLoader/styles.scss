@@ -1,0 +1,19 @@
+.button-loader:before {
+  content: var(--loader-text);
+}
+
+.button-loader {
+  color: transparent;
+  font-weight: 600;
+  background: linear-gradient(90deg, $primary-color calc(50% + 0.5ch), #858585 0)
+    right/calc(200% + 1ch) 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: c7 2s infinite steps(11);
+  text-wrap: nowrap;
+}
+@keyframes c7 {
+  to {
+    background-position: left;
+  }
+}

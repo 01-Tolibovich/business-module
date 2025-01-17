@@ -9,6 +9,8 @@ import {
   ReturnPaymentIcon,
 } from "../ui/icons";
 import "./styles.scss";
+import { useEffect } from "react";
+import isPreloader from "@/store/isPreloader";
 
 interface Segments {
   service_class: {
@@ -46,7 +48,6 @@ interface Flights {
 interface SearchParamsData {
   client_code: string;
   flights: Flights[];
-  // [key: string]: unknown;
   included: {
     supplier: {
       [key: string]: {
@@ -72,13 +73,21 @@ interface SearchResultProps {
 export const SearchResult: React.FC<SearchResultProps> = ({
   searchResultData,
 }) => {
-  console.log(3333, searchResultData);
-
   const included = (supplier: string) => {
     if (searchResultData) {
       return searchResultData.included.supplier[supplier].name.ru;
     }
   };
+
+  const setIsLoading = isPreloader((state) => state.setIsLoading);
+
+  useEffect(() => {
+    if (searchResultData || searchResultData === "Not found") {
+      setIsLoading(false);
+    }
+  }, [searchResultData, setIsLoading]);
+
+  console.log(3333, searchResultData);
 
   const renderRoutes = (flight: Flights): React.ReactNode => {
     type DepArrKeys = "departure" | "arrival";
@@ -165,8 +174,9 @@ export const SearchResult: React.FC<SearchResultProps> = ({
     <div className="search-result-page">
       <div className="filter-block">Filters</div>
       <div>
-        {searchResultData && searchResultData.flights.length >= 0
-          ? searchResultData.flights.map((flight) => (
+        {searchResultData
+          ? searchResultData.flights?.length >= 0 &&
+            searchResultData.flights.map((flight) => (
               <div className="ticket-wrap" key={flight.rec_id}>
                 <header className="head-text-info">
                   <p>{included(flight.validating_supplier)}</p>

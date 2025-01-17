@@ -1,28 +1,58 @@
 export const LoadingSpinningDots = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-    <linearGradient id="a4">
-      <stop offset="0" stopColor="#257EFF" stopOpacity="0"></stop>
-      <stop offset="1" stopColor="#257EFF"></stop>
-    </linearGradient>
     <circle
-      fill="none"
-      stroke="url(#a4)"
+      fill="#257EFF"
+      stroke="#257EFF"
       strokeWidth="15"
-      strokeLinecap="round"
-      strokeDasharray="0 44 0 44 0 44 0 44 0 360"
+      r="15"
+      cx="40"
+      cy="100"
+    >
+      <animate
+        attributeName="opacity"
+        calcMode="spline"
+        dur="2"
+        values="1;0;1;"
+        keySplines=".5 0 .5 1;.5 0 .5 1"
+        repeatCount="indefinite"
+        begin="-.4"
+      ></animate>
+    </circle>
+    <circle
+      fill="#257EFF"
+      stroke="#257EFF"
+      strokeWidth="15"
+      r="15"
       cx="100"
       cy="100"
-      r="70"
-      style={{ transformOrigin: 'center' }}
     >
-      <animateTransform
-        type="rotate"
-        attributeName="transform"
-        calcMode="discrete"
+      <animate
+        attributeName="opacity"
+        calcMode="spline"
         dur="2"
-        values="360;324;288;252;216;180;144;108;72;36"
+        values="1;0;1;"
+        keySplines=".5 0 .5 1;.5 0 .5 1"
         repeatCount="indefinite"
-      ></animateTransform>
+        begin="-.2"
+      ></animate>
+    </circle>
+    <circle
+      fill="#257EFF"
+      stroke="#257EFF"
+      strokeWidth="15"
+      r="15"
+      cx="160"
+      cy="100"
+    >
+      <animate
+        attributeName="opacity"
+        calcMode="spline"
+        dur="2"
+        values="1;0;1;"
+        keySplines=".5 0 .5 1;.5 0 .5 1"
+        repeatCount="indefinite"
+        begin="0"
+      ></animate>
     </circle>
   </svg>
 );

@@ -15,6 +15,7 @@ import { postSearchParamsData } from "@/services";
 
 import "./styles.scss";
 import userAuth from "@/store/userAuth";
+import isPreloader from "@/store/isPreloader";
 
 export const SearchForm = () => {
   const searchParamsData = searchParams((state) => state.searchParamsData);
@@ -90,7 +91,14 @@ export const SearchForm = () => {
     (route) => route.fromAirportCode && route.toAirportCode && route.date
   );
 
+  // const searchData = searchResult(state => state.searchData);
+  // const setSearchData = searchResult(state => state.setSearchData)
+  // const [isLoad, setIsLoad] = useState(false);
+  const isLoading = isPreloader(state => state.isLoading);
+  const setIsLoading = isPreloader(state => state.setIsLoading);
+
   const searchFlightsRequest = () => {
+    setIsLoading(true)
     router.push(`/result/${"ticket"}`);
     postSearchParamsData(searchParamsData);
   };
@@ -149,6 +157,8 @@ export const SearchForm = () => {
           icon={<SearchIcon />}
           onClick={searchFlightsRequest}
           className="action-btn search-btn"
+          isLoad={isLoading}
+          loadText="Поиск"
         >
           Поиск
         </ButtonUI>
