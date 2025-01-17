@@ -106,12 +106,12 @@ export const SearchResult: React.FC<SearchResultProps> = ({
                 "DD MMMM dd"
               )}
             </p>
-            <p>
+            <p className="airport-name">
               {
                 searchResultData?.included.airport[segment[depAndArr].airport]
                   .name.ru
               }{" "}
-              ({segment[depAndArr].airport})
+              ( {segment[depAndArr].airport} )
             </p>
           </div>
         </div>

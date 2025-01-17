@@ -1,6 +1,7 @@
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent } from "react";
 import { DropDownUI, InputUI } from "../../../ui";
 import "./styles.scss";
+import { useDropDown } from "@/hooks";
 
 interface DirectionItem {
   code: string;
@@ -27,41 +28,8 @@ type DirectionProps = {
 };
 
 export const Direction: React.FC<DirectionProps> = ({ label, airports, handleSetAirport, airportName, handleChangeAirportName }) => {
-  const [isShowDropDown, setIsShowDropDown] = useState({
-    active: false,
-    anim: false,
-  });
-
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  const handleToggleDropDown = () => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = null;
-    }
-
-    const toggleDropDown = (
-      elem1: keyof typeof isShowDropDown,
-      elem2: keyof typeof isShowDropDown,
-      bool: boolean
-    ) => {
-      setIsShowDropDown((prevState) => ({
-        ...prevState,
-        [elem1]: bool,
-      }));
-
-      timeoutRef.current = setTimeout(() => {
-        setIsShowDropDown((prevState) => ({ ...prevState, [elem2]: bool }));
-      }, 200);
-    };
-
-    if (!isShowDropDown.active && !isShowDropDown.anim) {
-      toggleDropDown("active", "anim", true);
-    }
-    if (isShowDropDown.anim && isShowDropDown.active) {
-      toggleDropDown("anim", "active", false);
-    }
-  };
+  const {isShowDropDown, setIsShowDropDown, handleToggleDropDown} = useDropDown();
+  
   return (
     <DropDownUI {...isShowDropDown} setIsShowDropDown={setIsShowDropDown} className="dropdown-item">
       <div className="direction" onClick={handleToggleDropDown}>

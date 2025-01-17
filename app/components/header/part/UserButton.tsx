@@ -1,8 +1,14 @@
 "use client";
 
-import { useRef, useState } from "react";
 import { ButtonUI, DropDownUI } from "../../ui";
-import { CartIcon, DownloadIcon, LoguotIcon, ReturnPaymentIcon, UserIcon, UsersIcon } from "../../ui/icons";
+import {
+  CartIcon,
+  DownloadIcon,
+  LoguotIcon,
+  ReturnPaymentIcon,
+  UserIcon,
+  UsersIcon,
+} from "../../ui/icons";
 import userAuth from "@/store/userAuth";
 import { useRouter } from "next/navigation";
 import { uploadsUrl } from "@/config/configs";
@@ -11,48 +17,18 @@ import Image from "next/image";
 import "./styles.scss";
 import Link from "next/link";
 import { logoutRequest } from "@/services";
+import { useDropDown } from "@/hooks";
 
 export const UserButton = () => {
-  const [isShowDropDown, setIsShowDropDown] = useState({
-    active: false,
-    anim: false,
-  });
   const router = useRouter();
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const isAuth = userAuth((state) => state.isAuth);
   const userData = userAuth((state) => state.userData);
-  const setUserData = userAuth(state => state.setUserData);
-  const setIsAuth = userAuth(state => state.setIsAuth);
+  const setUserData = userAuth((state) => state.setUserData);
+  const setIsAuth = userAuth((state) => state.setIsAuth);
 
-  const handleToggleDropDown = () => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = null;
-    }
-
-    const toggleDropDown = (
-      elem1: keyof typeof isShowDropDown,
-      elem2: keyof typeof isShowDropDown,
-      bool: boolean
-    ) => {
-      setIsShowDropDown((prevState) => ({
-        ...prevState,
-        [elem1]: bool,
-      }));
-
-      timeoutRef.current = setTimeout(() => {
-        setIsShowDropDown((prevState) => ({ ...prevState, [elem2]: bool }));
-      }, 400);
-    };
-
-    if (!isShowDropDown.active && !isShowDropDown.anim) {
-      toggleDropDown("active", "anim", true);
-    }
-    if (isShowDropDown.anim && isShowDropDown.active) {
-      toggleDropDown("anim", "active", false);
-    }
-  };
+  const { isShowDropDown, setIsShowDropDown, handleToggleDropDown } =
+    useDropDown();
 
   const renderNavLinks = () => {
     const navLinks = [
@@ -64,41 +40,41 @@ export const UserButton = () => {
       {
         href: "#",
         icon: <CartIcon />,
-        text: "Мои заказы"
+        text: "Мои заказы",
       },
       {
         href: "#",
         icon: <UsersIcon />,
-        text: "Список пассажиров"
+        text: "Список пассажиров",
       },
       {
         href: "#",
         icon: <DownloadIcon />,
-        text: "Загрузить документы"
+        text: "Загрузить документы",
       },
       {
         href: "#",
         icon: <ReturnPaymentIcon />,
-        text: "Заявление о возврате"
+        text: "Заявление о возврате",
       },
     ];
 
     return navLinks.map((linkElem, index) => (
       <Link key={index} className="nav-link" href={linkElem.href}>
-        <span className="icon">{linkElem.icon}</span> <span>{linkElem.text}</span>
+        <span className="icon">{linkElem.icon}</span>{" "}
+        <span>{linkElem.text}</span>
       </Link>
     ));
   };
 
-    const logoutHandler = () => {
-      logoutRequest()
-      .then(() => {
-        router.push("/info");
-        handleToggleDropDown();
-        setUserData(null);
-        setIsAuth(false);
-      });
-    };
+  const logoutHandler = () => {
+    logoutRequest().then(() => {
+      router.push("/info");
+      handleToggleDropDown();
+      setUserData(null);
+      setIsAuth(false);
+    });
+  };
 
   return isAuth && userData ? (
     <DropDownUI
@@ -126,8 +102,11 @@ export const UserButton = () => {
         </div>
         {renderNavLinks()}
         <div className="nav-link" role="button" onClick={logoutHandler}>
-        <span className="icon"><LoguotIcon /></span> <span>Выйти</span>
-      </div>
+          <span className="icon">
+            <LoguotIcon />
+          </span>{" "}
+          <span>Выйти</span>
+        </div>
       </div>
     </DropDownUI>
   ) : (

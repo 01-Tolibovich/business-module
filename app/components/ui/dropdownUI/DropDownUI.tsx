@@ -40,7 +40,7 @@ export const DropDownUI: React.FC<DropDownUIProps> = ({
 
       timeoutRef.current = setTimeout(() => {
         setIsShowDropDown((prevState) => ({ ...prevState, active: false }));
-      }, 400);
+      }, 200);
     }
   };
 

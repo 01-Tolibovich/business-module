@@ -91,9 +91,6 @@ export const SearchForm = () => {
     (route) => route.fromAirportCode && route.toAirportCode && route.date
   );
 
-  // const searchData = searchResult(state => state.searchData);
-  // const setSearchData = searchResult(state => state.setSearchData)
-  // const [isLoad, setIsLoad] = useState(false);
   const isLoading = isPreloader(state => state.isLoading);
   const setIsLoading = isPreloader(state => state.setIsLoading);
 
