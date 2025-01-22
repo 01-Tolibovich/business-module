@@ -50,6 +50,7 @@ export const Direction: React.FC<DirectionProps> = ({
     return () => clearTimeout(timer);
   }, [airportName, setIsShowDropDown]);
   //close drop down on selection
+  
 
   return (
     <DropDownUI
@@ -63,12 +64,11 @@ export const Direction: React.FC<DirectionProps> = ({
           label={label}
           value={airportName}
           onChange={handleChangeAirportName}
-          readOnly
         />
       </div>
       <div className="airports-list">
         {airports &&
-          airports.map((airport) => (
+          airports?.map((airport) => (
             <div
               onClick={() => handleSetAirport(airport)}
               key={airport.code}

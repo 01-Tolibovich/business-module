@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import moment from "moment";
 import {
   fromInputDefaultAirports,
@@ -11,11 +11,11 @@ import { DatePicker, Direction, PassengerAndCabin } from "./parts";
 import { CancelIcon, DificultRouteIcon, SearchIcon } from "../ui/icons";
 import searchParams from "@/store/searchParams";
 import { useRouter } from "next/navigation";
-import { postSearchParamsData } from "@/services";
-
-import "./styles.scss";
+import { getCities, postSearchParamsData } from "@/services";
 import userAuth from "@/store/userAuth";
 import isPreloader from "@/store/isPreloader";
+
+import "./styles.scss";
 
 export const SearchForm = () => {
   const searchParamsData = searchParams((state) => state.searchParamsData);
@@ -54,15 +54,9 @@ export const SearchForm = () => {
 
     setSearchParamsData({
       ...searchParamsData,
-      flightType: updatedRoutes.length === 2 ? "RT" : "OW",
       routes: updatedRoutes,
     });
   };
-
-  const [direction] = useState({
-    from: fromInputDefaultAirports,
-    to: toInputDefaultAirports,
-  });
 
   const handleSetAirport = (
     airportCode: string,
@@ -91,14 +85,75 @@ export const SearchForm = () => {
     (route) => route.fromAirportCode && route.toAirportCode && route.date
   );
 
-  const isLoading = isPreloader(state => state.isLoading);
-  const setIsLoading = isPreloader(state => state.setIsLoading);
+  const isLoading = isPreloader((state) => state.isLoading);
+  const setIsLoading = isPreloader((state) => state.setIsLoading);
 
   const searchFlightsRequest = () => {
-    setIsLoading(true)
+    setIsLoading(true);
     router.push(`/result/${"ticket"}`);
     postSearchParamsData(searchParamsData);
   };
+
+  const [direction, setDirection] = useState({
+    from: fromInputDefaultAirports, // airport array response
+    // fromAirport: "", // airport string for request
+    to: toInputDefaultAirports, // airport array response
+    // toAirport: "", // airport string for request
+  });
+  type AirportNameType = "fromAirportName" | "toAirportName";
+
+  const directionFields = useRef<{
+    airportName: AirportNameType;
+    depArr: string;
+  }>({
+    airportName: "fromAirportName",
+    depArr: "",
+  });
+
+  const handleChangeAirportName = (
+    airportName: AirportNameType,
+    depArr: string,
+    event: ChangeEvent<HTMLInputElement>
+  ) => {
+    setSearchParamsData({
+      ...searchParamsData,
+      routes: [
+        {
+          ...searchParamsData.routes[0],
+          [airportName]: event.target.value,
+        },
+      ],
+    });
+
+    directionFields.current.airportName = airportName;
+    directionFields.current.depArr = depArr;
+  };
+
+  console.log(
+    5555,
+    directionFields.current.airportName,
+    directionFields.current.depArr
+  );
+
+  useEffect(() => {
+    const cities =
+      searchParamsData.routes[0][directionFields.current.airportName];
+    if (cities.length >= 3) {
+      getCities(cities).then((response) => {
+        setDirection((prevState) => ({
+          ...prevState,
+          [directionFields.current.depArr]: response,
+        }));
+      });
+    } else if (cities.length < 3) {
+      setDirection({
+        from: fromInputDefaultAirports,
+        to: toInputDefaultAirports,
+      });
+    }
+
+    console.log(7777, cities);
+  }, [searchParamsData.routes]);
 
   return isAuth ? (
     <div className="search-form-section">
@@ -109,10 +164,10 @@ export const SearchForm = () => {
           handleSetAirport={(airport) =>
             handleSetAirport("fromAirportCode", "fromAirportName", airport)
           }
-          airportName={searchParamsData.routes[0].fromAirportName}
-          // handleChangeAirportName={(event) =>
-          //   handleChangeAirportName("fromAirportName", event)
-          // }
+          airportName={searchParamsData.routes[0]?.fromAirportName}
+          handleChangeAirportName={(event) =>
+            handleChangeAirportName("fromAirportName", "from", event)
+          }
         />
         <Direction
           label="Куда"
@@ -120,10 +175,10 @@ export const SearchForm = () => {
           handleSetAirport={(airport) =>
             handleSetAirport("toAirportCode", "toAirportName", airport)
           }
-          airportName={searchParamsData.routes[0].toAirportName}
-          // handleChangeAirportName={(event) =>
-          //   handleChangeAirportName("toAirportName", event)
-          // }
+          airportName={searchParamsData.routes[0]?.toAirportName}
+          handleChangeAirportName={(event) =>
+            handleChangeAirportName("toAirportName", "to", event)
+          }
         />
         <DatePicker
           handleSetDate={(year, month, day) =>

@@ -87,8 +87,6 @@ export const SearchResult: React.FC<SearchResultProps> = ({
     }
   }, [searchResultData, setIsLoading]);
 
-  console.log(3333, searchResultData);
-
   const renderRoutes = (flight: Flights): React.ReactNode => {
     type DepArrKeys = "departure" | "arrival";
 

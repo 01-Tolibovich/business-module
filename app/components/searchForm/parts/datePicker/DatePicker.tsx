@@ -8,13 +8,14 @@ import moment from "moment";
 import { useDropDown } from "@/hooks";
 import { CancelIcon } from "@/app/components/ui/icons";
 import searchParams from "@/store/searchParams";
+// import { Route } from "@/types";
 
 interface DatePickerProps {
   label?: string;
   handleSetDate: (year: number, month: number, day: number | null) => void;
   date: string;
   handleDateChange?: (event: ChangeEvent<HTMLInputElement>) => void;
-  index: number
+  index: number;
 }
 
 export const DatePicker: React.FC<DatePickerProps> = ({
@@ -54,9 +55,6 @@ export const DatePicker: React.FC<DatePickerProps> = ({
     });
   };
 
-  console.log(1111, searchParamsData);
-  
-
   return (
     <DropDownUI {...isShowDropDown} setIsShowDropDown={setIsShowDropDown}>
       <div className="date-picker-block" onClick={handleToggleDropDown}>
@@ -68,11 +66,14 @@ export const DatePicker: React.FC<DatePickerProps> = ({
           onChange={handleDateChange}
           readOnly
         />
-        <div className="clear" onClick={(e) => {
-          e.stopPropagation();
-          handleClear();
-          }}>
-          <CancelIcon />
+        <div
+          className="clear"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleClear();
+          }}
+        >
+          { searchParamsData.routes[index]?.date && <CancelIcon />}
         </div>
       </div>
       <Calendar handleSetDate={handleSetDate} />

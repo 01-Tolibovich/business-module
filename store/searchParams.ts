@@ -1,13 +1,5 @@
+import { Route } from "@/types";
 import { create } from "zustand";
-
-interface Route {
-  id: number;
-  fromAirportCode: string;
-  fromAirportName: string;
-  toAirportCode: string;
-  toAirportName: string;
-  date: string;
-}
 
 interface searchParamsData {
   flightType: string;
@@ -46,17 +38,44 @@ const defaultsearchParamsData: searchParamsData = {
       date: "",
     },
   ],
-}
+};
 
 const searchParams = create<searchParamTypes>((set) => ({
   searchParamsData: defaultsearchParamsData,
   setSearchParamsData: (search) =>
-    set((state) => ({
-      searchParamsData: {
+    set((state) => {
+      const updatedSearchParams = {
         ...state.searchParamsData,
         ...search,
-      },
-    })),
+      };
+
+      if (
+        updatedSearchParams.routes.length > 1 &&
+        updatedSearchParams.routes[1].date
+      ) {
+        updatedSearchParams.flightType = "RT";
+      } else {
+        updatedSearchParams.flightType = "OW";
+      }
+
+      if (
+        updatedSearchParams.routes.length === 2 &&
+        updatedSearchParams.routes[1].date === ""
+      ) {
+        updatedSearchParams.routes = updatedSearchParams.routes.filter(
+          (route, index) => {
+            if (index === 0) {
+              return true;
+            }
+            return route.date !== "";
+          }
+        );
+      }
+
+      return {
+        searchParamsData: updatedSearchParams,
+      };
+    }),
   setClearSearchFields: () =>
     set(() => ({
       searchParamsData: defaultsearchParamsData,
