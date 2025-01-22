@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useEffect } from "react";
 import { DropDownUI, InputUI } from "../../../ui";
 import "./styles.scss";
 import { useDropDown } from "@/hooks";
@@ -25,6 +25,9 @@ type DirectionProps = {
   handleSetAirport: (airport: { code: string; name: { ru: string } }) => void;
   airportName: string;
   handleChangeAirportName?: (event: ChangeEvent<HTMLInputElement>) => void;
+  index: number;
+  showDropDown: number;
+  setshowDropDown: Dispatch<SetStateAction<number>>
 };
 
 export const Direction: React.FC<DirectionProps> = ({
@@ -33,24 +36,38 @@ export const Direction: React.FC<DirectionProps> = ({
   handleSetAirport,
   airportName,
   handleChangeAirportName,
+  index,
+  showDropDown,
+  // setshowDropDown,
 }) => {
   const { isShowDropDown, setIsShowDropDown, handleToggleDropDown } =
     useDropDown();
 
   //close drop down on selection
   useEffect(() => {
-    if (!airportName) return;
-  
+    // if (!airportName) return;
+
     setIsShowDropDown({ active: true, anim: false });
-  
+
     const timer = setTimeout(() => {
       setIsShowDropDown({ active: false, anim: false });
-    }, 400);
-  
+    }, 200);
+
     return () => clearTimeout(timer);
   }, [airportName, setIsShowDropDown]);
   //close drop down on selection
-  
+
+  useEffect(() => {
+    if (showDropDown === index) {
+      setIsShowDropDown({ active: true, anim: false });
+
+    const timer = setTimeout(() => {
+      setIsShowDropDown({ active: true, anim: true });
+    }, 200);
+
+    return () => clearTimeout(timer);
+    }
+  }, [index, setIsShowDropDown, showDropDown])
 
   return (
     <DropDownUI
@@ -71,7 +88,7 @@ export const Direction: React.FC<DirectionProps> = ({
           airports?.map((airport) => (
             <div
               onClick={() => handleSetAirport(airport)}
-              key={airport.code}
+              key={`${airport.code}${Math.random()}`}
               className="airport-item"
             >
               <div className="city">

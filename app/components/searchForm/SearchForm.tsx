@@ -16,6 +16,7 @@ import userAuth from "@/store/userAuth";
 import isPreloader from "@/store/isPreloader";
 
 import "./styles.scss";
+// import { PreloaderEarth } from "../ui/icons/preloaders";
 
 export const SearchForm = () => {
   const searchParamsData = searchParams((state) => state.searchParamsData);
@@ -27,6 +28,8 @@ export const SearchForm = () => {
     (state) => state.setClearSearchFields
   );
 
+  const [showDropDown, setshowDropDown] = useState<number>(-1);
+
   const handleSetDate = (
     index: number,
     year: number,
@@ -35,6 +38,7 @@ export const SearchForm = () => {
   ) => {
     const formatedDate = moment([year, month, day || 0]).format("YYYY-MM-DD");
     const updatedRoutes = [...searchParamsData.routes];
+    setshowDropDown(-1);
 
     if (index >= updatedRoutes.length) {
       updatedRoutes.push({
@@ -105,14 +109,17 @@ export const SearchForm = () => {
   const directionFields = useRef<{
     airportName: AirportNameType;
     depArr: string;
+    index: number;
   }>({
     airportName: "fromAirportName",
     depArr: "",
+    index: -1,
   });
 
   const handleChangeAirportName = (
     airportName: AirportNameType,
     depArr: string,
+    index: number,
     event: ChangeEvent<HTMLInputElement>
   ) => {
     setSearchParamsData({
@@ -127,23 +134,22 @@ export const SearchForm = () => {
 
     directionFields.current.airportName = airportName;
     directionFields.current.depArr = depArr;
+    directionFields.current.index = index;
   };
-
-  console.log(
-    5555,
-    directionFields.current.airportName,
-    directionFields.current.depArr
-  );
 
   useEffect(() => {
     const cities =
       searchParamsData.routes[0][directionFields.current.airportName];
+    setshowDropDown(-1);
+
     if (cities.length >= 3) {
       getCities(cities).then((response) => {
         setDirection((prevState) => ({
           ...prevState,
           [directionFields.current.depArr]: response,
         }));
+
+        setshowDropDown(directionFields.current.index);
       });
     } else if (cities.length < 3) {
       setDirection({
@@ -152,7 +158,6 @@ export const SearchForm = () => {
       });
     }
 
-    console.log(7777, cities);
   }, [searchParamsData.routes]);
 
   return isAuth ? (
@@ -166,8 +171,11 @@ export const SearchForm = () => {
           }
           airportName={searchParamsData.routes[0]?.fromAirportName}
           handleChangeAirportName={(event) =>
-            handleChangeAirportName("fromAirportName", "from", event)
+            handleChangeAirportName("fromAirportName", "from", 0, event)
           }
+          index={0}
+          showDropDown={showDropDown}
+          setshowDropDown={setshowDropDown}
         />
         <Direction
           label="Куда"
@@ -177,8 +185,11 @@ export const SearchForm = () => {
           }
           airportName={searchParamsData.routes[0]?.toAirportName}
           handleChangeAirportName={(event) =>
-            handleChangeAirportName("toAirportName", "to", event)
+            handleChangeAirportName("toAirportName", "to", 1, event)
           }
+          index={1}
+          showDropDown={showDropDown}
+          setshowDropDown={setshowDropDown}
         />
         <DatePicker
           handleSetDate={(year, month, day) =>
@@ -216,6 +227,7 @@ export const SearchForm = () => {
         >
           Поиск
         </ButtonUI>
+        {/* <PreloaderEarth /> */}
       </div>
     </div>
   ) : null;
