@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, SetStateAction, useEffect } from "react";
+import { ChangeEvent, useEffect } from "react";
 import { DropDownUI, InputUI } from "../../../ui";
 import "./styles.scss";
 import { useDropDown } from "@/hooks";
@@ -28,10 +28,8 @@ type DirectionProps = {
   handleChangeAirportName?: (event: ChangeEvent<HTMLInputElement>) => void;
   index: number;
   showDropDown: number;
-  setshowDropDown: Dispatch<SetStateAction<number>>;
   isLoadCities: number;
   handleLoadingEarth: () => void;
-  setIsLoadCities: Dispatch<SetStateAction<number>>;
 };
 
 export const Direction: React.FC<DirectionProps> = ({
@@ -42,18 +40,14 @@ export const Direction: React.FC<DirectionProps> = ({
   handleChangeAirportName,
   index,
   showDropDown,
-  // setshowDropDown,
   isLoadCities,
   handleLoadingEarth,
-  // setIsLoadCities,
 }) => {
   const { isShowDropDown, setIsShowDropDown, handleToggleDropDown } =
     useDropDown();
 
   //close drop down on selection
   useEffect(() => {
-    // if (!airportName) return;
-
     setIsShowDropDown({ active: true, anim: false });
 
     const timer = setTimeout(() => {
@@ -76,8 +70,6 @@ export const Direction: React.FC<DirectionProps> = ({
     }
   }, [index, setIsShowDropDown, showDropDown]);
 
-  console.log(showDropDown, index);
-
   return (
     <DropDownUI
       {...isShowDropDown}
@@ -86,8 +78,8 @@ export const Direction: React.FC<DirectionProps> = ({
     >
       <div
         className="direction"
-        onClick={() => {
-          // e.stopPropagation();
+        onClick={(e) => {
+          e.stopPropagation();
           handleToggleDropDown();
           handleLoadingEarth();
         }}

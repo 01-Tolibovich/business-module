@@ -166,28 +166,6 @@ export const SearchForm = () => {
     directionFields.current.index = index;
   };
 
-  // useEffect(() => {
-  //   const cities =
-  //     searchParamsData.routes[0][directionFields.current.airportName];
-  //   setshowDropDown(-1);
-
-  //   if (cities.length >= 3) {
-  //     getCities(cities).then((response) => {
-  //       setDirection((prevState) => ({
-  //         ...prevState,
-  //         [directionFields.current.depArr]: response,
-  //       }));
-
-  //       setshowDropDown(directionFields.current.index);
-  //     });
-  //   } else if (cities.length < 3) {
-  //     setDirection({
-  //       from: fromInputDefaultAirports,
-  //       to: toInputDefaultAirports,
-  //     });
-  //   }
-  // }, [searchParamsData.routes]);
-
   return isAuth ? (
     <div className="search-form-section">
       <div className="search-form">
@@ -204,9 +182,7 @@ export const SearchForm = () => {
           handleLoadingEarth={() => handleLoadingEarth(0)}
           index={0}
           showDropDown={showDropDown}
-          setshowDropDown={setshowDropDown}
           isLoadCities={isLoadCities}
-          setIsLoadCities={setIsLoadCities}
         />
         <Direction
           label="Куда"
@@ -221,9 +197,7 @@ export const SearchForm = () => {
           handleLoadingEarth={() => handleLoadingEarth(1)}
           index={1}
           showDropDown={showDropDown}
-          setshowDropDown={setshowDropDown}
           isLoadCities={isLoadCities}
-          setIsLoadCities={setIsLoadCities}
         />
         <DatePicker
           handleSetDate={(year, month, day) =>
