@@ -2,6 +2,7 @@ import { ChangeEvent, Dispatch, SetStateAction, useEffect } from "react";
 import { DropDownUI, InputUI } from "../../../ui";
 import "./styles.scss";
 import { useDropDown } from "@/hooks";
+import { PreloaderEarth } from "@/app/components/ui/icons/preloaders";
 
 interface DirectionItem {
   code: string;
@@ -27,7 +28,10 @@ type DirectionProps = {
   handleChangeAirportName?: (event: ChangeEvent<HTMLInputElement>) => void;
   index: number;
   showDropDown: number;
-  setshowDropDown: Dispatch<SetStateAction<number>>
+  setshowDropDown: Dispatch<SetStateAction<number>>;
+  isLoadCities: number;
+  handleLoadingEarth: () => void;
+  setIsLoadCities: Dispatch<SetStateAction<number>>;
 };
 
 export const Direction: React.FC<DirectionProps> = ({
@@ -39,6 +43,9 @@ export const Direction: React.FC<DirectionProps> = ({
   index,
   showDropDown,
   // setshowDropDown,
+  isLoadCities,
+  handleLoadingEarth,
+  // setIsLoadCities,
 }) => {
   const { isShowDropDown, setIsShowDropDown, handleToggleDropDown } =
     useDropDown();
@@ -61,13 +68,15 @@ export const Direction: React.FC<DirectionProps> = ({
     if (showDropDown === index) {
       setIsShowDropDown({ active: true, anim: false });
 
-    const timer = setTimeout(() => {
-      setIsShowDropDown({ active: true, anim: true });
-    }, 200);
+      const timer = setTimeout(() => {
+        setIsShowDropDown({ active: true, anim: true });
+      }, 200);
 
-    return () => clearTimeout(timer);
+      return () => clearTimeout(timer);
     }
-  }, [index, setIsShowDropDown, showDropDown])
+  }, [index, setIsShowDropDown, showDropDown]);
+
+  console.log(showDropDown, index);
 
   return (
     <DropDownUI
@@ -75,19 +84,32 @@ export const Direction: React.FC<DirectionProps> = ({
       setIsShowDropDown={setIsShowDropDown}
       className="dropdown-item"
     >
-      <div className="direction" onClick={handleToggleDropDown}>
+      <div
+        className="direction"
+        onClick={() => {
+          // e.stopPropagation();
+          handleToggleDropDown();
+          handleLoadingEarth();
+        }}
+      >
         <InputUI
           classInputBlock="input-block"
           label={label}
           value={airportName}
           onChange={handleChangeAirportName}
         />
+        <div className="earth-preloader">
+          {index === isLoadCities && <PreloaderEarth />}
+        </div>
       </div>
       <div className="airports-list">
         {airports &&
           airports?.map((airport) => (
             <div
-              onClick={() => handleSetAirport(airport)}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleSetAirport(airport);
+              }}
               key={`${airport.code}${Math.random()}`}
               className="airport-item"
             >

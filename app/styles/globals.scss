@@ -7,9 +7,9 @@ body {
   color: $text-color;
   background-color: $neo-color;
 
-  svg:hover {
-    --primary-color: #{$secondary-color};
-  }
+  // svg:hover {
+  //   --primary-color: #{$secondary-color};
+  // }
 
   section {
     margin: 5rem auto;

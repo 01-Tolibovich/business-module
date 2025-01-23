@@ -1,6 +1,14 @@
 .direction {
+  position: relative;
+
   .input-block {
     margin-bottom: 0;
+  }
+
+  .earth-preloader {
+    position: absolute;
+    top: 38px;
+    right: 10px;
   }
 }
 

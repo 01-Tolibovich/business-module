@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useCallback, useRef, useState } from "react";
 import moment from "moment";
 import {
   fromInputDefaultAirports,
@@ -16,7 +16,6 @@ import userAuth from "@/store/userAuth";
 import isPreloader from "@/store/isPreloader";
 
 import "./styles.scss";
-// import { PreloaderEarth } from "../ui/icons/preloaders";
 
 export const SearchForm = () => {
   const searchParamsData = searchParams((state) => state.searchParamsData);
@@ -62,6 +61,12 @@ export const SearchForm = () => {
     });
   };
 
+  const [isLoadCities, setIsLoadCities] = useState(-1);
+
+  const handleLoadingEarth = (index: number) => {
+    setIsLoadCities(index);
+  };
+
   const handleSetAirport = (
     airportCode: string,
     airportName: string,
@@ -70,6 +75,7 @@ export const SearchForm = () => {
       name: { ru: string };
     }
   ) => {
+    setIsLoadCities(-1)
     setSearchParamsData({
       ...searchParamsData,
       routes: [
@@ -116,28 +122,7 @@ export const SearchForm = () => {
     index: -1,
   });
 
-  const handleChangeAirportName = (
-    airportName: AirportNameType,
-    depArr: string,
-    index: number,
-    event: ChangeEvent<HTMLInputElement>
-  ) => {
-    setSearchParamsData({
-      ...searchParamsData,
-      routes: [
-        {
-          ...searchParamsData.routes[0],
-          [airportName]: event.target.value,
-        },
-      ],
-    });
-
-    directionFields.current.airportName = airportName;
-    directionFields.current.depArr = depArr;
-    directionFields.current.index = index;
-  };
-
-  useEffect(() => {
+  const citiesRequest = useCallback(() => {
     const cities =
       searchParamsData.routes[0][directionFields.current.airportName];
     setshowDropDown(-1);
@@ -157,8 +142,51 @@ export const SearchForm = () => {
         to: toInputDefaultAirports,
       });
     }
+  }, [searchParamsData.routes])
 
-  }, [searchParamsData.routes]);
+  const handleChangeAirportName = (
+    airportName: AirportNameType,
+    depArr: string,
+    index: number,
+    event: ChangeEvent<HTMLInputElement>
+  ) => {
+    citiesRequest();
+    setSearchParamsData({
+      ...searchParamsData,
+      routes: [
+        {
+          ...searchParamsData.routes[0],
+          [airportName]: event.target.value,
+        },
+      ],
+    });
+
+    directionFields.current.airportName = airportName;
+    directionFields.current.depArr = depArr;
+    directionFields.current.index = index;
+  };
+
+  // useEffect(() => {
+  //   const cities =
+  //     searchParamsData.routes[0][directionFields.current.airportName];
+  //   setshowDropDown(-1);
+
+  //   if (cities.length >= 3) {
+  //     getCities(cities).then((response) => {
+  //       setDirection((prevState) => ({
+  //         ...prevState,
+  //         [directionFields.current.depArr]: response,
+  //       }));
+
+  //       setshowDropDown(directionFields.current.index);
+  //     });
+  //   } else if (cities.length < 3) {
+  //     setDirection({
+  //       from: fromInputDefaultAirports,
+  //       to: toInputDefaultAirports,
+  //     });
+  //   }
+  // }, [searchParamsData.routes]);
 
   return isAuth ? (
     <div className="search-form-section">
@@ -173,9 +201,12 @@ export const SearchForm = () => {
           handleChangeAirportName={(event) =>
             handleChangeAirportName("fromAirportName", "from", 0, event)
           }
+          handleLoadingEarth={() => handleLoadingEarth(0)}
           index={0}
           showDropDown={showDropDown}
           setshowDropDown={setshowDropDown}
+          isLoadCities={isLoadCities}
+          setIsLoadCities={setIsLoadCities}
         />
         <Direction
           label="Куда"
@@ -187,9 +218,12 @@ export const SearchForm = () => {
           handleChangeAirportName={(event) =>
             handleChangeAirportName("toAirportName", "to", 1, event)
           }
+          handleLoadingEarth={() => handleLoadingEarth(1)}
           index={1}
           showDropDown={showDropDown}
           setshowDropDown={setshowDropDown}
+          isLoadCities={isLoadCities}
+          setIsLoadCities={setIsLoadCities}
         />
         <DatePicker
           handleSetDate={(year, month, day) =>
@@ -227,7 +261,6 @@ export const SearchForm = () => {
         >
           Поиск
         </ButtonUI>
-        {/* <PreloaderEarth /> */}
       </div>
     </div>
   ) : null;
