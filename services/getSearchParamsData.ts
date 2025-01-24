@@ -1,7 +1,7 @@
 export const getSearchParamsData = async () => {
   try {
     const response = await fetch(
-      "http://localhost:3000/api/search-params-data",
+      "https://business-module-self.vercel.app/search-params-data",
       {
         method: "GET",
         cache: "no-cache",

@@ -1,7 +1,6 @@
 "use client";
 
 import { useDropDown } from "@/hooks";
-// import { useRef, useState } from "react";
 import { ButtonUI, DropDownUI, InputUI } from "../../ui";
 import { TranslateIcon } from "../../ui/icons";
 import "./styles.scss";

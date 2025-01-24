@@ -1,14 +1,12 @@
 import { ChangeEvent, useEffect } from "react";
-
 import { DropDownUI, InputUI } from "../../../ui";
 import { Calendar } from "../../../calendar";
-
-import "./styles.scss";
 import moment from "moment";
 import { useDropDown } from "@/hooks";
 import { CancelIcon } from "@/app/components/ui/icons";
 import searchParams from "@/store/searchParams";
-// import { Route } from "@/types";
+
+import "./styles.scss";
 
 interface DatePickerProps {
   label?: string;

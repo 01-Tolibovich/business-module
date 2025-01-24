@@ -105,10 +105,8 @@ export const SearchForm = () => {
   };
 
   const [direction, setDirection] = useState({
-    from: fromInputDefaultAirports, // airport array response
-    // fromAirport: "", // airport string for request
-    to: toInputDefaultAirports, // airport array response
-    // toAirport: "", // airport string for request
+    from: fromInputDefaultAirports,
+    to: toInputDefaultAirports,
   });
   type AirportNameType = "fromAirportName" | "toAirportName";
 

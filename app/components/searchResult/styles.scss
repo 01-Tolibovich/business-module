@@ -19,6 +19,11 @@ $p: 0.2rem;
       align-items: center;
       justify-content: space-between;
       padding: 0.625rem;
+
+      .suppliers {
+        display: flex;
+        gap: 0.5rem;
+      }
     }
 
     .ticket-blocks {

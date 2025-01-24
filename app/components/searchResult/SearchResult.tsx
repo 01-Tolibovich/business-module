@@ -8,9 +8,11 @@ import {
   ReloadIcon,
   ReturnPaymentIcon,
 } from "../ui/icons";
-import "./styles.scss";
 import { useEffect } from "react";
 import isPreloader from "@/store/isPreloader";
+import Image from "next/image";
+
+import "./styles.scss";
 
 interface Segments {
   service_class: {
@@ -175,9 +177,20 @@ export const SearchResult: React.FC<SearchResultProps> = ({
         {searchResultData
           ? searchResultData.flights?.length >= 0 &&
             searchResultData.flights.map((flight) => (
-              <div className="ticket-wrap" key={`${flight.rec_id}${Math.random()}`}>
+              <div
+                className="ticket-wrap"
+                key={`${flight.rec_id}${Math.random()}`}
+              >
                 <header className="head-text-info">
-                  <p>{included(flight.validating_supplier)}</p>
+                  <div className="suppliers">
+                    <Image
+                      src={`/suppliers/${flight.validating_supplier}.png`}
+                      width={48}
+                      height={16}
+                      alt="logo"
+                    />
+                    <p>{included(flight.validating_supplier)}</p>
+                  </div>
                   <p>Поставщик: {flight.config_name}</p>
                   <p>
                     {included(flight.validating_supplier)} — валидирует перелёты
