@@ -9,6 +9,7 @@ interface ButtonUIProps {
   className?: string;
   loadText?: string;
   isLoad?: boolean;
+  disabled?: boolean;
   [key: string]: unknown;
 }
 
@@ -18,11 +19,12 @@ export const ButtonUI: React.FC<ButtonUIProps> = ({
   className,
   loadText = "Загрузка",
   isLoad,
+  disabled,
   ...rest
 }) => {
   const renderButton = (conventionalStyles: string) => (
     <button
-      disabled={isLoad}
+      disabled={isLoad || disabled}
       {...rest}
       className={`button-ui ${conventionalStyles} ${className}`}
     >

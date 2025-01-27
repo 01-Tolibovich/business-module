@@ -1,10 +1,15 @@
 .calendar {
+  width: 320px;
+  display: grid;
+  grid-auto-flow: column;
+  gap: 2rem;
+  transition: 0.300s;
 
   .weeks {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 0.875rem;
-    margin: 1rem 0 2rem 0;
+    margin: 1rem 0 1rem 0;
 
     .week-day {
       align-self: center;
@@ -59,6 +64,28 @@
           $blur: 0.313rem
         );
       }
+    }
+  }
+}
+
+.arrows {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  button {
+
+    &:disabled {
+
+      svg {
+        opacity: 0.7;
+      }
+    }
+  }
+
+  .prev {
+    svg {
+      transform: rotate(180deg);
     }
   }
 }
