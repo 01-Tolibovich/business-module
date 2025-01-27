@@ -18,3 +18,6 @@ export const getSearchParamsData = async () => {
     console.error(error);
   }
 };
+
+// https://business-module-self.vercel.app/
+// http://localhost:3000/

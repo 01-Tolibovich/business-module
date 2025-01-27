@@ -1,6 +1,12 @@
 "use client";
 
-import React, { Dispatch, SetStateAction, useEffect, useRef } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import "./styles.scss";
 
 interface DropDownUIProps {
@@ -12,7 +18,7 @@ interface DropDownUIProps {
   setIsShowDropDown: Dispatch<
     SetStateAction<{ active: boolean; anim: boolean }>
   >;
-  className?: string
+  className?: string;
 }
 
 export const DropDownUI: React.FC<DropDownUIProps> = ({
@@ -52,11 +58,32 @@ export const DropDownUI: React.FC<DropDownUIProps> = ({
     };
   });
 
+  // const overflowY = useRef<React.CSSProperties["overflowY"]>("hidden");
+
+  const [overflowY, setOverflowY] =
+    useState<React.CSSProperties["overflowY"]>("hidden");
+
+  useEffect(() => {
+    if (active && anim) {
+      const timer = setTimeout(() => {
+        setOverflowY("auto");
+      }, 500);
+
+      return () => clearTimeout(timer);
+    }
+
+    setOverflowY("hidden");
+
+  }, [active, anim]);
+
   return (
     <div ref={dropDownRef} className="drop-down-ui">
       <div className="item">{dropDownChildren[0]}</div>
       {active && (
-        <div style={{ left, right}} className={`drop-down-item ${anim ? "anim" : ""} ${className}`}>
+        <div
+          style={{ left, right, overflowY: overflowY }}
+          className={`drop-down-item ${anim ? "anim" : ""} ${className}`}
+        >
           {dropDownChildren[1]}
         </div>
       )}

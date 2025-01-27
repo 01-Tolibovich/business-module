@@ -93,7 +93,7 @@ export const Calendar: React.FC<CalendarProps> = ({ handleSetDate }) => {
       >
         {yearCalendar.map(({ year, month, days }) => (
           <div key={`${year}-${month}`}>
-            <HeadingUI className="title" as="h4">
+            <HeadingUI className="title" as="h4" textTransform={"uppercase"}>
               {moment().year(year).month(month).format("MMMM YYYY")}
             </HeadingUI>
             <div className="weeks">
