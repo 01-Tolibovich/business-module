@@ -1,9 +1,5 @@
 .calendar {
 
-  .title {
-
-  }
-
   .weeks {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -19,10 +15,33 @@
       background: none;
       border: none;
       color: $text-color;
+
+      &:disabled {
+        color: rgba(91, 91, 91, 0.5);
+
+        &:active {
+          @include neumorphism(
+            $shadow-step: 0.25rem,
+            $glow-step: -0.25rem,
+            $blur: 0.313rem
+          );
+        }
+
+        &:hover {
+          color: rgba(91, 91, 91, 0.5);
+          cursor: not-allowed;
+        }
+      }
     }
 
     .day {
-      @include neumorphism($shadow-step: 0.25rem, $glow-step: -0.25rem, $blur: 0.313rem);
+      cursor: pointer;
+
+      @include neumorphism(
+        $shadow-step: 0.25rem,
+        $glow-step: -0.25rem,
+        $blur: 0.313rem
+      );
       display: flex;
       justify-content: center;
       align-items: center;
@@ -33,7 +52,12 @@
       }
 
       &:active {
-        @include neumorphism($inset: inset, $shadow-step: 0.25rem, $glow-step: -0.25rem, $blur: 0.313rem);
+        @include neumorphism(
+          $inset: inset,
+          $shadow-step: 0.25rem,
+          $glow-step: -0.25rem,
+          $blur: 0.313rem
+        );
       }
     }
   }

@@ -9,7 +9,7 @@ import "./styles.scss";
 moment.locale("ru");
 
 interface CalendarProps {
-  handleSetDate: (year: number, month: number, day: number | null) => void
+  handleSetDate: (year: number, month: number, day: number | null) => void;
 }
 
 interface MonthData {
@@ -18,7 +18,7 @@ interface MonthData {
   days: (number | null)[];
 }
 
-export const Calendar: React.FC<CalendarProps> = ({handleSetDate}) => {
+export const Calendar: React.FC<CalendarProps> = ({ handleSetDate }) => {
   const today = moment();
   const startMonth = today.month();
   const startYear = today.year();
@@ -59,33 +59,47 @@ export const Calendar: React.FC<CalendarProps> = ({handleSetDate}) => {
     return months;
   };
 
+  const currentDay = today.date();
   const yearCalendar = generateYearCalendar(startMonth, startYear);
+
+  yearCalendar.map(({ days }) => days);
+
+  console.log(startYear, startMonth, currentDay);
+
+  // day !== null && currentDay !== null && currentDay >= day
+
+  const handleDisableButton = (day: number | null, month: number) => {
+    console.log(day !== null && currentDay >= day);
+
+    return day !== null && currentDay >= ++day && startMonth >= month
+  };
 
   return (
     <div className="calendar">
-        {yearCalendar.map(({ year, month, days }) => (
-          <div key={`${year}-${month}`}>
-            <HeadingUI className="title" as="h4">
-              {moment().year(year).month(month).format("MMMM YYYY")}
-            </HeadingUI>
-            <div className="weeks">
-              {["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"].map((day) => (
-                <div className="week-day" key={day}>
-                  {day}
-                </div>
-              ))}
-              {days.map((day, index) => (
-                <button
-                  className={`${day ? "day" : ""}`}
-                  key={index}
-                  onClick={() => day && handleSetDate(year, month, day)}
-                >
-                  {day || ""}
-                </button>
-              ))}
-            </div>
+      {yearCalendar.map(({ year, month, days }) => (
+        <div key={`${year}-${month}`}>
+          <HeadingUI className="title" as="h4">
+            {moment().year(year).month(month).format("MMMM YYYY")}
+          </HeadingUI>
+          <div className="weeks">
+            {["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"].map((day) => (
+              <div className="week-day" key={day}>
+                {day}
+              </div>
+            ))}
+            {days.map((day, index) => (
+              <button
+                disabled={day !== null && handleDisableButton(day, month)}
+                className={`${day ? "day" : ""}`}
+                key={index}
+                onClick={() => day && handleSetDate(year, month, day)}
+              >
+                {day || ""}
+              </button>
+            ))}
           </div>
-        ))}
+        </div>
+      ))}
     </div>
   );
 };
