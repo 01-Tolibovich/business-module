@@ -1,17 +1,19 @@
 "use client";
 
+import userAuth from "@/store/userAuth";
+import { useEffect, useState } from "react";
+import { getUserInfo } from "@/services";
 import Link from "next/link";
 import { FlyLogo } from "../ui/logo";
-import { BurgerButton, TranslateButton, UserButton } from "./part";
+import { BurgerButton, HeaderNav, TranslateButton, UserButton } from "./part";
 
 import "./styles.scss";
-import userAuth from "@/store/userAuth";
-import { useEffect } from "react";
-import { getUserInfo } from "@/services";
 
 export const Header = () => {
   const setUserData = userAuth((state) => state.setUserData);
   const setIsAuth = userAuth((state) => state.setIsAuth);
+
+  const [isActiveNavLinks, setIsActiveNavLinks] = useState<boolean>(false);
 
   useEffect(() => {
     getUserInfo().then((userData) => {
@@ -25,6 +27,10 @@ export const Header = () => {
     });
   }, [setIsAuth, setUserData]);
 
+  const toggleNavLinks = () => {
+    setIsActiveNavLinks(!isActiveNavLinks);
+  };
+
   return (
     <header className="header">
       <div className="header-items-block">
@@ -34,8 +40,9 @@ export const Header = () => {
         <div className="buttons">
           <TranslateButton />
           <UserButton />
-          <BurgerButton />
+          <BurgerButton onClick={toggleNavLinks} isActive={isActiveNavLinks} />
         </div>
+        <HeaderNav isActive={isActiveNavLinks} setIsActive={setIsActiveNavLinks} />
       </div>
     </header>
   );

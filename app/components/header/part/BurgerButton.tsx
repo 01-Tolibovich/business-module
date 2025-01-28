@@ -2,11 +2,24 @@
 
 import userAuth from "@/store/userAuth";
 import { ButtonUI } from "../../ui";
-import { BurgerButtonIcon } from "../../ui/icons";
+import { BurgerButtonIcon, CancelIcon } from "../../ui/icons";
 import "./styles.scss";
 
-export const BurgerButton = () => {
+interface BurgerButtonProps {
+  onClick: () => void;
+  isActive: boolean;
+}
+
+export const BurgerButton: React.FC<BurgerButtonProps> = ({
+  onClick,
+  isActive,
+}) => {
   const isAuth = userAuth((state) => state.isAuth);
 
-  return isAuth ? <ButtonUI icon={<BurgerButtonIcon />} /> : null;
+  return isAuth ? (
+    <ButtonUI
+      onClick={onClick}
+      icon={isActive ? <CancelIcon /> : <BurgerButtonIcon />}
+    />
+  ) : null;
 };
