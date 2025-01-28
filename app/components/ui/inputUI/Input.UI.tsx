@@ -10,9 +10,9 @@ interface InputUIProps {
   placeholder?: string;
   onBlur?: FocusEventHandler<HTMLInputElement>;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  checked?: boolean,
-  classInput?: string
-  classInputBlock?: string
+  checked?: boolean;
+  classInput?: string;
+  classInputBlock?: string;
   errors?: string | null;
   readOnly?: boolean;
 }
@@ -30,18 +30,31 @@ export const InputUI: React.FC<InputUIProps> = ({
   classInputBlock,
   classInput,
   errors,
-  readOnly = false
+  readOnly = false,
 }) => {
+  const renderInputType = (inputType: string) => {
+    switch (inputType) {
+      case "radio":
+        return "type-radio";
+      case "checkbox":
+        return "type-checkbox";
+      default:
+        return "";
+    }
+  };
+
+  console.log(renderInputType(type));
+
   return (
-    <div className={`input-ui-block ${type === "radio" ? "type-radio" : ""}`}>
+    <div className={`input-ui-block ${renderInputType(type)}`}>
       {label ? (
         <label className="label-ui" htmlFor={htmlFor}>
           {label}
         </label>
       ) : null}
-      <div className={`input-block ${classInputBlock}`}>
+      <div className={`input-block ${classInputBlock ? classInputBlock : ""}`}>
         <input
-          className={`input-ui ${classInput}`}
+          className={`input-ui ${classInput ? classInput : ""}`}
           name={name}
           type={type}
           id={htmlFor}

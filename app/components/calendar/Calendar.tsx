@@ -65,7 +65,6 @@ export const Calendar: React.FC<CalendarProps> = ({ handleSetDate }) => {
 
   const currentDay = today.date();
   const handleDisableButton = (day: number | null, month: number) => {
-    console.log(day !== null && currentDay >= day);
 
     return day !== null && currentDay >= ++day && startMonth >= month;
   };

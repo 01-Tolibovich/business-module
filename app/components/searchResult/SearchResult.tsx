@@ -13,6 +13,7 @@ import isPreloader from "@/store/isPreloader";
 import Image from "next/image";
 
 import "./styles.scss";
+import { Filters } from "./filters";
 
 interface Segments {
   service_class: {
@@ -172,7 +173,9 @@ export const SearchResult: React.FC<SearchResultProps> = ({
 
   return (
     <div className="search-result-page">
-      <div className="filter-block">Filters</div>
+      <aside className="filter-block">
+        <Filters />
+      </aside>
       <div>
         {searchResultData
           ? searchResultData.flights?.length >= 0 &&

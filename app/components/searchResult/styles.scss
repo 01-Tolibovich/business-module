@@ -3,8 +3,14 @@ $p: 0.2rem;
 .search-result-page {
   @include container();
   display: grid;
+  gap: 2rem;
   grid-template-columns: 18.75rem 1fr;
   margin-top: 3rem;
+
+  .filter-block {
+    border-right: 1px solid $neo-blackout;
+    padding-right: 2rem;
+  }
 
   .ticket-wrap {
     @include neumorphism($radius: 1rem);

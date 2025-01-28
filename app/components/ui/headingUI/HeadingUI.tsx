@@ -1,7 +1,8 @@
+import { TitleTypes } from "@/types";
 import "./styles.scss";
 
 interface HeadingUIProps {
-  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+  as?: TitleTypes;
   children: React.ReactNode;
   className?: string;
   textTransform?: React.CSSProperties["textTransform"];
@@ -21,7 +22,7 @@ export const HeadingUI: React.FC<HeadingUIProps> = ({
     // text-transform: none | capitalize | uppercase | lowercase | full-width | inherit | initial | unset;
     <div
       style={{ textTransform, textAlign }}
-      className={`heading-ui ${className}`}
+      className={`heading-ui ${className ? className : ""}`}
     >
       <Component>{children}</Component>
     </div>

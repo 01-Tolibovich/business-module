@@ -22,12 +22,19 @@
     font-size: 0.75rem;
   }
 
-  &.type-radio {
-    .input-ui {
-      width: 30px;
-      display: inline;
-    }
-  }
+  // &.type-checkbox {
+  //   .input-ui {
+  //     width: 30px;
+  //     display: inline;
+  //   }
+  // }
+
+  // &.type-radio {
+  //   .input-ui {
+  //     width: 30px;
+  //     display: inline;
+  //   }
+  // }
 }
 
 .label-ui {
@@ -38,6 +45,69 @@
 
 .input-ui-block {
   margin-bottom: 0.5rem;
+
+  &.type-checkbox {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+
+    .label-ui {
+      margin: 0;
+      cursor: pointer;
+    }
+
+    .input-block {
+      margin-bottom: 0;
+
+      .input-ui {
+        appearance: none;
+        -webkit-appearance: none;
+        padding: 0;
+        box-shadow: none;
+        margin: 0;
+        width: 1.25rem;
+        height: 1.25rem;
+        cursor: pointer;
+        @include neumorphism(
+          $radius: 0.188rem,
+          $shadow-step: 0.188rem,
+          $glow-step: -0.188rem,
+          $blur: 0.375rem
+        );
+        position: relative;
+
+        &::after {
+          content: "";
+          @include neumorphism(
+            $inset: inset,
+            $radius: 0.188rem,
+            $shadow-step: 0.1rem,
+            $glow-step: -0.1rem,
+            $blur: 0.275rem
+          );
+          top: 50%;
+          left: 50%;
+          width: 0.8rem;
+          height: 0.8rem;
+          position: absolute;
+          transform: translate(-50%, -50%);
+          -webkit-transform: translate(-50%, -50%);
+          -moz-transform: translate(-50%, -50%);
+          -ms-transform: translate(-50%, -50%);
+          -o-transform: translate(-50%, -50%);
+        }
+
+        &:checked {
+          &::after {
+            content: "";
+            background-color: $primary-color;
+          }
+        }
+      }
+    }
+  }
 
   &.type-radio {
     display: flex;
