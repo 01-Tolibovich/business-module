@@ -56,9 +56,7 @@ export const DropDownUI: React.FC<DropDownUIProps> = ({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  });
-
-  // const overflowY = useRef<React.CSSProperties["overflowY"]>("hidden");
+  }, []);
 
   const [overflowY, setOverflowY] =
     useState<React.CSSProperties["overflowY"]>("hidden");

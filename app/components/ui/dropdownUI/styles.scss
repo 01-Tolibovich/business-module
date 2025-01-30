@@ -21,6 +21,12 @@
     -ms-transition: 0.3s;
     -o-transition: 0.3s;
 
+    @include mediaMax($sm) {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
     &.anim {
       max-height: 430px;
       padding: 1rem 1rem;

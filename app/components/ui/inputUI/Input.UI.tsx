@@ -43,8 +43,6 @@ export const InputUI: React.FC<InputUIProps> = ({
     }
   };
 
-  console.log(renderInputType(type));
-
   return (
     <div className={`input-ui-block ${renderInputType(type)}`}>
       {label ? (

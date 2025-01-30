@@ -1,6 +1,6 @@
 .header {
   border-bottom: 1px solid $neo-blackout;
-  margin-bottom: 5rem;
+  margin-bottom: clamp(2.5rem, 6vw, 5rem);
 
   .header-items-block {
     @include container($padding: 0 $indent 0 $indent);

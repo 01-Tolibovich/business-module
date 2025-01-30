@@ -1,11 +1,19 @@
 .our-partners {
   @include container();
-  
+
   .partner-items {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     margin-top: 2.25rem;
     gap: 1rem;
+
+    @include mediaMax($lg) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include mediaMax($sm) {
+      grid-template-columns: 1fr;
+    }
 
     .partner-item {
       @include neumorphism(

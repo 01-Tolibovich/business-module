@@ -5,6 +5,10 @@
   justify-content: center;
   @include container();
 
+  @include mediaMax($sm) {
+    grid-template-columns: 300px;
+  }
+
   button {
     width: 100%;
   }

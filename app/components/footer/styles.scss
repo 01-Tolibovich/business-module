@@ -3,34 +3,78 @@
   margin-top: 5rem;
 
   .container {
-    @include container($padding: 0 $indent 0 $indent)
+    @include container($padding: 0 $indent 0 $indent);
   }
 
   .footer-links {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(6, auto);
     gap: 1rem;
     border-bottom: 1px solid $neo-glow;
     padding: 1.75rem 0;
+
+    @include mediaMax($lg) {
+      grid-template-columns: repeat(3, auto);
+      justify-items: center;
+    }
+
+    @include mediaMax($md) {
+      grid-template-columns: repeat(2, auto);
+    }
+
+    @include mediaMax($sm) {
+      grid-template-columns: 1fr;
+    }
   }
 
   .contact-section {
     padding: 1.75rem 0;
 
+    @include mediaMax($lg) {
+      text-align: center;
+    }
+
     .contact-block {
-      display: flex;
+      display: grid;
+      grid-template-columns: auto auto;
       margin-top: 1.5rem;
       justify-content: space-between;
       align-items: center;
+      gap: 2rem;
+
+      @include mediaMax($lg) {
+        grid-template-columns: 1fr;
+      }
 
       .contact-links {
         display: flex;
         gap: 1.5rem;
+
+        @include mediaMax($lg) {
+          justify-content: center;
+        }
+
+        @include mediaMax($sm) {
+          display: grid;
+          justify-items: center;
+
+          a {
+            width: 100%;
+            
+            button {
+              width: 100%;
+            }
+          }
+        }
       }
 
       .social {
         display: flex;
         gap: 1.5rem;
+
+        @include mediaMax($lg) {
+          justify-content: center;
+        }
 
         .social-btn {
           height: 2.75rem;
@@ -43,7 +87,7 @@
             -moz-transform: translateY(1px);
             -ms-transform: translateY(1px);
             -o-transform: translateY(1px);
-}
+          }
         }
       }
     }

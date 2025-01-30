@@ -73,6 +73,7 @@ export const UserButton = () => {
       handleToggleDropDown();
       setUserData(null);
       setIsAuth(false);
+      localStorage.removeItem("auth-storage")
     });
   };
 
