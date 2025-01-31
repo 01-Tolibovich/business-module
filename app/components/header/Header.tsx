@@ -12,10 +12,8 @@ import "./styles.scss";
 export const Header = () => {
   const setUserData = userAuth((state) => state.setUserData);
   const setIsAuth = userAuth((state) => state.setIsAuth);
-  const userDate = userAuth((state) => state.userData);
+  // const userDate = userAuth((state) => state.userData);
   const isAuth = userAuth((state) => state.isAuth);
-
-  console.log(!!userDate);
 
   const [isActiveNavLinks, setIsActiveNavLinks] = useState<boolean>(false);
 

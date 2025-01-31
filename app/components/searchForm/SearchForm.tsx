@@ -75,7 +75,7 @@ export const SearchForm = () => {
       name: { ru: string };
     }
   ) => {
-    setIsLoadCities(-1)
+    setIsLoadCities(-1);
     setSearchParamsData({
       ...searchParamsData,
       routes: [
@@ -140,7 +140,7 @@ export const SearchForm = () => {
         to: toInputDefaultAirports,
       });
     }
-  }, [searchParamsData.routes])
+  }, [searchParamsData.routes]);
 
   const handleChangeAirportName = (
     airportName: AirportNameType,
@@ -167,72 +167,88 @@ export const SearchForm = () => {
   return isAuth ? (
     <div className="search-form-section">
       <div className="search-form">
-        <Direction
-          label="Откуда"
-          airports={direction.from}
-          handleSetAirport={(airport) =>
-            handleSetAirport("fromAirportCode", "fromAirportName", airport)
-          }
-          airportName={searchParamsData.routes[0]?.fromAirportName}
-          handleChangeAirportName={(event) =>
-            handleChangeAirportName("fromAirportName", "from", 0, event)
-          }
-          handleLoadingEarth={() => handleLoadingEarth(0)}
-          index={0}
-          showDropDown={showDropDown}
-          isLoadCities={isLoadCities}
-        />
-        <Direction
-          label="Куда"
-          airports={direction.to}
-          handleSetAirport={(airport) =>
-            handleSetAirport("toAirportCode", "toAirportName", airport)
-          }
-          airportName={searchParamsData.routes[0]?.toAirportName}
-          handleChangeAirportName={(event) =>
-            handleChangeAirportName("toAirportName", "to", 1, event)
-          }
-          handleLoadingEarth={() => handleLoadingEarth(1)}
-          index={1}
-          showDropDown={showDropDown}
-          isLoadCities={isLoadCities}
-        />
-        <DatePicker
-          handleSetDate={(year, month, day) =>
-            handleSetDate(0, year, month, day)
-          }
-          date={searchParamsData.routes[0]?.date}
-          label="Туда"
-          index={0}
-        />
-        <DatePicker
-          handleSetDate={(year, month, day) =>
-            handleSetDate(1, year, month, day)
-          }
-          date={searchParamsData.routes[1]?.date || ""}
-          label="Обратно"
-          index={1}
-        />
-        <PassengerAndCabin label="1 пассажир" />
-        <ButtonUI icon={<DificultRouteIcon />} className="action-btn">
-          Сложный маршрут
-        </ButtonUI>
-        <ButtonUI
-          icon={<CancelIcon />}
-          onClick={() => setClearSearchFields()}
-          className="action-btn"
-        >
-          Очистить
-        </ButtonUI>
-        <ButtonUI
-          icon={<SearchIcon />}
-          onClick={searchFlightsRequest}
-          className="action-btn search-btn"
-          isLoad={isLoading}
-          loadText="Поиск"
-        >
-          Поиск
-        </ButtonUI>
+        <div className="item-1">
+          <Direction
+            label="Откуда"
+            airports={direction.from}
+            handleSetAirport={(airport) =>
+              handleSetAirport("fromAirportCode", "fromAirportName", airport)
+            }
+            airportName={searchParamsData.routes[0]?.fromAirportName}
+            handleChangeAirportName={(event) =>
+              handleChangeAirportName("fromAirportName", "from", 0, event)
+            }
+            handleLoadingEarth={() => handleLoadingEarth(0)}
+            index={0}
+            showDropDown={showDropDown}
+            isLoadCities={isLoadCities}
+          />
+        </div>
+        <div className="item-2">
+          <Direction
+            label="Куда"
+            airports={direction.to}
+            handleSetAirport={(airport) =>
+              handleSetAirport("toAirportCode", "toAirportName", airport)
+            }
+            airportName={searchParamsData.routes[0]?.toAirportName}
+            handleChangeAirportName={(event) =>
+              handleChangeAirportName("toAirportName", "to", 1, event)
+            }
+            handleLoadingEarth={() => handleLoadingEarth(1)}
+            index={1}
+            showDropDown={showDropDown}
+            isLoadCities={isLoadCities}
+          />
+        </div>
+        <div className="item-3">
+          <DatePicker
+            handleSetDate={(year, month, day) =>
+              handleSetDate(0, year, month, day)
+            }
+            date={searchParamsData.routes[0]?.date}
+            label="Туда"
+            index={0}
+          />
+        </div>
+        <div className="item-4">
+          <DatePicker
+            handleSetDate={(year, month, day) =>
+              handleSetDate(1, year, month, day)
+            }
+            date={searchParamsData.routes[1]?.date || ""}
+            label="Обратно"
+            index={1}
+          />
+        </div>
+        <div className="item-5">
+          <PassengerAndCabin label="1 пассажир" />
+        </div>
+        <div className="item-6">
+          <ButtonUI icon={<DificultRouteIcon />} className="action-btn">
+            Сложный маршрут
+          </ButtonUI>
+        </div>
+        <div className="item-7">
+          <ButtonUI
+            icon={<CancelIcon />}
+            onClick={() => setClearSearchFields()}
+            className="action-btn"
+          >
+            Очистить
+          </ButtonUI>
+        </div>
+        <div className="item-8">
+          <ButtonUI
+            icon={<SearchIcon />}
+            onClick={searchFlightsRequest}
+            className="action-btn search-btn"
+            isLoad={isLoading}
+            loadText="Поиск"
+          >
+            Поиск
+          </ButtonUI>
+        </div>
       </div>
     </div>
   ) : null;

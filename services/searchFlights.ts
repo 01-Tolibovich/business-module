@@ -2,6 +2,7 @@
 
 import { apiUrl } from "@/config/configs";
 import { cookies } from "next/headers";
+// import { deleteCookies } from "./serverActions";
 
 type PassengerData = {
   adt: string;
@@ -54,7 +55,7 @@ export const searchFlights = async (
     const token = (await cookieStore).get("token")?.value;
 
     if (!token) {
-      throw new Error("Пользователь не авторизован. Пожалуйста авторизуйтесь");
+      
     }
 
     const queryString = buildQueryParams(data, language);
@@ -67,14 +68,13 @@ export const searchFlights = async (
     });
 
     if (!response.ok) {
-      throw new Error(
-        `Failed to fetch flights: ${response.status} ${response.statusText}`
-      );
+      // await deleteCookies();
     }
 
     return await response.json();
   } catch (error) {
     console.error(error);
-    throw error;
+    // await deleteCookies();
+    // throw error;
   }
 };

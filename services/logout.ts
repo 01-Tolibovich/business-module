@@ -2,6 +2,7 @@
 
 import { apiUrl } from "@/config/configs";
 import { cookies } from "next/headers";
+import { deleteCookies } from "./serverActions";
 
 export const logoutRequest = async () => {
   const cookieStore = cookies();
@@ -22,13 +23,8 @@ export const logoutRequest = async () => {
 
     const data = await response.json();
 
-    (await cookies()).set("token", "", {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      expires: new Date(0),
-      path: "/",
-    });
-
+    await deleteCookies()
+          
     return data;
   } catch (error) {
     console.error(error);

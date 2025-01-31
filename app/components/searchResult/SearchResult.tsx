@@ -14,6 +14,7 @@ import Image from "next/image";
 
 import "./styles.scss";
 import { Filters } from "./filters";
+import { useRouter } from "next/navigation";
 
 interface Segments {
   service_class: {
@@ -67,6 +68,8 @@ interface SearchParamsData {
       };
     };
   };
+
+  message: string;
 }
 
 interface SearchResultProps {
@@ -76,6 +79,15 @@ interface SearchResultProps {
 export const SearchResult: React.FC<SearchResultProps> = ({
   searchResultData,
 }) => {
+
+  const router = useRouter();
+  useEffect(() => {
+    if (searchResultData.message === "Неавторизованный") {
+      localStorage.removeItem("auth-storage");
+      router.refresh()
+    }
+  }, [router, searchResultData.message]);
+
   const included = (supplier: string) => {
     if (searchResultData) {
       return searchResultData.included.supplier[supplier].name.ru;
