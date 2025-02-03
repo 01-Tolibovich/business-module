@@ -1,7 +1,12 @@
+import { ReactNode } from "react";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
 interface UserData {
+  credit_limit: ReactNode;
+  currency: ReactNode;
+  deposit: ReactNode;
+  logo: unknown;
   name: string;
   login: string;
 }
