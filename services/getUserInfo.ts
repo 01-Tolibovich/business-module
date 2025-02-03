@@ -19,9 +19,6 @@ export const getUserInfo = async () => {
       throw new Error(`HTTP error! status: ${response.status}`)
     }
 
-    console.log(6666);
-    
-
     const { data } = await response.json()
 
     return await data;

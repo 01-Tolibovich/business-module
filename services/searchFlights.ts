@@ -2,7 +2,6 @@
 
 import { apiUrl } from "@/config/configs";
 import { cookies } from "next/headers";
-// import { deleteCookies } from "./serverActions";
 
 type PassengerData = {
   adt: string;
@@ -54,9 +53,9 @@ export const searchFlights = async (
     const cookieStore = cookies();
     const token = (await cookieStore).get("token")?.value;
 
-    if (!token) {
-      
-    }
+    // if (!token) {
+
+    // }
 
     const queryString = buildQueryParams(data, language);
 
@@ -68,13 +67,12 @@ export const searchFlights = async (
     });
 
     if (!response.ok) {
-      // await deleteCookies();
+      // (await cookieStore).delete("token");
     }
 
     return await response.json();
   } catch (error) {
     console.error(error);
-    // await deleteCookies();
-    // throw error;
+    throw error;
   }
 };
