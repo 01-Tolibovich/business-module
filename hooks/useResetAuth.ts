@@ -16,6 +16,7 @@ export const useResetAuth = ({ error }: UseResetAuthProps) => {
         await fetch("/api/delete-token", { method: "GET" });
         resetAuth();
         router.replace("/");
+        window.location.reload()
       };
 
       reset();
