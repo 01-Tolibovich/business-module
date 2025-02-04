@@ -54,7 +54,7 @@ export default function AuthLayout({
       closeModal();
     } else if (pathName === "/login") {
       openModal();
-    }
+    } 
 
     return () => clearExistingTimer();
   }, [closeModal, pathName]);

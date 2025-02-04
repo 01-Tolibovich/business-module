@@ -42,11 +42,11 @@ export const LoginForm = () => {
     if (Object.values(newError).every((error) => !error)) {
       loginRequest(email, password).then((res) => {
         setIsLoad(false);
-        router.push("/");
         getUserInfo().then((userData) => {
           if (userData) {
             setUserData(userData);
             setIsAuth(true);
+            router.push("/");             
           }
         });
         if (!res) {

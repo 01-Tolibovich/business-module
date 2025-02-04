@@ -17,6 +17,3 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: ["/", "/result/:path", "/reporting", "/orders", "/analytics"],
 };
-
-
-// https://business-module-self.vercel.app/ middleware не работает для этого домена
