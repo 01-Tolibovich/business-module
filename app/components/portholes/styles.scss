@@ -1,29 +1,46 @@
-.portholes {
-  margin: 3rem 0;
-  .porthole-items {
-    padding: 2rem;
-    width: 100px;
-    .outside {
-      @include neumorphism($shadow-step: 0.625rem, $glow-step: -0.625rem, $blur: 1rem, $radius: clamp(40px, 5vw, 70px));
-      padding: 1rem;
-      .inside {
-        @include neumorphism($inset: inset, $radius: clamp(30px, 4vw, 60px));
-        padding: 0.5rem;
+.portholes-wrap {
+  overflow: hidden;
 
-        .img-wrap {
-          .image {
-            width: 100%;
+  .portholes {
+    // display: grid;
+    // grid-auto-flow: column;
+    width: 2000px;
+    margin: 3rem 0;
+  
+    .porthole-items {
+      padding: 2rem;
+      width: 230px;
+      height: 280px;
+  
+      .outside {
+        height: 100%;
+        @include neumorphism(
+          $shadow-step: 0.625rem,
+          $glow-step: -0.625rem,
+          $blur: 1rem,
+          $radius: 70px,
+        );
+        padding: 1rem;
+        .inside {
+          height: 100%;
+          @include neumorphism($inset: inset, $radius: 60px);
+          padding: 0.5rem;
+  
+          .img-wrap {
             height: 100%;
-            object-fit: cover;
+            .image {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }
+            overflow: hidden;
+            border-radius: 54px;
+            -webkit-border-radius: 54px;
+            -moz-border-radius: 54px;
+            -ms-border-radius: 54px;
+            -o-border-radius: 54px;
           }
-          border-radius: clamp(24px, 4vw, 54px);
-          -webkit-border-radius: clamp(24px, 4vw, 54px);
-          -moz-border-radius: clamp(24px, 4vw, 54px);
-          -ms-border-radius: clamp(24px, 4vw, 54px);
-          -o-border-radius: clamp(24px, 4vw, 54px);
-          overflow: hidden;
-          height: 10vw;
-}
+        }
       }
     }
   }
