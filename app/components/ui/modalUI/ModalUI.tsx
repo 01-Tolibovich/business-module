@@ -19,14 +19,16 @@ export const ModalUI: React.FC<ModalUIProps> = ({
   header,
   footer,
 }) => {
-
   return (
     active && (
       <div
-        onClick={handleCloseModal}
+        onClick={(e) => {
+          e.stopPropagation();
+          handleCloseModal();
+        }}
         className={`modal-ui-background ${anim ? "anim" : ""}`}
       >
-        <div className="modal-window" onClick={e => e.stopPropagation()}>
+        <div className="modal-window" onClick={(e) => e.stopPropagation()}>
           <header>{header}</header>
           <section className="section">{children}</section>
           <footer>{footer}</footer>

@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect, useRef, ReactNode } from "react";
+import { useState, useEffect, useRef, ReactNode, useCallback } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { ModalUI } from "../components/ui";
+import useAuth from "@/store/userAuth";
 
 export default function AuthLayout({
   children,
@@ -11,11 +12,11 @@ export default function AuthLayout({
     active: false,
     anim: false,
   });
-
   const router = useRouter();
   const pathName = usePathname();
-
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const isAuth = useAuth((state) => state.isAuth);
 
   const clearExistingTimer = () => {
     if (timerRef.current) {
@@ -29,35 +30,38 @@ export default function AuthLayout({
 
     timerRef.current = setTimeout(() => {
       setModalShow({ active: true, anim: true });
-    }, 100);
+    }, 350);
   };
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     setModalShow((prevState) => ({ ...prevState, anim: false }));
 
     clearExistingTimer();
 
     timerRef.current = setTimeout(() => {
       setModalShow({ active: false, anim: false });
-      router.back();
-    }, 400);
-  };
+
+      if (!isAuth) {
+        router.back();
+      }
+    }, 350);
+  }, [isAuth, router]);
 
   useEffect(() => {
     clearExistingTimer();
 
-    if (pathName === "/") {
-      setModalShow({ active: false, anim: false });
+    if (pathName !== "/login") {
+      closeModal();
     } else if (pathName === "/login") {
       openModal();
     }
 
     return () => clearExistingTimer();
-  }, [pathName]);
+  }, [closeModal, pathName]);
 
   return (
     <ModalUI {...modalShow} handleCloseModal={closeModal}>
       {children}
     </ModalUI>
-  )
+  );
 }
