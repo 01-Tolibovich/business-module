@@ -4,7 +4,10 @@ import { NextRequest } from "next/server";
 export function middleware(request: NextRequest) {
   const token = request.cookies.get("token")?.value;
 
-  if (!token) {
+  console.log("middleware");
+  
+
+  if (!token ) {
     return NextResponse.redirect(new URL("/info", request.url));
   }
 
@@ -12,5 +15,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: "/",
+  matcher: ["/", "/result/:path", "/reporting", "/orders", "/analytics"],
 };

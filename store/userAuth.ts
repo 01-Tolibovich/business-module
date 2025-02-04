@@ -17,7 +17,8 @@ interface UserState {
   isHydrated: boolean;
   setUserData: (data: UserData | null) => void;
   setIsAuth: (auth: boolean) => void;
-  setHydrated: (value: boolean) => void; // Добавляем метод для установки isHydrated
+  setHydrated: (value: boolean) => void; // preloader ещё ни где не используется
+  resetAuth: () => void;
 }
 
 const useAuth = create<UserState>()(
@@ -28,7 +29,8 @@ const useAuth = create<UserState>()(
       isHydrated: false,
       setUserData: (data) => set({ userData: data }),
       setIsAuth: (auth) => set({ isAuth: auth }),
-      setHydrated: (value) => set({ isHydrated: value }), // Добавляем в стор
+      setHydrated: (value) => set({ isHydrated: value }),
+      resetAuth: () => set({ userData: null, isAuth: false}),
     }),
     {
       name: "auth-storage",
@@ -38,7 +40,7 @@ const useAuth = create<UserState>()(
           console.error("Ошибка восстановления состояния:", error);
         }
         if (state) {
-          state.setHydrated(true); // Теперь корректно устанавливаем isHydrated
+          state.setHydrated(true);
         }
       },
     }

@@ -2,6 +2,7 @@
 
 import { apiUrl } from "@/config/configs";
 import { cookies } from "next/headers";
+// import { getHostUrl } from "./utils/getHostUrl";
 
 type PassengerData = {
   adt: string;
@@ -24,19 +25,23 @@ type FlightSearchData = {
 };
 
 const buildQueryParams = (data: FlightSearchData, language: string) => {
-  const { cabin, flightType, passengers, routes } = data;
+  const cabin = data?.cabin;
+  const flightType = data?.flightType;
+  const passengers = data?.passengers;
+  const routes = data?.routes
+
 
   const params = new URLSearchParams({
     language,
     cabin,
     flightType,
-    "passengers[adt]": passengers.adt,
-    "passengers[chd]": passengers.chd,
-    "passengers[ins]": passengers.ins,
-    "passengers[inf]": passengers.inf,
+    "passengers[adt]": passengers?.adt,
+    "passengers[chd]": passengers?.chd,
+    "passengers[ins]": passengers?.ins,
+    "passengers[inf]": passengers?.inf,
   });
 
-  routes.forEach((route, index) => {
+  routes?.forEach((route, index) => {
     params.append(`routes[${index}][from]`, route.fromAirportCode);
     params.append(`routes[${index}][to]`, route.toAirportCode);
     params.append(`routes[${index}][date]`, route.date);
@@ -52,6 +57,10 @@ export const searchFlights = async (
   try {
     const cookieStore = cookies();
     const token = (await cookieStore).get("token")?.value;
+    // const url = await getHostUrl("/api/delete-token")
+    
+    console.log(token);
+    
 
     // if (!token) {
 
@@ -67,7 +76,9 @@ export const searchFlights = async (
     });
 
     if (!response.ok) {
-      // (await cookieStore).delete("token");
+      // console.log(url);
+      
+      // await fetch(url, { method: "GET" });
     }
 
     return await response.json();

@@ -1,12 +1,12 @@
+import { getHostUrl } from "./utils/getHostUrl";
+
 export const getSearchParamsData = async () => {
+  const url = await getHostUrl("/api/search-params-data");
   try {
-    const response = await fetch(
-      "http://localhost:3000/api/search-params-data",
-      {
-        method: "GET",
-        cache: "no-cache",
-      }
-    );
+    const response = await fetch(url, {
+      method: "GET",
+      cache: "no-cache",
+    });
 
     if (!response) {
       return null;
@@ -18,6 +18,3 @@ export const getSearchParamsData = async () => {
     console.error(error);
   }
 };
-
-// https://business-module-self.vercel.app/
-// http://localhost:3000/

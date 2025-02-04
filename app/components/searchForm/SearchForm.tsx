@@ -16,6 +16,7 @@ import userAuth from "@/store/userAuth";
 import isPreloader from "@/store/isPreloader";
 
 import "./styles.scss";
+import { useResetAuth } from "@/hooks";
 
 export const SearchForm = () => {
   const searchParamsData = searchParams((state) => state.searchParamsData);
@@ -127,6 +128,7 @@ export const SearchForm = () => {
 
     if (cities.length >= 3) {
       getCities(cities).then((response) => {
+  
         setDirection((prevState) => ({
           ...prevState,
           [directionFields.current.depArr]: response,
@@ -141,6 +143,11 @@ export const SearchForm = () => {
       });
     }
   }, [searchParamsData.routes]);
+
+  console.log(direction.from);
+
+  useResetAuth({error: !direction.from || !direction.to})
+  
 
   const handleChangeAirportName = (
     airportName: AirportNameType,

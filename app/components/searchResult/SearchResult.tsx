@@ -14,7 +14,7 @@ import Image from "next/image";
 
 import "./styles.scss";
 import { Filters } from "./filters";
-import { useRouter } from "next/navigation";
+import { useResetAuth } from "@/hooks";
 
 interface Segments {
   service_class: {
@@ -80,13 +80,7 @@ export const SearchResult: React.FC<SearchResultProps> = ({
   searchResultData,
 }) => {
 
-  const router = useRouter();
-  useEffect(() => {
-    if (searchResultData.message === "Неавторизованный") {
-      localStorage.removeItem("auth-storage");
-      router.refresh()
-    }
-  }, [router, searchResultData.message]);
+  useResetAuth({error: searchResultData.message})
 
   const included = (supplier: string) => {
     if (searchResultData) {
