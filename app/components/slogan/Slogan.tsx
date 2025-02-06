@@ -1,13 +1,40 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { HeadingUI } from "../ui";
 import "./styles.scss";
+import { useAnimationsOnVisible } from "@/hooks";
 
 export const Slogan = () => {
+  const typingText = " - РЕШЕНИЕ ДЛЯ ТЕХ, КТО ЛЕТАЕТ С УМОМ";
+  const [typewriter, setTypewriter] = useState<string>("");
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    if (index < typingText.length) {
+      const timer = setTimeout(() => {
+        setTypewriter((prevState) => prevState + typingText[index]);
+        setIndex(index + 1);
+      }, 100);
+
+      return () => clearTimeout(timer);
+    }
+  }, [index]);
+
+  const { visibleIndexes, refs } = useAnimationsOnVisible();
+
   return (
     <div className="slogan">
       <HeadingUI as="h1" textAlign="center" className="title">
-        <span>ONLINE</span> - РЕШЕНИЕ ДЛЯ ТЕХ, КТО ЛЕТАЕТ С УМОМ
+        <span>ONLINE</span>
+        {typewriter}
       </HeadingUI>
-      <p className="description">
+      <p
+        ref={(el) => {
+          refs.current[0] = el;
+        }}
+        className={`description ${visibleIndexes.has(0) ? "is-visible" : ""}`}
+      >
         <span>FLY.TJ FOR BUSINESS</span> - сервис для организации командировок
         на базе собственного ПО. Бронируйте билеты без сервисных сборов и
         наценок субагентов. Поддержим 24/7

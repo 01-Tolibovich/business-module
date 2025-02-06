@@ -5,6 +5,8 @@
   justify-content: center;
   @include container();
 
+  @include animToTop($delay: 1.4s);
+
   @include mediaMax($sm) {
     grid-template-columns: 300px;
   }

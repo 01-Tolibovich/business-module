@@ -1,41 +1,44 @@
+"use client";
+
+import { useAnimationsOnVisible } from "@/hooks";
 import { HeadingUI } from "../ui";
-import { AgreementIcon, PaymentIcon, PlaneTicketIcon } from "../ui/icons";
 import "./styles.scss";
 
-export const ServicesAndTechnologies = () => {
-  const servicesInfo = [
-    {
-      icon: <AgreementIcon />,
-      title: "Спектр услуг",
-      description:
-        "Спектр услуг, которые оказывает наша компания, весьма разнообразна. Помимо пассажирских авиаперевозок, наши специалисты также помогут Вам в организации Вашей деловой поездки (забронировать отель, оформить страховой полис и визу). Компания «FLY.TJ» является лидером продаж авиабилетов по всем направлениям на рынке авиаперевозок",
-    },
-    {
-      icon: <PlaneTicketIcon />,
-      title: "Бронирование",
-      description:
-        "За это время нами была разработана и оптимизирована онлайн система по реализации авиабилетов, которая не имеет аналогов в Таджикистане. Данная система позволяет Вам легко и просто оценивать, бронировать и покупать авиабилеты самостоятельно на сайт.",
-    },
-    {
-      icon: <PaymentIcon />,
-      title: "Оплата",
-      description:
-        "За это время нами была разработана и оптимизирована онлайн система по реализации авиабилетов, которая не имеет аналогов в Таджикистане. Данная система позволяет Вам легко и просто оценивать, бронировать и покупать авиабилеты самостоятельно на сайт.",
-    },
-  ];
+interface SAndTProps {
+  info: {
+    icon: React.ReactNode;
+    title: string;
+    description: string;
+  }[];
+}
+
+export const ServicesAndTechnologies: React.FC<SAndTProps> = ({ info }) => {
+  const { visibleIndexes, refs } = useAnimationsOnVisible();
   return (
     <div className="services-and-technologies">
-      <HeadingUI as="h2" textAlign="center">Сервисы и технологии</HeadingUI>
+      <HeadingUI as="h2" textAlign="center">
+        Сервисы и технологии
+      </HeadingUI>
       <div className="items">
-      {servicesInfo.map((item, index) => (
-        <div key={index} className="item">
-          <div className="head">
-            <span>{item.icon}</span>
-            <h4>{item.title}</h4>
+        {info.map((item, index) => (
+          <div
+            ref={(el) => {
+              refs.current[index] = el;
+            }}
+            key={index}
+            className="item"
+          >
+            <div
+              className={`head ${
+                visibleIndexes.has(index) ? "is-visible" : ""
+              }`}
+            >
+              <span>{item.icon}</span>
+              <h4>{item.title}</h4>
+            </div>
+            <p>{item.description}</p>
           </div>
-          <p>{item.description}</p>
-        </div>
-      ))}
+        ))}
       </div>
     </div>
   );

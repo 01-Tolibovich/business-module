@@ -128,7 +128,6 @@ export const SearchForm = () => {
 
     if (cities.length >= 3) {
       getCities(cities).then((response) => {
-  
         setDirection((prevState) => ({
           ...prevState,
           [directionFields.current.depArr]: response,
@@ -144,10 +143,7 @@ export const SearchForm = () => {
     }
   }, [searchParamsData.routes]);
 
-  console.log(direction.from);
-
-  useResetAuth({error: !direction.from || !direction.to})
-  
+  useResetAuth({ error: !direction.from || !direction.to });
 
   const handleChangeAirportName = (
     airportName: AirportNameType,

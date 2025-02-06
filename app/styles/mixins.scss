@@ -40,3 +40,27 @@ $indent: clamp(0.875rem, 2vw, 1.5rem);
   width: $width;
   padding: $padding;
 };
+
+
+// animations
+@mixin animToTop($delay: 0s) {
+  transform: translateY(2rem);
+  -webkit-transform: translateY(2rem);
+  -moz-transform: translateY(2rem);
+  -ms-transform: translateY(2rem);
+  -o-transform: translateY(2rem);
+  transition: 0.6s $delay ease;
+  -webkit-transition: 0.6s $delay ease;
+  -moz-transition: 0.6s $delay ease;
+  -ms-transition: 0.6s $delay ease;
+  -o-transition: 0.6s $delay ease;
+  opacity: 0;
+    &.is-visible {
+    transform: translateY(0);
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -o-transform: translateY(0);
+    opacity: 1;
+  }
+}

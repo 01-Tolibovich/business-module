@@ -57,9 +57,6 @@ export const searchFlights = async (
   try {
     const cookieStore = cookies();
     const token = (await cookieStore).get("token")?.value;
-    // const url = await getHostUrl("/api/delete-token")
-    
-    console.log(token);
     
 
     // if (!token) {

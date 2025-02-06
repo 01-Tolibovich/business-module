@@ -61,14 +61,36 @@
           justify-content: center;
           align-items: center;
           height: 60%;
+          transform: scale(0) rotate(359deg);
+          -webkit-transform: scale(0) rotate(359deg);
+          -moz-transform: scale(0) rotate(359deg);
+          -ms-transform: scale(0) rotate(359deg);
+          -o-transform: scale(0) rotate(359deg);
+          transition: 1s;
+          -webkit-transition: 1s;
+          -moz-transition: 1s;
+          -ms-transition: 1s;
+          -o-transition: 1s;
+          
+          &.is-visible {
+            transform: scale(1) rotate(0deg);
+            -webkit-transform: scale(1) rotate(0deg);
+            -moz-transform: scale(1) rotate(0deg);
+            -ms-transform: scale(1) rotate(0deg);
+            -o-transform: scale(1) rotate(0deg);
+          }
         }
 
         .item-title {
           color: $text-color;
+
+          @include animToTop($delay: 0.4s);
         }
 
         p {
           font-size: 0.875rem;
+
+          @include animToTop($delay: 0.8s)
         }
       }
     }
