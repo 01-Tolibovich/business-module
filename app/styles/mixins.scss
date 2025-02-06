@@ -64,3 +64,26 @@ $indent: clamp(0.875rem, 2vw, 1.5rem);
     opacity: 1;
   }
 }
+
+@mixin doubleFade() {
+  animation: double-fade 1.5s linear;
+  -webkit-animation: double-fade 1.5s linear;
+
+  @keyframes double-fade {
+    0% {
+      opacity: 1;
+    }
+    25% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    75% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+}
