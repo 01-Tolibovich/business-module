@@ -8,14 +8,14 @@ import {
   ReloadIcon,
   ReturnPaymentIcon,
 } from "../ui/icons";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import isPreloader from "@/store/isPreloader";
 import Image from "next/image";
 
 import "./styles.scss";
 import { Filters } from "./filters";
 import { useResetAuth } from "@/hooks";
-import { debounce } from "@/utils";
+// import { debounce } from "@/utils";
 
 interface Segments {
   service_class: {
@@ -178,11 +178,11 @@ export const SearchResult: React.FC<SearchResultProps> = ({
     );
   };
 
-  const [width, setWidth] = useState(0);
+  // const [width, setWidth] = useState(0);
 
-  useEffect(() => {
-    debounce();
-  }, []);
+  // useEffect(() => {
+  //   debounce();
+  // }, []);
 
   return (
     <div className="search-result-page">
