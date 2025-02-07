@@ -15,10 +15,13 @@ import {
   SupportIcon,
   TwentyFourIcon,
 } from "../components/ui/icons";
-import { AgreementIcon, PaymentIcon, PlaneTicketIcon } from "../components/ui/icons";
+import {
+  AgreementIcon,
+  PaymentIcon,
+  PlaneTicketIcon,
+} from "../components/ui/icons";
 
-
-export default function Home() {
+export default async function Home() {
   const ourAdvantagesdata = [
     {
       icon: <ArmchairsIcon />,
@@ -92,7 +95,7 @@ export default function Home() {
         <OurAdvantages data={ourAdvantagesdata} />
       </section>
       <section>
-        <ServicesAndTechnologies info={servicesInfo}/>
+        <ServicesAndTechnologies info={servicesInfo} />
       </section>
       <section>
         <OurPartners />

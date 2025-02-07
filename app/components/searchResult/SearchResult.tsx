@@ -8,13 +8,14 @@ import {
   ReloadIcon,
   ReturnPaymentIcon,
 } from "../ui/icons";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import isPreloader from "@/store/isPreloader";
 import Image from "next/image";
 
 import "./styles.scss";
 import { Filters } from "./filters";
 import { useResetAuth } from "@/hooks";
+import { debounce } from "@/utils";
 
 interface Segments {
   service_class: {
@@ -79,22 +80,22 @@ interface SearchResultProps {
 export const SearchResult: React.FC<SearchResultProps> = ({
   searchResultData,
 }) => {
+  const setIsLoading = isPreloader((state) => state.setIsLoading);
 
-  useResetAuth({error: searchResultData.message})
+  console.log(2222, searchResultData);
+  
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, [searchResultData, setIsLoading]);
+
+  useResetAuth({ error: searchResultData.message });
 
   const included = (supplier: string) => {
     if (searchResultData) {
       return searchResultData.included.supplier[supplier].name.ru;
     }
   };
-
-  const setIsLoading = isPreloader((state) => state.setIsLoading);
-
-  useEffect(() => {
-    if (searchResultData || searchResultData === "Not found") {
-      setIsLoading(false);
-    }
-  }, [searchResultData, setIsLoading]);
 
   const renderRoutes = (flight: Flights): React.ReactNode => {
     type DepArrKeys = "departure" | "arrival";
@@ -176,6 +177,12 @@ export const SearchResult: React.FC<SearchResultProps> = ({
       </>
     );
   };
+
+  const [width, setWidth] = useState(0);
+
+  useEffect(() => {
+    debounce();
+  }, []);
 
   return (
     <div className="search-result-page">

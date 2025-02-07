@@ -14,11 +14,11 @@ import { useRouter } from "next/navigation";
 import { getCities, postSearchParamsData } from "@/services";
 import userAuth from "@/store/userAuth";
 import isPreloader from "@/store/isPreloader";
-
-import "./styles.scss";
 import { useResetAuth } from "@/hooks";
 
-export const SearchForm = () => {
+import "./styles.scss";
+
+export const SearchForm: React.FC = () => {
   const searchParamsData = searchParams((state) => state.searchParamsData);
   const isAuth = userAuth((state) => state.isAuth);
   const setSearchParamsData = searchParams(

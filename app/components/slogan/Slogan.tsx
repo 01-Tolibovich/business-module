@@ -2,13 +2,16 @@
 
 import { useEffect, useState } from "react";
 import { HeadingUI } from "../ui";
-import "./styles.scss";
-import { useAnimationsOnVisible } from "@/hooks";
+import { useAnimationsOnVisible, useResetAuth } from "@/hooks";
 
-export const Slogan = () => {
+import "./styles.scss";
+
+export const Slogan: React.FC= () => {
   const typingText = " - РЕШЕНИЕ ДЛЯ ТЕХ, КТО ЛЕТАЕТ С УМОМ";
   const [typewriter, setTypewriter] = useState<string>("");
   const [index, setIndex] = useState(0);
+
+  useResetAuth()
 
   useEffect(() => {
     if (index < typingText.length) {

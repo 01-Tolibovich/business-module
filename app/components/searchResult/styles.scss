@@ -7,6 +7,10 @@ $p: 0.2rem;
   grid-template-columns: 18.75rem 1fr;
   margin-top: 3rem;
 
+  @include mediaMax($lg) {
+    
+  }
+
   .filter-block {
     border-right: 1px solid $neo-blackout;
     padding-right: 2rem;

@@ -73,6 +73,7 @@ export const searchFlights = async (
     });
 
     if (!response.ok) {
+      
       // console.log(url);
       
       // await fetch(url, { method: "GET" });

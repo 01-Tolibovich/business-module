@@ -9,7 +9,7 @@ import { BurgerButton, HeaderNav, TranslateButton, UserButton } from "./part";
 
 import "./styles.scss";
 
-export const Header = () => {
+export const Header: React.FC = () => {
   const setUserData = userAuth((state) => state.setUserData);
   const setIsAuth = userAuth((state) => state.setIsAuth);
   // const userDate = userAuth((state) => state.userData);

@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
-import "./styles/globals.scss";
 import { Footer, Header, SearchForm } from "./components";
+
+import "./styles/globals.scss";
 
 const montserrat = Montserrat({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   style: ["normal", "italic"],
   subsets: ["cyrillic", "cyrillic-ext", "latin", "latin-ext", "vietnamese"],
-})
+});
 
 export const metadata: Metadata = {
   title: "Business module",
@@ -15,7 +16,8 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  children, auth
+  children,
+  auth,
 }: Readonly<{
   children: React.ReactNode;
   auth: React.ReactNode;
