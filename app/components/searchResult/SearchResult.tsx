@@ -1,7 +1,7 @@
 "use client";
 
 import moment from "moment";
-import { ButtonUI } from "../ui";
+import { ButtonUI, ModalUI } from "../ui";
 import {
   BaggageIcon,
   HandLuggageIcon,
@@ -14,7 +14,7 @@ import Image from "next/image";
 
 import "./styles.scss";
 import { Filters } from "./filters";
-import { useResetAuth } from "@/hooks";
+import { useExtraWindow, useResetAuth, useViewportResize } from "@/hooks";
 // import { debounce } from "@/utils";
 
 interface Segments {
@@ -83,7 +83,6 @@ export const SearchResult: React.FC<SearchResultProps> = ({
   const setIsLoading = isPreloader((state) => state.setIsLoading);
 
   console.log(2222, searchResultData);
-  
 
   useEffect(() => {
     setIsLoading(false);
@@ -178,16 +177,31 @@ export const SearchResult: React.FC<SearchResultProps> = ({
     );
   };
 
-  // const [width, setWidth] = useState(0);
+  const { screen } = useViewportResize();
 
-  // useEffect(() => {
-  //   debounce();
-  // }, []);
+  const { isShowExtraWindow, setIsShowExtraWindow, handleToggleExtraWindow } =
+    useExtraWindow();
 
   return (
     <div className="search-result-page">
       <aside className="filter-block">
-        <Filters />
+        {screen.width < 1150 ? (
+          <>
+            <ModalUI
+              {...isShowExtraWindow}
+              handleCloseModal={handleToggleExtraWindow}
+            >
+              <Filters />
+            </ModalUI>
+            <ButtonUI
+              onClick={() => setIsShowExtraWindow({ active: true, anim: true })}
+            >
+              Фильтры
+            </ButtonUI>
+          </>
+        ) : (
+          <Filters />
+        )}
       </aside>
       <div>
         {searchResultData

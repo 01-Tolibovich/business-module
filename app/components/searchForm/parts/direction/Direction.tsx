@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect } from "react";
 import { DropDownUI, InputUI } from "../../../ui";
 import "./styles.scss";
-import { useDropDown } from "@/hooks";
+import { useExtraWindow } from "@/hooks";
 import { PreloaderEarth } from "@/app/components/ui/icons/preloaders";
 
 interface DirectionItem {
@@ -43,44 +43,44 @@ export const Direction: React.FC<DirectionProps> = ({
   isLoadCities,
   handleLoadingEarth,
 }) => {
-  const { isShowDropDown, setIsShowDropDown, handleToggleDropDown } =
-    useDropDown();
+  const { isShowExtraWindow, setIsShowExtraWindow, handleToggleExtraWindow } =
+    useExtraWindow();
 
   //close drop down on selection
   useEffect(() => {
-    setIsShowDropDown({ active: true, anim: false });
+    setIsShowExtraWindow({ active: true, anim: false });
 
     const timer = setTimeout(() => {
-      setIsShowDropDown({ active: false, anim: false });
+      setIsShowExtraWindow({ active: false, anim: false });
     }, 200);
 
     return () => clearTimeout(timer);
-  }, [airportName, setIsShowDropDown]);
+  }, [airportName, setIsShowExtraWindow]);
   //close drop down on selection
 
   useEffect(() => {
     if (showDropDown === index) {
-      setIsShowDropDown({ active: true, anim: false });
+      setIsShowExtraWindow({ active: true, anim: false });
 
       const timer = setTimeout(() => {
-        setIsShowDropDown({ active: true, anim: true });
+        setIsShowExtraWindow({ active: true, anim: true });
       }, 200);
 
       return () => clearTimeout(timer);
     }
-  }, [index, setIsShowDropDown, showDropDown]);
+  }, [index, setIsShowExtraWindow, showDropDown]);
 
   return (
     <DropDownUI
-      {...isShowDropDown}
-      setIsShowDropDown={setIsShowDropDown}
+      {...isShowExtraWindow}
+      setIsShowDropDown={setIsShowExtraWindow}
       className="dropdown-item"
     >
       <div
         className="direction"
         onClick={(e) => {
           e.stopPropagation();
-          handleToggleDropDown();
+          handleToggleExtraWindow();
           handleLoadingEarth();
         }}
       >

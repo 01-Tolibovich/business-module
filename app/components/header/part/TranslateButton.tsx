@@ -1,21 +1,21 @@
 "use client";
 
-import { useDropDown } from "@/hooks";
+import { useExtraWindow } from "@/hooks";
 import { ButtonUI, DropDownUI, InputUI } from "../../ui";
 import { TranslateIcon } from "../../ui/icons";
 import "./styles.scss";
 
 export const TranslateButton = () => {
-  const { isShowDropDown, setIsShowDropDown, handleToggleDropDown } =
-    useDropDown();
+  const { isShowExtraWindow, setIsShowExtraWindow, handleToggleExtraWindow } =
+    useExtraWindow();
 
   return (
     <DropDownUI
       right="0"
-      {...isShowDropDown}
-      setIsShowDropDown={setIsShowDropDown}
+      {...isShowExtraWindow}
+      setIsShowDropDown={setIsShowExtraWindow}
     >
-      <ButtonUI icon={<TranslateIcon />} onClick={handleToggleDropDown} />
+      <ButtonUI icon={<TranslateIcon />} onClick={handleToggleExtraWindow} />
       <div>
         <InputUI
           name="lang"

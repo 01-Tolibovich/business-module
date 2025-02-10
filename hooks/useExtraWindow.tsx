@@ -1,43 +1,43 @@
 import { useEffect, useRef, useState } from "react";
 
-type DropDownState = {
+type ExtraWindowState = {
   active: boolean;
   anim: boolean;
 };
 
-export const useDropDown = () => {
-  const [isShowDropDown, setIsShowDropDown] = useState<DropDownState>({
+export const useExtraWindow = () => {
+  const [isShowExtraWindow, setIsShowExtraWindow] = useState<ExtraWindowState>({
     active: false,
     anim: false,
   });
 
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const handleToggleDropDown = () => {
+  const handleToggleExtraWindow = () => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
       timeoutRef.current = null;
     }
 
     const toggleDropDown = (
-      elem1: keyof DropDownState,
-      elem2: keyof DropDownState,
+      elem1: keyof ExtraWindowState,
+      elem2: keyof ExtraWindowState,
       bool: boolean
     ) => {
-      setIsShowDropDown((prevState) => ({
+      setIsShowExtraWindow((prevState) => ({
         ...prevState,
         [elem1]: bool,
       }));
 
       timeoutRef.current = setTimeout(() => {
-        setIsShowDropDown((prevState) => ({ ...prevState, [elem2]: bool }));
+        setIsShowExtraWindow((prevState) => ({ ...prevState, [elem2]: bool }));
       }, 200);
     };
 
-    if (!isShowDropDown.active && !isShowDropDown.anim) {
+    if (!isShowExtraWindow.active && !isShowExtraWindow.anim) {
       toggleDropDown("active", "anim", true);
     }
-    if (isShowDropDown.anim && isShowDropDown.active) {
+    if (isShowExtraWindow.anim && isShowExtraWindow.active) {
       toggleDropDown("anim", "active", false);
     }
   };
@@ -51,8 +51,8 @@ export const useDropDown = () => {
   }, []);
 
   return {
-    isShowDropDown,
-    setIsShowDropDown,
-    handleToggleDropDown,
+    isShowExtraWindow,
+    setIsShowExtraWindow,
+    handleToggleExtraWindow,
   }
 };

@@ -17,7 +17,7 @@ import Image from "next/image";
 import "./styles.scss";
 import Link from "next/link";
 import { logoutRequest } from "@/services";
-import { useDropDown } from "@/hooks";
+import { useExtraWindow } from "@/hooks";
 
 export const UserButton = () => {
   const router = useRouter();
@@ -27,8 +27,8 @@ export const UserButton = () => {
   const setUserData = userAuth((state) => state.setUserData);
   const setIsAuth = userAuth((state) => state.setIsAuth);
 
-  const { isShowDropDown, setIsShowDropDown, handleToggleDropDown } =
-    useDropDown();
+  const { isShowExtraWindow, setIsShowExtraWindow, handleToggleExtraWindow } =
+      useExtraWindow();
 
   const renderNavLinks = () => {
     const navLinks = [
@@ -70,7 +70,7 @@ export const UserButton = () => {
   const logoutHandler = () => {
     logoutRequest().then(() => {
       router.push("/info");
-      handleToggleDropDown();
+      handleToggleExtraWindow();
       setUserData(null);
       setIsAuth(false);
       localStorage.removeItem("auth-storage")
@@ -80,10 +80,10 @@ export const UserButton = () => {
   return isAuth && userData ? (
     <DropDownUI
       right="0"
-      {...isShowDropDown}
-      setIsShowDropDown={setIsShowDropDown}
+      {...isShowExtraWindow}
+      setIsShowDropDown={setIsShowExtraWindow}
     >
-      <ButtonUI icon={<UserIcon />} onClick={handleToggleDropDown} />
+      <ButtonUI icon={<UserIcon />} onClick={handleToggleExtraWindow} />
       <div className="user-dropdown-wrap">
         <div className="dropdown-block">
           <Image

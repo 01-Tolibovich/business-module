@@ -2,7 +2,7 @@ import { ChangeEvent, useEffect } from "react";
 import { DropDownUI, InputUI } from "../../../ui";
 import { Calendar } from "../../../calendar";
 import moment from "moment";
-import { useDropDown } from "@/hooks";
+import { useExtraWindow } from "@/hooks";
 import { CancelIcon } from "@/app/components/ui/icons";
 import searchParams from "@/store/searchParams";
 
@@ -23,21 +23,21 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   handleDateChange,
   index,
 }) => {
-  const { isShowDropDown, setIsShowDropDown, handleToggleDropDown } =
-    useDropDown();
+  const { isShowExtraWindow, setIsShowExtraWindow, handleToggleExtraWindow } =
+        useExtraWindow();
 
   //close drop down on selection
   useEffect(() => {
     if (!date) return;
 
-    setIsShowDropDown({ active: true, anim: false });
+    setIsShowExtraWindow({ active: true, anim: false });
 
     const timer = setTimeout(() => {
-      setIsShowDropDown({ active: false, anim: false });
+      setIsShowExtraWindow({ active: false, anim: false });
     }, 400);
 
     return () => clearTimeout(timer);
-  }, [date, setIsShowDropDown]);
+  }, [date, setIsShowExtraWindow]);
   //close drop down on selection
 
   const searchParamsData = searchParams((state) => state.searchParamsData);
@@ -55,8 +55,8 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   
 
   return (
-    <DropDownUI {...isShowDropDown} setIsShowDropDown={setIsShowDropDown}>
-      <div className="date-picker-block" onClick={handleToggleDropDown}>
+    <DropDownUI {...isShowExtraWindow} setIsShowDropDown={setIsShowExtraWindow}>
+      <div className="date-picker-block" onClick={handleToggleExtraWindow}>
         <InputUI
           classInputBlock="date-picker-input"
           type="text"
