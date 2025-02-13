@@ -29,6 +29,24 @@ export const useViewportResize = ({
     height: 0,
   });
 
+  const size = {
+    xs: 480,
+    sm: 650,
+    md: 850,
+    lg: 1150,
+    xl: 1350,
+    xxl: 1450
+  }
+
+  const max = {
+    xs: screen.width < size.xs,
+    sm: screen.width < size.sm,
+    md: screen.width < size.md,
+    lg: screen.width < size.lg,
+    xl: screen.width < size.xl,
+    xxl: screen.width < size.xxl
+  }
+
   useLayoutEffect(() => {
     if (typeof window !== "undefined") {
       setScreen({ width: window.innerWidth, height: window.innerHeight });
@@ -45,5 +63,5 @@ export const useViewportResize = ({
 
   useEventListener("resize", watchViewPort);
 
-  return { screen };
+  return { screen, size, max };
 };

@@ -11,11 +11,11 @@ import {
 import { useEffect } from "react";
 import isPreloader from "@/store/isPreloader";
 import Image from "next/image";
-
-import "./styles.scss";
+import { FiltersIcon } from "../ui/icons";
 import { Filters } from "./filters";
 import { useExtraWindow, useResetAuth, useViewportResize } from "@/hooks";
-// import { debounce } from "@/utils";
+
+import "./styles.scss";
 
 interface Segments {
   service_class: {
@@ -82,8 +82,6 @@ export const SearchResult: React.FC<SearchResultProps> = ({
 }) => {
   const setIsLoading = isPreloader((state) => state.setIsLoading);
 
-  console.log(2222, searchResultData);
-
   useEffect(() => {
     setIsLoading(false);
   }, [searchResultData, setIsLoading]);
@@ -95,6 +93,11 @@ export const SearchResult: React.FC<SearchResultProps> = ({
       return searchResultData.included.supplier[supplier].name.ru;
     }
   };
+
+  const { screen, size, max } = useViewportResize();
+
+  // const mobile: boolean = screen.width < 480;
+  // const tablet: boolean = screen.width < 650;
 
   const renderRoutes = (flight: Flights): React.ReactNode => {
     type DepArrKeys = "departure" | "arrival";
@@ -113,13 +116,15 @@ export const SearchResult: React.FC<SearchResultProps> = ({
                 "DD MMMM dd"
               )}
             </p>
-            <p className="airport-name">
-              {
-                searchResultData?.included.airport[segment[depAndArr].airport]
-                  .name.ru
-              }{" "}
-              ( {segment[depAndArr].airport} )
-            </p>
+            {max.sm ? null : (
+              <p className="airport-name">
+                {
+                  searchResultData?.included.airport[segment[depAndArr].airport]
+                    .name.ru
+                }{" "}
+                ( {segment[depAndArr].airport} )
+              </p>
+            )}
           </div>
         </div>
       );
@@ -139,13 +144,15 @@ export const SearchResult: React.FC<SearchResultProps> = ({
         {flight.routes.length >= 0
           ? flight.routes.map((route) => (
               <div key={Math.random()} className="routes">
-                <div className="cabin-and-free-seats">
-                  <small>
-                    Класс: {route.segments[0].service_class.name} (
-                    {route.segments[0].service_class.code})
-                  </small>
-                  <small>{route.segments[0].free_seats}+ мест</small>
-                </div>
+                {max.sm ? null : (
+                  <div className="cabin-and-free-seats">
+                    <small>
+                      Класс: {route.segments[0].service_class.name} (
+                      {route.segments[0].service_class.code})
+                    </small>
+                    <small>{route.segments[0].free_seats}+ мест</small>
+                  </div>
+                )}
                 <div className="route">
                   <div className="departure">
                     {renderRouteInfo(route.segments[0], "departure")}
@@ -155,21 +162,25 @@ export const SearchResult: React.FC<SearchResultProps> = ({
                       {renderDuration(route.duration)}
                     </small>
                     <span className="line" />
-                    <small className="text-center">
-                      {route.segments.length === 1
-                        ? "Без пересадок"
-                        : `${route.segments.length} пересадок`}
-                    </small>
+                    {max.xs ? null : (
+                      <small className="text-center">
+                        {route.segments.length === 1
+                          ? "Без пересадок"
+                          : `${route.segments.length} пересадок`}
+                      </small>
+                    )}
                   </div>
                   {renderRouteInfo(
                     route.segments[route.segments.length - 1],
                     "arrival"
                   )}
                 </div>
-                <small className="baggage">
-                  Багаж: {route.segments[0].baggage} | Ручная кладь:{" "}
-                  {route.segments[0].hand_luggage}
-                </small>
+                {max.sm ? null : (
+                  <small className="baggage">
+                    Багаж: {route.segments[0].baggage} | Ручная кладь:{" "}
+                    {route.segments[0].hand_luggage}
+                  </small>
+                )}
               </div>
             ))
           : null}
@@ -177,15 +188,20 @@ export const SearchResult: React.FC<SearchResultProps> = ({
     );
   };
 
-  const { screen } = useViewportResize();
+  const { isShowExtraWindow, handleToggleExtraWindow } = useExtraWindow();
 
-  const { isShowExtraWindow, setIsShowExtraWindow, handleToggleExtraWindow } =
-    useExtraWindow();
+  const renderFilters = () => {
+    const className: string = "filter-block";
 
-  return (
-    <div className="search-result-page">
-      <aside className="filter-block">
-        {screen.width < 1150 ? (
+    if (screen.width >= size.lg) {
+      return (
+        <aside className={className}>
+          <Filters />
+        </aside>
+      );
+    } else if (screen.width < size.lg) {
+      return (
+        <aside className={className}>
           <>
             <ModalUI
               {...isShowExtraWindow}
@@ -193,16 +209,20 @@ export const SearchResult: React.FC<SearchResultProps> = ({
             >
               <Filters />
             </ModalUI>
-            <ButtonUI
-              onClick={() => setIsShowExtraWindow({ active: true, anim: true })}
-            >
-              Фильтры
-            </ButtonUI>
           </>
-        ) : (
-          <Filters />
-        )}
-      </aside>
+        </aside>
+      );
+    }
+
+    return null;
+  };
+
+  return (
+    <div className="search-result-page">
+      {screen.width >= size.lg && renderFilters()}
+      {screen.width < size.lg && <div className="filter-button">
+        <ButtonUI onClick={handleToggleExtraWindow} icon={<FiltersIcon />} />
+      </div>}
       <div>
         {searchResultData
           ? searchResultData.flights?.length >= 0 &&
@@ -215,16 +235,19 @@ export const SearchResult: React.FC<SearchResultProps> = ({
                   <div className="suppliers">
                     <Image
                       src={`/suppliers/${flight.validating_supplier}.png`}
-                      width={48}
-                      height={16}
+                      width={100}
+                      height={20}
                       alt="logo"
                     />
                     <p>{included(flight.validating_supplier)}</p>
                   </div>
-                  <p>Поставщик: {flight.config_name}</p>
-                  <p>
-                    {included(flight.validating_supplier)} — валидирует перелёты
-                  </p>
+                  {max.sm ? null : <p>Поставщик: {flight.config_name}</p>}
+                  {max.sm ? null : (
+                    <p>
+                      {included(flight.validating_supplier)} — валидирует
+                      перелёты
+                    </p>
+                  )}
                 </header>
                 <div className="ticket-blocks">
                   <div className="first-block">{renderRoutes(flight)}</div>
@@ -232,12 +255,14 @@ export const SearchResult: React.FC<SearchResultProps> = ({
                     <span className="price">
                       {Math.ceil(+flight.price.TJS)} TJS
                     </span>
-                    <div className="icons">
-                      <BaggageIcon />
-                      <HandLuggageIcon />
-                      <ReturnPaymentIcon />
-                      <ReloadIcon />
-                    </div>
+                    {max.xs ? null : (
+                      <div className="icons">
+                        <BaggageIcon />
+                        <HandLuggageIcon />
+                        <ReturnPaymentIcon />
+                        <ReloadIcon />
+                      </div>
+                    )}
                     <ButtonUI>Выбрать</ButtonUI>
                   </div>
                 </div>
@@ -245,6 +270,7 @@ export const SearchResult: React.FC<SearchResultProps> = ({
             ))
           : null}
       </div>
+      {screen.width < size.lg && renderFilters()}
     </div>
   );
 };

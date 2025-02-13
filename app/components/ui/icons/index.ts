@@ -27,3 +27,4 @@ export * from "./BaggageIcon";
 export * from "./HandLuggageIcon";
 export * from "./ReloadIcon";
 export * from "./ArrowIcon";
+export * from "./FiltersIcon";
