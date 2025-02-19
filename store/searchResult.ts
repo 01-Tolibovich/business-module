@@ -1,12 +1,23 @@
-// import { create } from "zustand";
+import { SearchTypes } from "@/types/searchFlightsResult";
+import { create } from "zustand";
 
-// interface searchState {
-//   searchData: boolean;
-//   setSearchData: (data: boolean) => void;
-// }
-// const searchResult = create<searchState>((set) => ({
-//   searchData: false,
-//   setSearchData: (data: boolean) => set(() => ({ searchData: data })),
-// }));
+interface searchState {
+  searchData: SearchTypes;
+  setSearchData: (data: SearchTypes) => void;
+}
 
-// export default searchResult;
+const defaultSearchData: SearchTypes = {
+  client_code: "",
+  flights: [],
+  included: {
+    supplier: {},
+    airport: {}
+  },
+  message: "",
+}
+const searchResult = create<searchState>((set) => ({
+  searchData: defaultSearchData,
+  setSearchData: (data) => set(() => ({ searchData: data })),
+}));
+
+export default searchResult;

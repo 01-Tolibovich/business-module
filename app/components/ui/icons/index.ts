@@ -28,3 +28,4 @@ export * from "./HandLuggageIcon";
 export * from "./ReloadIcon";
 export * from "./ArrowIcon";
 export * from "./FiltersIcon";
+export * from "./UserWithBaggageIcon";

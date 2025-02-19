@@ -1,14 +1,20 @@
 "use client";
 
+import {
+  SearchTypes,
+  Flights,
+  Segments,
+  Included,
+} from "@/types/searchFlightsResult";
 import moment from "moment";
-import { ButtonUI, ModalUI } from "../ui";
+import { ButtonUI, ModalUI, RouteLineUI } from "../ui";
 import {
   BaggageIcon,
   HandLuggageIcon,
   ReloadIcon,
   ReturnPaymentIcon,
 } from "../ui/icons";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import isPreloader from "@/store/isPreloader";
 import Image from "next/image";
 import { FiltersIcon } from "../ui/icons";
@@ -16,70 +22,28 @@ import { Filters } from "./filters";
 import { useExtraWindow, useResetAuth, useViewportResize } from "@/hooks";
 
 import "./styles.scss";
-
-interface Segments {
-  service_class: {
-    code: "";
-    name: "";
-  };
-  free_seats: number;
-  departure: {
-    time: string;
-    airport: string;
-  };
-  arrival: {
-    time: string;
-    airport: string;
-  };
-  baggage: string;
-  hand_luggage: string;
-}
-
-interface Routes {
-  duration: number;
-  segments: Segments[];
-}
-
-interface Flights {
-  rec_id: string;
-  routes: Routes[];
-  config_name: string;
-  price: {
-    TJS: string;
-  };
-  validating_supplier: string;
-}
-
-interface SearchParamsData {
-  client_code: string;
-  flights: Flights[];
-  included: {
-    supplier: {
-      [key: string]: {
-        name: {
-          ru: string;
-        };
-      };
-    };
-    airport: {
-      [key: string]: {
-        name: {
-          ru: string;
-        };
-      };
-    };
-  };
-
-  message: string;
-}
+import { TicketDetailsInfo } from "./part";
+import searchResult from "@/store/searchResult";
+import { routeDuration } from "@/utils";
 
 interface SearchResultProps {
-  searchResultData: SearchParamsData;
+  searchResultData: SearchTypes;
 }
 
 export const SearchResult: React.FC<SearchResultProps> = ({
   searchResultData,
 }) => {
+  const setSearchData = searchResult((state) => state.setSearchData); // zustand
+  // как лучше?
+  setSearchData(searchResultData); // в теле функционального компонента
+  // или
+  useEffect(() => {
+    setSearchData(searchResultData); // внутри useEffect()?
+  }, [searchResultData, setSearchData]);
+
+  const included: Included = searchResultData?.included;
+  const flights = searchResultData?.flights;
+
   const setIsLoading = isPreloader((state) => state.setIsLoading);
 
   useEffect(() => {
@@ -88,19 +52,18 @@ export const SearchResult: React.FC<SearchResultProps> = ({
 
   useResetAuth({ error: searchResultData.message });
 
-  const included = (supplier: string) => {
-    if (searchResultData) {
-      return searchResultData.included.supplier[supplier].name.ru;
-    }
+  const renderIncluded = (supplier: string) => {
+    return included.supplier[supplier].name.ru;
   };
 
   const { screen, size, max } = useViewportResize();
 
-  // const mobile: boolean = screen.width < 480;
-  // const tablet: boolean = screen.width < 650;
-
   const renderRoutes = (flight: Flights): React.ReactNode => {
     type DepArrKeys = "departure" | "arrival";
+
+    // const returnRouteInfo = () => {
+
+    // }
 
     const renderRouteInfo = (segment: Segments, depAndArr: DepArrKeys) => {
       return (
@@ -118,11 +81,8 @@ export const SearchResult: React.FC<SearchResultProps> = ({
             </p>
             {max.sm ? null : (
               <p className="airport-name">
-                {
-                  searchResultData?.included.airport[segment[depAndArr].airport]
-                    .name.ru
-                }{" "}
-                ( {segment[depAndArr].airport} )
+                {included.airport[segment[depAndArr].airport].name.ru} ({" "}
+                {segment[depAndArr].airport} )
               </p>
             )}
           </div>
@@ -130,14 +90,14 @@ export const SearchResult: React.FC<SearchResultProps> = ({
       );
     };
 
-    const renderDuration = (seconds: number) => {
-      const duration = moment.duration(seconds, "seconds");
-      const formatedTime = `${Math.floor(
-        duration.asHours()
-      )} ч ${duration.minutes()} м`;
+    // const renderDuration = (seconds: number) => {
+    //   const duration = moment.duration(seconds, "seconds");
+    //   const formatedTime = `${Math.floor(
+    //     duration.asHours()
+    //   )} ч ${duration.minutes()} м`;
 
-      return formatedTime;
-    };
+    //   return formatedTime;
+    // };
 
     return (
       <>
@@ -159,14 +119,15 @@ export const SearchResult: React.FC<SearchResultProps> = ({
                   </div>
                   <div>
                     <small className="text-center">
-                      {renderDuration(route.duration)}
+                      {/* {renderDuration(route.duration)} */}
+                      {routeDuration(route.duration)}
                     </small>
-                    <span className="line" />
+                    <RouteLineUI />
                     {max.xs ? null : (
                       <small className="text-center">
                         {route.segments.length === 1
                           ? "Без пересадок"
-                          : `${route.segments.length} пересадок`}
+                          : `${route.segments.length - 1} пересадок`}
                       </small>
                     )}
                   </div>
@@ -217,16 +178,24 @@ export const SearchResult: React.FC<SearchResultProps> = ({
     return null;
   };
 
+  const [ticketDetails, setTicketDatails] = useState<Flights | null>(null);
+
+  const detailInfo = (flight: Flights) => {
+    setTicketDatails(flight);
+  };
+
   return (
     <div className="search-result-page">
       {screen.width >= size.lg && renderFilters()}
-      {screen.width < size.lg && <div className="filter-button">
-        <ButtonUI onClick={handleToggleExtraWindow} icon={<FiltersIcon />} />
-      </div>}
+      {screen.width < size.lg && (
+        <div className="filter-button">
+          <ButtonUI onClick={handleToggleExtraWindow} icon={<FiltersIcon />} />
+        </div>
+      )}
       <div>
         {searchResultData
-          ? searchResultData.flights?.length >= 0 &&
-            searchResultData.flights.map((flight) => (
+          ? flights?.length >= 0 &&
+            flights.map((flight) => (
               <div
                 className="ticket-wrap"
                 key={`${flight.rec_id}${Math.random()}`}
@@ -239,12 +208,12 @@ export const SearchResult: React.FC<SearchResultProps> = ({
                       height={20}
                       alt="logo"
                     />
-                    <p>{included(flight.validating_supplier)}</p>
+                    <p>{renderIncluded(flight.validating_supplier)}</p>
                   </div>
                   {max.sm ? null : <p>Поставщик: {flight.config_name}</p>}
                   {max.sm ? null : (
                     <p>
-                      {included(flight.validating_supplier)} — валидирует
+                      {renderIncluded(flight.validating_supplier)} — валидирует
                       перелёты
                     </p>
                   )}
@@ -263,12 +232,24 @@ export const SearchResult: React.FC<SearchResultProps> = ({
                         <ReloadIcon />
                       </div>
                     )}
-                    <ButtonUI>Выбрать</ButtonUI>
+                    <ButtonUI
+                      onClick={() => {
+                        detailInfo(flight);
+                      }}
+                    >
+                      Выбрать
+                    </ButtonUI>
                   </div>
                 </div>
               </div>
             ))
           : null}
+        <TicketDetailsInfo
+          searchResultData={searchResultData}
+          flight={ticketDetails}
+          setTicketDatails={setTicketDatails}
+          included={included}
+        />
       </div>
       {screen.width < size.lg && renderFilters()}
     </div>

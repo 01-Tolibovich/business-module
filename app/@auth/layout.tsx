@@ -60,7 +60,7 @@ export default function AuthLayout({
   }, [closeModal, pathName]);
 
   return (
-    <ModalUI {...modalShow} handleCloseModal={closeModal}>
+    <ModalUI {...modalShow} handleCloseModal={closeModal} width="auto">
       {children}
     </ModalUI>
   );
