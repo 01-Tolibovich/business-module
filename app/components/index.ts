@@ -7,3 +7,4 @@ export * from "./ourPartners";
 export * from "./footer";
 export * from "./searchForm";
 export * from "./searchResult";
+export * from "./booking";

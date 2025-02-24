@@ -29,3 +29,4 @@ export * from "./ReloadIcon";
 export * from "./ArrowIcon";
 export * from "./FiltersIcon";
 export * from "./UserWithBaggageIcon";
+export * from "./PlaneIcon";

@@ -33,13 +33,15 @@ interface SearchResultProps {
 export const SearchResult: React.FC<SearchResultProps> = ({
   searchResultData,
 }) => {
-  const setSearchData = searchResult((state) => state.setSearchData); // zustand
-  // как лучше?
-  setSearchData(searchResultData); // в теле функционального компонента
-  // или
+  const setSearchData = searchResult((state) => state.setSearchData);
+  const searchData = searchResult(state => state.searchData)
+
   useEffect(() => {
-    setSearchData(searchResultData); // внутри useEffect()?
+    setSearchData(searchResultData);
   }, [searchResultData, setSearchData]);
+
+  console.log("zustand", searchData);
+  
 
   const included: Included = searchResultData?.included;
   const flights = searchResultData?.flights;
@@ -89,15 +91,6 @@ export const SearchResult: React.FC<SearchResultProps> = ({
         </div>
       );
     };
-
-    // const renderDuration = (seconds: number) => {
-    //   const duration = moment.duration(seconds, "seconds");
-    //   const formatedTime = `${Math.floor(
-    //     duration.asHours()
-    //   )} ч ${duration.minutes()} м`;
-
-    //   return formatedTime;
-    // };
 
     return (
       <>
@@ -248,7 +241,6 @@ export const SearchResult: React.FC<SearchResultProps> = ({
           searchResultData={searchResultData}
           flight={ticketDetails}
           setTicketDatails={setTicketDatails}
-          included={included}
         />
       </div>
       {screen.width < size.lg && renderFilters()}

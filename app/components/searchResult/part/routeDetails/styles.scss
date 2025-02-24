@@ -1,0 +1,123 @@
+$h: 3.625rem;
+
+.ticket-details-info {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 3.125rem;
+  position: relative;
+
+  @include mediaMax($sm) {
+    grid-template-columns: 1fr;
+  }
+
+  .from-to {
+    .route {
+      margin: 2.25rem 0;
+
+      .route-details {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        gap: 1rem;
+        height: $h;
+
+        .line {
+          .supplier {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.375rem;
+
+            @include mediaMax($sm) {
+
+              svg {
+                width: 1.625rem;
+                height: auto;
+              }
+            }
+          }
+
+          .time {
+            display: block;
+            text-align: center;
+          }
+        }
+      }
+
+      .date-and-airport {
+        display: flex;
+        justify-content: space-between;
+
+        .date {
+          font-size: 0.875rem;
+          margin-bottom: 0.375rem;
+        }
+
+        .arrival {
+          text-align: end;
+        }
+
+        .airport {
+          font-weight: 600;
+        }
+      }
+    }
+
+    .replanting-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      border: 1px solid $neo-blackout;
+      padding: 0.5rem;
+      margin: 2.25rem 0;
+      border-radius: 0.5rem;
+      -webkit-border-radius: 0.5rem;
+      -moz-border-radius: 0.5rem;
+      -ms-border-radius: 0.5rem;
+      -o-border-radius: 0.5rem;
+
+      .replanting {
+        :nth-child(1) {
+          text-align: end;
+          font-weight: 400 !important;
+        }
+      }
+
+      span {
+        text-align: end;
+        display: block;
+      }
+    }
+  }
+
+  .second-block {
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+    height: fit-content;
+
+    @include mediaMax($sm) {
+      align-items: flex-end;
+    }
+
+    .duration {
+      height: $h;
+      display: flex;
+      align-items: center;
+
+      .duration-title {
+        color: $secondary-color;
+      }
+    }
+
+    .aircraft {
+      font-size: 0.875rem;
+    }
+  }
+}
+
+.error {
+ @include container()
+}

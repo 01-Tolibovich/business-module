@@ -104,10 +104,6 @@ $p: 0.2rem;
             @include mediaMax($sm) {
               font-size: 0.75rem;
             }
-
-            .airport-name {
-              width: min-content;
-            }
           }
 
           .departure {

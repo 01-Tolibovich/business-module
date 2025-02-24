@@ -9,6 +9,7 @@ export type Arrival = {
 };
 
 export type Segments = {
+  operation_supplier: "";
   aircraft: string;
   service_class: {
     code: "";
@@ -27,13 +28,21 @@ export type Routes = {
   segments: Segments[];
 };
 
+type Currency = "TJS" | "RUB" | "UZB";
+
+type Currences = {
+  TJS: string;
+  RUB: string;
+  UZB: string
+}
+
 export type Flights = {
+  available_currencies: Currency[];
+  total_price: Currences;
   rec_id: string;
   routes: Routes[];
   config_name: string;
-  price: {
-    TJS: string;
-  };
+  price: Currences;
   validating_supplier: string;
 };
 
@@ -55,6 +64,7 @@ export type Included = {
 };
 
 export type SearchTypes = {
+  session: string;
   client_code: string;
   flights: Flights[];
   included: Included;

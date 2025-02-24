@@ -19,6 +19,7 @@
     background-color: $neo-color;
     max-width: 930px;
     @include container($max-width: 50rem);
+    margin: 1rem;
     border-radius: 1rem;
     -webkit-border-radius: 1rem;
     -moz-border-radius: 1rem;
