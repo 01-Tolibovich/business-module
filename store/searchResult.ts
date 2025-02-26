@@ -14,6 +14,7 @@ const defaultSearchData: SearchTypes = {
     airport: {}
   },
   message: "",
+  session: ""
 }
 const searchResult = create<searchState>((set) => ({
   searchData: defaultSearchData,
