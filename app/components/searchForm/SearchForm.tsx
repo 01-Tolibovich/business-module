@@ -225,7 +225,7 @@ export const SearchForm: React.FC = () => {
           />
         </div>
         <div className="item-5">
-          <PassengerAndCabin label="1 пассажир" />
+          <PassengerAndCabin />
         </div>
         <div className="item-6">
           <ButtonUI icon={<DificultRouteIcon />} className="action-btn">
