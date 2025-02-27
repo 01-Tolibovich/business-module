@@ -1,11 +1,17 @@
 import { DropDownUI, HeadingUI, InputUI } from "@/app/components/ui";
 import { useExtraWindow } from "@/hooks";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import "./styles.scss";
 import { MinusIcon, PlusIcon } from "@/app/components/ui/icons";
+import searchParams from "@/store/searchParams";
 
 export const PassengerAndCabin: React.FC = () => {
+  const setSearchParamsData = searchParams(
+    (state) => state.setSearchParamsData
+  );
+  const searchParamsData = searchParams((state) => state.searchParamsData);
+
   const [passenger, setPassenger] = useState([
     {
       type: "adt",
@@ -51,22 +57,48 @@ export const PassengerAndCabin: React.FC = () => {
       passengerType: passenger[3].type,
     },
   ];
+
+  const cabins = [
+    {
+      cabin: "economy",
+      type: "radio",
+      label: "Эконом класс",
+      htmlFor: "1",
+    },
+    {
+      cabin: "business",
+      type: "radio",
+      label: "Бизнес класс",
+      htmlFor: "2",
+    },
+    {
+      cabin: "first",
+      type: "radio",
+      label: "Первый класс",
+      htmlFor: "3",
+    },
+    {
+      cabin: "all",
+      type: "radio",
+      label: "Без привязки к классу",
+      htmlFor: "4",
+    },
+  ];
+
   const { isShowExtraWindow, setIsShowExtraWindow, handleToggleExtraWindow } =
     useExtraWindow();
-
-  // const [totalCount, setTotalCount] = useState(1);
 
   const handleCounter = (type: string, operator: "+" | "-") => {
     setPassenger((prev) => {
       const total = prev.reduce((sum, p) => sum + p.count, 0);
-      
-      
+
       if (total >= 9 && operator === "+") return prev;
 
-      if (operator === "-" && prev.find(p => p.type && type === "adt")?.count === 1) {
-        return prev.map((p) =>
-          p.type === "adt" ? { ...p, count: 1} : p
-        )
+      if (
+        operator === "-" &&
+        prev.find((p) => p.type && type === "adt")?.count === 1
+      ) {
+        return prev.map((p) => (p.type === "adt" ? { ...p, count: 1 } : p));
       }
 
       return prev.map((p) =>
@@ -79,20 +111,44 @@ export const PassengerAndCabin: React.FC = () => {
 
   const renderTotalPassengers = () => {
     const total = passenger.reduce((sum, p) => sum + p.count, 0);
-    const pCount = total.toString()
+    const pCount = total.toString();
 
     if (total === 1) {
-      return `${pCount} пассажир`
+      return `${pCount} пассажир`;
     } else if (total < 5) {
-      return `${pCount} пассажира`
+      return `${pCount} пассажира`;
     } else {
-      return `${pCount} пассажиров` 
+      return `${pCount} пассажиров`;
     }
-  }
+  };
 
-  console.log(passenger.reduce((sum, p) => sum + p.count, 0));
-  
-  
+  console.log(searchParamsData);
+  const [currentIndex, setCurrentIndex] = useState(3);
+
+  const pickCabin = (index: number) => {
+    setCurrentIndex(index);
+
+    setSearchParamsData({
+      ...searchParamsData,
+      cabin: cabins[index].cabin
+    })
+  };
+
+  useEffect(() => {
+    const counter = (index: number) => {
+      return passenger[index].count.toString();
+    };
+    setSearchParamsData({
+      ...searchParamsData,
+      passengers: {
+        adt: counter(0),
+        chd: counter(1),
+        ins: counter(2),
+        inf: counter(3),
+      },
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [passenger]);
 
   return (
     <DropDownUI
@@ -103,8 +159,8 @@ export const PassengerAndCabin: React.FC = () => {
       <div onClick={() => handleToggleExtraWindow()}>
         <InputUI
           readOnly
-          label={renderTotalPassengers()}
-          placeholder="Без привязки к классу"
+          label={cabins[currentIndex].label}
+          value={renderTotalPassengers()}
           classInputBlock="passenger-and-cabin"
           classInput="passenger-and-cabin-input"
         />
@@ -116,7 +172,7 @@ export const PassengerAndCabin: React.FC = () => {
             {passengersData.map((el) => (
               <div key={Math.random()} className="passenger-type-section">
                 <div>
-                  <p>{el.title}</p>
+                  <p className="title">{el.title}</p>
                   <small>{el.info}</small>
                 </div>
                 <div className="counter-block">
@@ -138,7 +194,25 @@ export const PassengerAndCabin: React.FC = () => {
             ))}
           </div>
         </div>
-        <div></div>
+        <div className="cabin-section">
+          <HeadingUI className="title" as="h5">
+            Выберите класс
+          </HeadingUI>
+          <div>
+            {cabins.map((el, index) => (
+              <div key={Math.random()} className="cabin">
+                <InputUI
+                  type={el.type}
+                  label={el.label}
+                  htmlFor={el.htmlFor}
+                  name="cabin"
+                  onChange={() => pickCabin(index)}
+                  checked={currentIndex === index}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </DropDownUI>
   );
