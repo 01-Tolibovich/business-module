@@ -1,16 +1,8 @@
 $p: 0.2rem;
 
 .search-result-page {
-  @include container();
-  display: grid;
-  gap: 2rem;
-  grid-template-columns: 18.75rem 1fr;
-  margin-top: 3rem;
   position: relative;
-
-  @include mediaMax($lg) {
-    grid-template-columns: 1fr;
-  }
+  @include searchPageLayout();
 
   .filter-button {
     border-right: 1px solid $neo-blackout;

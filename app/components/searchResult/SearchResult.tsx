@@ -20,11 +20,11 @@ import Image from "next/image";
 import { FiltersIcon } from "../ui/icons";
 import { Filters } from "./filters";
 import { useExtraWindow, useResetAuth, useViewportResize } from "@/hooks";
-
-import "./styles.scss";
 import { TicketDetailsInfo } from "./part";
 import searchResult from "@/store/searchResult";
 import { routeDuration } from "@/utils";
+
+import "./styles.scss";
 
 interface SearchResultProps {
   searchResultData: SearchTypes;

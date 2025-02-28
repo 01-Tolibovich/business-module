@@ -101,7 +101,7 @@ export const SearchForm: React.FC = () => {
 
   const searchFlightsRequest = () => {
     setIsLoading(true);
-    router.push(`/result/${"ticket"}`);
+    router.push(`/result/${Math.random()}`);
     postSearchParamsData(searchParamsData);
   };
 
