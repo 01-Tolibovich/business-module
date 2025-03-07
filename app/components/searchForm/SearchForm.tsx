@@ -10,7 +10,7 @@ import { ButtonUI } from "../ui";
 import { DatePicker, Direction, PassengerAndCabin } from "./parts";
 import { CancelIcon, DificultRouteIcon, SearchIcon } from "../ui/icons";
 import searchParams from "@/store/searchParams";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { getCities, postSearchParamsData } from "@/services";
 import userAuth from "@/store/userAuth";
 import isPreloader from "@/store/isPreloader";
@@ -91,6 +91,10 @@ export const SearchForm: React.FC = () => {
   };
 
   const router = useRouter();
+  const pathname = usePathname();
+
+  console.log(pathname);
+  
 
   searchParamsData.routes.every(
     (route) => route.fromAirportCode && route.toAirportCode && route.date
@@ -99,9 +103,12 @@ export const SearchForm: React.FC = () => {
   const isLoading = isPreloader((state) => state.isLoading);
   const setIsLoading = isPreloader((state) => state.setIsLoading);
 
+  const searchSlug = useRef("")
+
   const searchFlightsRequest = () => {
     setIsLoading(true);
-    router.push(`/result/${Math.random()}`);
+    searchSlug.current = Math.random().toString()
+    router.push(`/result/${searchSlug.current}`);
     postSearchParamsData(searchParamsData);
   };
 
@@ -167,7 +174,9 @@ export const SearchForm: React.FC = () => {
     directionFields.current.index = index;
   };
 
-  return isAuth ? (
+  const pages = pathname === "/" || pathname === `/result/${searchSlug.current}`
+
+  return isAuth && pages ? (
     <div className="search-form-section">
       <div className="search-form">
         <div className="item-1">

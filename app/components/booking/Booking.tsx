@@ -19,8 +19,6 @@ export const Booking: React.FC<BookingProps> = ({ currentTicket }) => {
 
   const segment = currentTicket?.routes.map((route) => route.segments).flat();
 
-  console.log(currentTicket && currentTicket);
-
   return (
     <div className="booking">
       <div>

@@ -122,7 +122,6 @@ export const PassengerAndCabin: React.FC = () => {
     }
   };
 
-  console.log(searchParamsData);
   const [currentIndex, setCurrentIndex] = useState(3);
 
   const pickCabin = (index: number) => {

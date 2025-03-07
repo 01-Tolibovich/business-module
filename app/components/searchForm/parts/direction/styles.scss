@@ -13,7 +13,7 @@
 }
 
 .airports-list {
-  width: 330px;
+  min-width: 330px;
   .airport-item {
     display: flex;
     justify-content: space-between;

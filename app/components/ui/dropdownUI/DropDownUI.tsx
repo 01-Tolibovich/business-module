@@ -8,6 +8,7 @@ import React, {
   useState,
 } from "react";
 import "./styles.scss";
+import { useViewportResize } from "@/hooks";
 
 interface DropDownUIProps {
   children?: React.ReactNode | null;
@@ -71,8 +72,16 @@ export const DropDownUI: React.FC<DropDownUIProps> = ({
     }
 
     setOverflowY("hidden");
-
   }, [active, anim]);
+
+  const { max } = useViewportResize();
+
+  if (max.sm) {
+    left = "0px";
+    right = "0px";
+  }
+
+  console.log(max.sm);
 
   return (
     <div ref={dropDownRef} className="drop-down-ui">

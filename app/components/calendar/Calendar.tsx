@@ -74,23 +74,29 @@ export const Calendar: React.FC<CalendarProps> = ({ handleSetDate }) => {
   const handleMove = (operator: string) => {
     switch (operator) {
       case "+":
-        setSlider(slider + 346);
+        setSlider(prevState => prevState + 1);
         break;
       case "-":
-        setSlider(slider - 346);
+        setSlider(prevstate => prevstate - 1);
         break;
       default:
         break;
     }
-  };
+  }
+
+  const showedMonth = yearCalendar.filter((month) => {
+    return month === yearCalendar[slider]
+  });
+  
+  console.log(slider);
+  
 
   return (
     <>
       <div
         className="calendar"
-        style={{ transform: `translateX(${slider}px)` }}
       >
-        {yearCalendar.map(({ year, month, days }) => (
+        {showedMonth.map(({ year, month, days }) => (
           <div key={`${year}-${month}`}>
             <HeadingUI className="title" as="h4" textTransform={"uppercase"}>
               {moment().year(year).month(month).format("MMMM YYYY")}
@@ -118,13 +124,13 @@ export const Calendar: React.FC<CalendarProps> = ({ handleSetDate }) => {
       <div className="arrows">
         <ButtonUI
           disabled={slider === 0}
-          onClick={() => handleMove("+")}
+          onClick={() => handleMove("-")}
           className="prev"
           icon={<ArrowIcon />}
         />
         <ButtonUI
-          disabled={slider === -3806}
-          onClick={() => handleMove("-")}
+          disabled={slider === yearCalendar.length - 1}
+          onClick={() => handleMove("+")}
           icon={<ArrowIcon />}
         />
       </div>

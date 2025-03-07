@@ -1,9 +1,9 @@
 .calendar {
-  width: 320px;
-  display: grid;
-  grid-auto-flow: column;
-  gap: 2rem;
-  transition: 0.300s;
+  // display: grid;
+  // grid-auto-flow: column;
+  // gap: 2rem;
+  // transition: 0.300s;
+  min-height: 350px;
 
   .weeks {
     display: grid;

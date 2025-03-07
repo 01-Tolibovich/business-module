@@ -34,14 +34,10 @@ export const SearchResult: React.FC<SearchResultProps> = ({
   searchResultData,
 }) => {
   const setSearchData = searchResult((state) => state.setSearchData);
-  const searchData = searchResult(state => state.searchData)
 
   useEffect(() => {
     setSearchData(searchResultData);
   }, [searchResultData, setSearchData]);
-
-  console.log("zustand", searchData);
-  
 
   const included: Included = searchResultData?.included;
   const flights = searchResultData?.flights;
